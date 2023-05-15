@@ -8,7 +8,7 @@ class ColorResources {
     return Provider.of<ThemeProvider>(context).darkTheme ? Color(0xFF678cb5) : Color(0xFF92C6FF);
   }
   static Color getLightSkyBlue(BuildContext context) {
-    return Provider.of<ThemeProvider>(context).darkTheme ? Color(0xFFc7c7c7) : Color(0xFF8DBFF6);
+    return Provider.of<ThemeProvider>(context).darkTheme ? Color(0xFFF89B1D) : Color(0xFFF89B1D);
   }
   static Color getHarlequin(BuildContext context) {
     return Provider.of<ThemeProvider>(context).darkTheme ? Color(0xFF257800) : Color(0xFF3FCC01);

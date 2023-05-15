@@ -16,6 +16,8 @@ import 'package:medosedo_ecommerce/view/screen/onboarding/onboarding_screen.dart
 import 'package:medosedo_ecommerce/view/screen/splash/widget/splash_painter.dart';
 import 'package:provider/provider.dart';
 
+import '../../../utill/dimensions.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -89,29 +91,36 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _globalKey,
-      body: Provider.of<SplashProvider>(context).hasConnection ? Stack(
-        clipBehavior: Clip.none, children: [
+        backgroundColor: Theme.of(context).primaryColor,
+        body: Stack(
+          clipBehavior: Clip.none, children: [
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : ColorResources.getPrimary(context),
             child: CustomPaint(
               painter: SplashPainter(),
             ),
           ),
+
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.asset(Images.splashScreenLogo, height: 250.0, fit: BoxFit.scaleDown,
-                  width: 250.0,),
+                Hero(
+                    tag:'logo',
+                    child: Image.asset(Images.logo__white, height: 200,
+                        fit: BoxFit.cover, width: 200.0)),
+                SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE,),
+                // Text(AppConstants.APP_NAME, style: titilliumBold.copyWith(fontSize: Dimensions.FONT_SIZE_WALLET,
+                //     color: Colors.white),
+                // ),
               ],
             ),
           ),
         ],
-      ) : NoInternetOrDataScreen(isNoInternet: true, child: SplashScreen()),
+        )
     );
+
   }
 
 }

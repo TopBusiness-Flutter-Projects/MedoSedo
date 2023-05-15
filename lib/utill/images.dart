@@ -9,6 +9,7 @@ class Images {
   static const String logo_image = 'assets/images/logo.png';
   static const String logo_with_name_image = 'assets/images/logo_with_name.png';
   static const String logo_with_name_image_white = 'assets/images/logo_with_name_white.png';
+  static const String logo__white = 'assets/images/logo_white.png';
   static const String message_image = 'assets/images/inbox.png';
   static const String more_image = 'assets/images/more.png';
   static const String shopping_image = 'assets/images/order.png';

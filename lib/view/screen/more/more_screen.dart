@@ -295,7 +295,7 @@ class SquareButton extends StatelessWidget {
               children: [
                 Image.asset(image, color: Theme.of(context).highlightColor),
                 hasCount?
-                Positioned(top: -4, right: -4,
+                Positioned(top: -2, right: -2,
                   child: Consumer<CartProvider>(builder: (context, cart, child) {
                     return CircleAvatar(radius: 7, backgroundColor: ColorResources.RED,
                       child: Text(count.toString(),
