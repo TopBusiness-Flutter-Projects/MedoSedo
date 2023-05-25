@@ -44,7 +44,7 @@ class BrandView extends StatelessWidget {
                         children: [
                           Container(
                             width: (MediaQuery.of(context).size.width/5.9),
-                            height: (MediaQuery.of(context).size.width/5.9),
+                            height: (MediaQuery.of(context).size.width/20),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(Radius.circular((MediaQuery.of(context).size.width/5))),
                                 color: Theme.of(context).highlightColor,
