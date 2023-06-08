@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 import 'add_new_address_screen.dart';
 class SavedAddressListScreen extends StatelessWidget {
-  const SavedAddressListScreen({Key key}) : super(key: key);
+  const SavedAddressListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

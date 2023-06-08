@@ -13,7 +13,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class ProductSpecification extends StatelessWidget {
   final String productSpecification;
-  ProductSpecification({@required this.productSpecification});
+  ProductSpecification({required this.productSpecification});
 
   @override
   Widget build(BuildContext context) {

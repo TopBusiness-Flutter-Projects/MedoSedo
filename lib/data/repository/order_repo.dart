@@ -10,11 +10,12 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter/foundation.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class OrderRepo {
   final DioClient dioClient;
 
-  OrderRepo({@required this.dioClient});
+  OrderRepo({required this.dioClient});
 
   Future<ApiResponse> getOrderList() async {
     try {

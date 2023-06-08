@@ -4,11 +4,12 @@ import 'package:medosedo_ecommerce/data/datasource/remote/exception/api_error_ha
 import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class SplashRepo {
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
-  SplashRepo({@required this.dioClient, @required this.sharedPreferences});
+  SplashRepo({required this.dioClient, required this.sharedPreferences});
 
   Future<ApiResponse> getConfig() async {
     try {
@@ -46,7 +47,7 @@ class SplashRepo {
     sharedPreferences.setBool(AppConstants.INTRO, false);
   }
 
-  bool showIntro() {
+  bool? showIntro() {
     return sharedPreferences.getBool(AppConstants.INTRO);
   }
 

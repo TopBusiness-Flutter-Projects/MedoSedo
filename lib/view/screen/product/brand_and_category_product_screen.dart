@@ -16,8 +16,8 @@ class BrandAndCategoryProductScreen extends StatelessWidget {
   final bool isBrand;
   final String id;
   final String name;
-  final String image;
-  BrandAndCategoryProductScreen({@required this.isBrand, @required this.id, @required this.name, this.image});
+  final String? image;
+  BrandAndCategoryProductScreen({required this.isBrand, required this.id, required this.name, this.image});
   @override
   Widget build(BuildContext context) {
     Provider.of<ProductProvider>(context, listen: false).initBrandOrCategoryProductList(isBrand, id, context);
@@ -27,7 +27,7 @@ class BrandAndCategoryProductScreen extends StatelessWidget {
         builder: (context, productProvider, child) {
           return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
 
-            CustomAppBar(title: name),
+            CustomAppBar(title: name, onActionPressed: (){}),
 
             isBrand ? Container(height: 100,
               padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),

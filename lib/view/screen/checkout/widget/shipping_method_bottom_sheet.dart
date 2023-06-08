@@ -11,7 +11,7 @@ class ShippingMethodBottomSheet extends StatefulWidget {
   final String groupId;
   final int sellerId;
   final int sellerIndex;
-  ShippingMethodBottomSheet({@required this.groupId, @required this.sellerId, @required this.sellerIndex});
+  ShippingMethodBottomSheet({required this.groupId, required this.sellerId, required this.sellerIndex});
 
   @override
   _ShippingMethodBottomSheetState createState() => _ShippingMethodBottomSheetState();
@@ -53,7 +53,7 @@ class _ShippingMethodBottomSheetState extends State<ShippingMethodBottomSheet> {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Theme.of(context).highlightColor,
-                  boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 200], spreadRadius: 1, blurRadius: 5)]),
+                  boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 200]!, spreadRadius: 1, blurRadius: 5)]),
               child: Icon(Icons.clear, size: Dimensions.ICON_SIZE_SMALL),
             ),
           ),
@@ -76,7 +76,7 @@ class _ShippingMethodBottomSheetState extends State<ShippingMethodBottomSheet> {
                     activeColor: Theme.of(context).primaryColor,
                     toggleable: false,
                     onChanged: (value) async {
-                      Provider.of<CartProvider>(context, listen: false).setSelectedShippingMethod(value, widget.sellerIndex);
+                      Provider.of<CartProvider>(context, listen: false).setSelectedShippingMethod(int.parse(value.toString()), widget.sellerIndex);
                       ShippingMethodModel shipping = ShippingMethodModel();
                       shipping.id = order.shippingList[widget.sellerIndex].shippingMethodList[index].id;
                      shipping.duration = widget.groupId;

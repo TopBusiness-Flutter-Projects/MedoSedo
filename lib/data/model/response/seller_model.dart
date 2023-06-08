@@ -1,12 +1,12 @@
 class SellerModel {
-  Seller _seller;
-  int _avgRating;
-  int _totalReview;
-  int _totalOrder;
-  int _totalProduct;
+  late Seller _seller;
+  late int _avgRating;
+  late int _totalReview;
+  late int _totalOrder;
+  late int _totalProduct;
 
   SellerModel(
-      {Seller seller, int avgRating, int totalReview, int totalOrder, int totalProduct}) {
+      {required Seller seller, required int avgRating, required int totalReview, required int totalOrder, required int totalProduct}) {
     if (seller != null) {
       this._seller = seller;
     }
@@ -33,7 +33,7 @@ class SellerModel {
 
   SellerModel.fromJson(Map<String, dynamic> json) {
     _seller =
-    json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
+    (json['seller'] != null ? new Seller.fromJson(json['seller']) : null)!;
     _avgRating = json['avg_rating'];
     _totalReview = json['total_review'];
     _totalOrder = json['total_order'];
@@ -54,20 +54,20 @@ class SellerModel {
 }
 
 class Seller {
-  int _id;
-  String _fName;
-  String _lName;
-  String _phone;
-  String _image;
-  Shop _shop;
+  late int _id;
+  late String _fName;
+  late  String _lName;
+  late  String _phone;
+  late  String _image;
+  late Shop _shop;
 
   Seller(
-      {int id,
-        String fName,
-        String lName,
-        String phone,
-        String image,
-        Shop shop}) {
+      {required int id,
+        required String fName,
+        required String lName,
+        required String phone,
+        required String image,
+        required Shop shop}) {
     if (id != null) {
       this._id = id;
     }
@@ -101,7 +101,7 @@ class Seller {
     _lName = json['l_name'];
     _phone = json['phone'];
     _image = json['image'];
-    _shop = json['shop'] != null ? new Shop.fromJson(json['shop']) : null;
+    _shop = (json['shop'] != null ? new Shop.fromJson(json['shop']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -119,34 +119,34 @@ class Seller {
 }
 
 class Shop {
-  int _id;
-  int _sellerId;
-  String _name;
-  String _address;
-  String _contact;
-  String _image;
-  String _createdAt;
-  String _updatedAt;
-  String _banner;
-  int _temporaryClose;
-  String _vacationEndDate;
-  String _vacationStartDate;
-  int _vacationStatus;
+  late int _id;
+  late int _sellerId;
+  late  String _name;
+  late  String _address;
+  late  String _contact;
+  late  String _image;
+  late  String _createdAt;
+  late  String _updatedAt;
+  late  String _banner;
+  late  int _temporaryClose;
+  late String _vacationEndDate;
+  late String _vacationStartDate;
+  late  int _vacationStatus;
 
   Shop(
-      {int id,
-        int sellerId,
-        String name,
-        String address,
-        String contact,
-        String image,
-        String createdAt,
-        String updatedAt,
-        String banner,
-        int temporaryClose,
-        String vacationEndDate,
-        String vacationStartDate,
-        int vacationStatus
+      {required int id,
+        required int sellerId,
+        required String name,
+        required String address,
+        required String contact,
+        required String image,
+        required String createdAt,
+        required String updatedAt,
+        required String banner,
+        required int temporaryClose,
+        required String vacationEndDate,
+        required String vacationStartDate,
+        required int vacationStatus
       }) {
     if (id != null) {
       this._id = id;

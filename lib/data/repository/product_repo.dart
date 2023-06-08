@@ -5,13 +5,14 @@ import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/helper/product_type.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class ProductRepo {
   final DioClient dioClient;
-  ProductRepo({@required this.dioClient});
+  ProductRepo({required this.dioClient});
 
   Future<ApiResponse> getLatestProductList(BuildContext context, String offset, ProductType productType, String title) async {
-    String endUrl;
+    String? endUrl;
 
      if(productType == ProductType.BEST_SELLING){
       endUrl = AppConstants.BEST_SELLING_PRODUCTS_URI;
@@ -31,7 +32,7 @@ class ProductRepo {
 
     try {
       final response = await dioClient.get(
-        endUrl+offset);
+        endUrl!+offset);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

@@ -11,8 +11,8 @@ import 'package:medosedo_ecommerce/view/basewidget/textfield/custom_textfield.da
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 class LoyaltyPointConverterBottomSheet extends StatefulWidget {
-  final double myPoint;
-  const LoyaltyPointConverterBottomSheet({Key key, this.myPoint}) : super(key: key);
+  final double? myPoint;
+  const LoyaltyPointConverterBottomSheet({Key? key, this.myPoint}) : super(key: key);
 
   @override
   State<LoyaltyPointConverterBottomSheet> createState() => _LoyaltyPointConverterBottomSheetState();
@@ -89,7 +89,7 @@ class _LoyaltyPointConverterBottomSheetState extends State<LoyaltyPointConverter
                   );
 
                 }
-                else if(point.toDouble() > widget.myPoint){
+                else if(point.toDouble() > widget.myPoint!){
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     behavior: SnackBarBehavior.floating,

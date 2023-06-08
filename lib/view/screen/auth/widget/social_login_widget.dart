@@ -74,7 +74,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
                   if(Provider.of<GoogleSignInProvider>(context,listen: false).googleAccount != null){
                     id = Provider.of<GoogleSignInProvider>(context,listen: false).googleAccount.id;
                     email = Provider.of<GoogleSignInProvider>(context,listen: false).googleAccount.email;
-                    token = Provider.of<GoogleSignInProvider>(context,listen: false).auth.accessToken;
+                    token = Provider.of<GoogleSignInProvider>(context,listen: false).auth.accessToken!;
                     medium = 'google';
                     print('eemail =>$email token =>$token');
                     socialLogin.email = email;
@@ -109,9 +109,9 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
                   await Provider.of<FacebookLoginProvider>(context, listen: false).login();
                   String id,token,email, medium;
                   if(Provider.of<FacebookLoginProvider>(context,listen: false).userData != null){
-                    id = Provider.of<FacebookLoginProvider>(context,listen: false).result.accessToken.userId;
+                    id = Provider.of<FacebookLoginProvider>(context,listen: false).result.accessToken!.userId;
                     email = Provider.of<FacebookLoginProvider>(context,listen: false).userData['email'];
-                    token = Provider.of<FacebookLoginProvider>(context,listen: false).result.accessToken.token;
+                    token = Provider.of<FacebookLoginProvider>(context,listen: false).result.accessToken!.token;
                     medium = 'facebook';
                     socialLogin.email = email;
                     socialLogin.medium = medium;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:medosedo_ecommerce/data/datasource/remote/dio/dio_client.dart';

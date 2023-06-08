@@ -8,8 +8,8 @@ import 'package:medosedo_ecommerce/utill/images.dart';
 
 class NoInternetOrDataScreen extends StatelessWidget {
   final bool isNoInternet;
-  final Widget child;
-  NoInternetOrDataScreen({@required this.isNoInternet, this.child});
+  final Widget? child;
+  NoInternetOrDataScreen({required this.isNoInternet, this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class NoInternetOrDataScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () async {
                   if(await Connectivity().checkConnectivity() != ConnectivityResult.none) {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => child));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => child!));
                   }
                 },
                 child: Container(

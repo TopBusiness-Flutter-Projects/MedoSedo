@@ -7,7 +7,7 @@ import 'package:medosedo_ecommerce/view/basewidget/no_internet_screen.dart';
 import 'package:provider/provider.dart';
 class FaqScreen extends StatefulWidget {
   final String title;
-  FaqScreen({@required this.title});
+  FaqScreen({required this.title});
 
   @override
   _FaqScreenState createState() => _FaqScreenState();

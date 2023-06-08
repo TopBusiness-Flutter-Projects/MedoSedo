@@ -12,12 +12,12 @@ import 'package:medosedo_ecommerce/view/screen/tracking/painter/line_dashed_pain
 import 'package:provider/provider.dart';
 
 class TrackingResultScreen extends StatelessWidget {
-  final String orderID;
-  TrackingResultScreen({@required this.orderID});
+  final String? orderID;
+  TrackingResultScreen({required this.orderID});
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<OrderProvider>(context, listen: false).initTrackingInfo(orderID, context);
+    Provider.of<OrderProvider>(context, listen: false).initTrackingInfo(orderID!, context);
     List<String> _statusList = ['pending', 'confirmed', 'processing', 'out_for_delivery', 'delivered'];
 
 
@@ -25,7 +25,7 @@ class TrackingResultScreen extends StatelessWidget {
       backgroundColor: ColorResources.getIconBg(context),
       body: Column(
         children: [
-          CustomAppBar(title: getTranslated('DELIVERY_STATUS', context)),
+          CustomAppBar(title: getTranslated('DELIVERY_STATUS', context), onActionPressed: (){}),
 
           Expanded(
             child: Consumer<OrderProvider>(
@@ -125,7 +125,7 @@ class CustomStepper extends StatelessWidget {
   final String title;
   final Color color;
   final bool isLastItem;
-  CustomStepper({@required this.title, @required this.color, this.isLastItem = false});
+  CustomStepper({required this.title, required this.color, this.isLastItem = false});
 
   @override
   Widget build(BuildContext context) {

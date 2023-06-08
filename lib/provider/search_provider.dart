@@ -6,7 +6,7 @@ import 'package:medosedo_ecommerce/helper/api_checker.dart';
 
 class SearchProvider with ChangeNotifier {
   final SearchRepo searchRepo;
-  SearchProvider({@required this.searchRepo});
+  SearchProvider({required this.searchRepo});
 
   int _filterIndex = 0;
   List<String> _historyList = [];
@@ -35,20 +35,20 @@ class SearchProvider with ChangeNotifier {
     } else if (_filterIndex == 2) {
       _searchProductList.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
       Iterable iterable = _searchProductList.reversed;
-      _searchProductList = iterable.toList();
+      _searchProductList = iterable.toList() as List<Product>;
     } else if (_filterIndex == 3) {
       _searchProductList.sort((a, b) => a.unitPrice.compareTo(b.unitPrice));
     } else if (_filterIndex == 4) {
       _searchProductList.sort((a, b) => a.unitPrice.compareTo(b.unitPrice));
       Iterable iterable = _searchProductList.reversed;
-      _searchProductList = iterable.toList();
+      _searchProductList = iterable.toList() as List<Product>;
     }
 
     notifyListeners();
   }
 
-  List<Product> _searchProductList;
-  List<Product> _filterProductList;
+  List<Product> _searchProductList=[];
+  List<Product> _filterProductList=[];
   bool _isClear = true;
   String _searchText = '';
 
@@ -73,21 +73,21 @@ class SearchProvider with ChangeNotifier {
     print('====koybar=====>');
     _searchText = query;
     _isClear = false;
-    _searchProductList = null;
-    _filterProductList = null;
+    _searchProductList = [];
+    _filterProductList = [];
     notifyListeners();
 
     ApiResponse apiResponse = await searchRepo.getSearchProductList(query);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       if (query.isEmpty) {
         _searchProductList = [];
         _filterProductList = [];
       } else {
         _searchProductList = [];
-        if(ProductModel.fromJson(apiResponse.response.data).products != null){
-          _searchProductList.addAll(ProductModel.fromJson(apiResponse.response.data).products);
+        if(ProductModel.fromJson(apiResponse.response!.data).products != null){
+          _searchProductList.addAll(ProductModel.fromJson(apiResponse.response!.data).products);
           _filterProductList = [];
-          _filterProductList.addAll(ProductModel.fromJson(apiResponse.response.data).products);
+          _filterProductList.addAll(ProductModel.fromJson(apiResponse.response!.data).products);
         }
 
       }

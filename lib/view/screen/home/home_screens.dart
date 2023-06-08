@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             await _loadData(context, true);
             await Provider.of<FlashDealProvider>(context, listen: false).getMegaDealList(true, context, false);
 
-            return true;
+          //  return true;
           },
           child: Stack(
             children: [
@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                                 height: 60, alignment: Alignment.centerLeft,
                                 decoration: BoxDecoration(color: Theme.of(context).cardColor,
                                   boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ?
-                                  900 : 200], spreadRadius: 1, blurRadius: 1)],
+                                  900 : 200]!, spreadRadius: 1, blurRadius: 1)],
                                   borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL),),
                                 child: Row(mainAxisAlignment : MainAxisAlignment.spaceBetween, children: [
 
@@ -216,8 +216,7 @@ class _HomePageState extends State<HomePage> {
                           // Mega Deal
                           Consumer<FlashDealProvider>(
                             builder: (context, flashDeal, child) {
-                              return  (flashDeal.flashDeal != null && flashDeal.flashDealList != null
-                                  && flashDeal.flashDealList.length > 0)
+                              return  (flashDeal.flashDealList.length > 0)
                                   ? TitleRow(title: getTranslated('flash_deal', context),
                                       eventDuration: flashDeal.flashDeal != null ? flashDeal.duration : null,
                                       onTap: () {Navigator.push(context, MaterialPageRoute(builder: (_) => FlashDealScreen()));
@@ -229,7 +228,7 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                           Consumer<FlashDealProvider>(
                             builder: (context, megaDeal, child) {
-                              return  (megaDeal.flashDeal != null && megaDeal.flashDealList != null && megaDeal.flashDealList.length > 0)
+                              return  (megaDeal.flashDealList.length > 0)
                                   ? Container(height: MediaQuery.of(context).size.width*.77,
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: Dimensions.HOME_PAGE_PADDING),
@@ -271,7 +270,7 @@ class _HomePageState extends State<HomePage> {
 
                           //footer banner
                           Consumer<BannerProvider>(builder: (context, footerBannerProvider, child){
-                            return footerBannerProvider.footerBannerList != null && footerBannerProvider.footerBannerList.length > 0?
+                            return footerBannerProvider.footerBannerList.length > 0?
                             Padding(
                               padding: const EdgeInsets.only(bottom: Dimensions.HOME_PAGE_PADDING),
                               child: FooterBannersView(index: 0,),
@@ -285,7 +284,7 @@ class _HomePageState extends State<HomePage> {
                           // Featured Products
                           Consumer<ProductProvider>(
                             builder: (context, featured,_) {
-                              return featured.featuredProductList!=null && featured.featuredProductList.length>0 ?
+                              return featured.featuredProductList.length>0 ?
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                                 child: Padding(
@@ -310,7 +309,7 @@ class _HomePageState extends State<HomePage> {
                           // Featured Deal
                           Consumer<FeaturedDealProvider>(
                             builder: (context, featuredDealProvider, child) {
-                              return featuredDealProvider.featuredDealProductList != null && featuredDealProvider.featuredDealProductList.length >0 ?
+                              return featuredDealProvider.featuredDealProductList.length >0 ?
                               Padding(padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
                                 child: TitleRow(title: getTranslated('featured_deals', context),
                                     onTap: () {Navigator.push(context, MaterialPageRoute(builder: (_) => FeaturedDealScreen()));}),
@@ -318,7 +317,7 @@ class _HomePageState extends State<HomePage> {
 
                           Consumer<FeaturedDealProvider>(
                             builder: (context, featuredDealProvider, child) {
-                              return featuredDealProvider.featuredDealProductList != null && featuredDealProvider.featuredDealProductList.length >0 ?
+                              return featuredDealProvider.featuredDealProductList.length >0 ?
                              Container(height: featuredDealProvider.featuredDealProductList.length> 4 ? 120 * 4.0 : 120 * (double.parse(featuredDealProvider.featuredDealProductList.length.toString())),
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: Dimensions.HOME_PAGE_PADDING),
@@ -339,8 +338,7 @@ class _HomePageState extends State<HomePage> {
 
                           //footer banner
                           Consumer<BannerProvider>(builder: (context, footerBannerProvider, child){
-                            return footerBannerProvider.mainSectionBannerList != null &&
-                                footerBannerProvider.mainSectionBannerList.length > 0?
+                            return footerBannerProvider.mainSectionBannerList.length > 0?
                             Padding(
                               padding: const EdgeInsets.only(bottom: Dimensions.HOME_PAGE_PADDING),
                               child: MainSectionBannersView(index: 0,),
@@ -371,7 +369,7 @@ class _HomePageState extends State<HomePage> {
 
                           //footer banner
                           Consumer<BannerProvider>(builder: (context, footerBannerProvider, child){
-                            return footerBannerProvider.footerBannerList != null && footerBannerProvider.footerBannerList.length>1?
+                            return footerBannerProvider.footerBannerList.length>1?
                             FooterBannersView(index: 1):SizedBox();
                           }),
                           SizedBox(height: Dimensions.HOME_PAGE_PADDING),
@@ -408,16 +406,16 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   onSelected: (value) {
                                     if(value == ProductType.NEW_ARRIVAL){
-                                      Provider.of<ProductProvider>(context, listen: false).changeTypeOfProduct(value, types[0]);
+                                      Provider.of<ProductProvider>(context, listen: false).changeTypeOfProduct(value as ProductType, types[0]);
                                     }else if(value == ProductType.TOP_PRODUCT){
-                                      Provider.of<ProductProvider>(context, listen: false).changeTypeOfProduct(value, types[1]);
+                                      Provider.of<ProductProvider>(context, listen: false).changeTypeOfProduct(value as ProductType, types[1]);
                                     }else if(value == ProductType.BEST_SELLING){
-                                      Provider.of<ProductProvider>(context, listen: false).changeTypeOfProduct(value, types[2]);
+                                      Provider.of<ProductProvider>(context, listen: false).changeTypeOfProduct(value as ProductType, types[2]);
                                     }else if(value == ProductType.DISCOUNTED_PRODUCT){
-                                      Provider.of<ProductProvider>(context, listen: false).changeTypeOfProduct(value, types[3]);
+                                      Provider.of<ProductProvider>(context, listen: false).changeTypeOfProduct(value as ProductType, types[3]);
                                     }
 
-                                    ProductView(isHomePage: false, productType: value, scrollController: _scrollController);
+                                    ProductView(isHomePage: false, productType: value as ProductType, scrollController: _scrollController);
                                     Provider.of<ProductProvider>(context, listen: false).getLatestProductList(1, context, reload: true);
 
 
@@ -441,7 +439,7 @@ class _HomePageState extends State<HomePage> {
                 left: 0,right: 0,
                 child: Consumer<SplashProvider>(
                   builder: (context, announcement, _){
-                    return (announcement.configModel.announcement.announcement != null && announcement.onOff)?
+                    return (announcement.onOff)?
                     AnnouncementScreen(announcement: announcement.configModel.announcement):SizedBox();
                   },
 
@@ -457,7 +455,7 @@ class _HomePageState extends State<HomePage> {
 
 class SliverDelegate extends SliverPersistentHeaderDelegate {
   Widget child;
-  SliverDelegate({@required this.child});
+  SliverDelegate({required this.child});
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {

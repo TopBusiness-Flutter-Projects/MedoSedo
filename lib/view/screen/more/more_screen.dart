@@ -40,8 +40,8 @@ class MoreScreen extends StatefulWidget {
 }
 
 class _MoreScreenState extends State<MoreScreen> {
-  bool isGuestMode;
-  String version;
+  bool isGuestMode=false;
+  String version='';
   bool singleVendor = false;
   @override
   void initState() {
@@ -272,7 +272,7 @@ class SquareButton extends StatelessWidget {
   final bool hasCount;
 
 
-  SquareButton({@required this.image, @required this.title, @required this.navigateTo, @required this.count, @required this.hasCount});
+  SquareButton({required this.image, required this.title, required this.navigateTo, required this.count, required this.hasCount});
 
   @override
   Widget build(BuildContext context) {
@@ -322,7 +322,7 @@ class TitleButton extends StatelessWidget {
   final String image;
   final String title;
   final Widget navigateTo;
-  TitleButton({@required this.image, @required this.title, @required this.navigateTo});
+  TitleButton({required this.image, required this.title, required this.navigateTo});
 
   @override
   Widget build(BuildContext context) {

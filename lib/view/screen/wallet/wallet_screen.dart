@@ -38,7 +38,7 @@ class WalletScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         onRefresh: () async {
           Provider.of<WalletTransactionProvider>(context, listen: false).getTransactionList(context,1,reload: true);
-          return false;
+          //r//eturn false;
         },
         child: CustomScrollView(
           controller: _scrollController,
@@ -65,7 +65,7 @@ class WalletScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColor,
                                 borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
-                                boxShadow: [BoxShadow(color: Colors.grey[darkMode ? 900 : 200],
+                                boxShadow: [BoxShadow(color: Colors.grey[darkMode ? 900 : 200]!,
                                     spreadRadius: 0.5, blurRadius: 0.3)],
                               ),
                               child: Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,8 +126,8 @@ class OrderShimmer extends StatelessWidget {
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
           color: Theme.of(context).highlightColor,
           child: Shimmer.fromColors(
-            baseColor: Colors.grey[300],
-            highlightColor: Colors.grey[100],
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -168,7 +168,7 @@ class OrderShimmer extends StatelessWidget {
 
 class SliverDelegate extends SliverPersistentHeaderDelegate {
   Widget child;
-  SliverDelegate({@required this.child});
+  SliverDelegate({required this.child});
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {

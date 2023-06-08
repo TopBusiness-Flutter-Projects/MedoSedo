@@ -22,8 +22,8 @@ import 'package:provider/provider.dart';
 
 class CartBottomSheet extends StatefulWidget {
   final pd.ProductDetailsModel product;
-  final Function callback;
-  CartBottomSheet({@required this.product, this.callback});
+  final Function? callback;
+  CartBottomSheet({required this.product, this.callback});
 
   @override
   _CartBottomSheetState createState() => _CartBottomSheetState();
@@ -67,8 +67,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
 
 
 
-              Variation _variation;
-              String _variantName = (widget.product.colors != null && widget.product.colors.length != 0) ? widget.product.colors[details.variantIndex].name : null;
+              Variation? _variation;
+              String? _variantName = (widget.product.colors != null && widget.product.colors.length != 0) ? widget.product.colors[details.variantIndex].name : null;
               List<String> _variationList = [];
               for(int index=0; index < widget.product.choiceOptions.length; index++) {
                 _variationList.add(widget.product.choiceOptions[index].options[details.variationIndex[index]].trim());
@@ -433,7 +433,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                 cart, route, context, widget.product.choiceOptions,
                                 Provider.of<ProductDetailsProvider>(context, listen: false).variationIndex,).
                               then((value) {
-                                if(value.response.statusCode == 200){
+                                if(value.response!.statusCode == 200){
                                   _navigateToNextScreen(context);
                                 }
 
@@ -477,10 +477,10 @@ class QuantityButton extends StatelessWidget {
   final bool digitalProduct;
 
   QuantityButton({
-    @required this.isIncrement,
-    @required this.quantity,
-    @required this.stock,
-    this.isCartWidget = false,@required this.minimumOrderQuantity,@required this.digitalProduct,
+    required this.isIncrement,
+    required this.quantity,
+    required this.stock,
+    this.isCartWidget = false,required this.minimumOrderQuantity,required this.digitalProduct,
   });
 
   @override

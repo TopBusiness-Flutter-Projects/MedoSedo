@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class SignOutConfirmationDialog extends StatelessWidget {
   final bool isDelete;
   final int customerId;
-  const SignOutConfirmationDialog({Key key, this.isDelete = false, this.customerId}) : super(key: key);
+  const SignOutConfirmationDialog({Key? key, this.isDelete = false, this.customerId=0}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -42,7 +42,7 @@ class SignOutConfirmationDialog extends StatelessWidget {
                 onTap: () {
                   if(isDelete){
                     Provider.of<ProfileProvider>(context, listen: false).deleteCustomerAccount(context, customerId).then((condition) {
-                      if(condition.response.statusCode == 200){
+                      if(condition.response!.statusCode == 200){
                         Navigator.pop(context);
                         Provider.of<AuthProvider>(context,listen: false).clearSharedData();
                         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => AuthScreen()), (route) => false);

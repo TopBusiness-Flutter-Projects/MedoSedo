@@ -18,7 +18,7 @@ import 'add_new_address_screen.dart';
 
 class AddressScreen extends StatefulWidget {
 
-  final AddressModel addressModel;
+  final AddressModel? addressModel;
   AddressScreen({this.addressModel});
 
   @override
@@ -26,7 +26,7 @@ class AddressScreen extends StatefulWidget {
 }
 
 class _AddressScreenState extends State<AddressScreen> {
-  bool _isLoggedIn;
+  bool _isLoggedIn=false;
 
   @override
   void initState() {

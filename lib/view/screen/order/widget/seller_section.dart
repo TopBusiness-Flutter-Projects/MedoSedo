@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class SellerSection extends StatelessWidget {
   final OrderProvider order;
-  const SellerSection({Key key, this.order}) : super(key: key);
+  const SellerSection({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

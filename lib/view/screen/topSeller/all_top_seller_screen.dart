@@ -10,8 +10,8 @@ import 'package:medosedo_ecommerce/view/screen/home/widget/top_seller_view.dart'
 import 'package:provider/provider.dart';
 
 class AllTopSellerScreen extends StatelessWidget {
-  final TopSellerModel topSeller;
-  AllTopSellerScreen({@required this.topSeller});
+  final TopSellerModel? topSeller;
+  AllTopSellerScreen({ this.topSeller});
   @override
   Widget build(BuildContext context) {
 

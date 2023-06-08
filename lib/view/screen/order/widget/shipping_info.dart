@@ -6,7 +6,7 @@ import 'package:medosedo_ecommerce/utill/dimensions.dart';
 
 class ShippingInfo extends StatelessWidget {
   final OrderProvider order;
-  const ShippingInfo({Key key, this.order}) : super(key: key);
+  const ShippingInfo({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

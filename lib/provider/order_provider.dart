@@ -15,22 +15,23 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-
+import 'dart:async';
+import 'dart:convert';
 class OrderProvider with ChangeNotifier {
   final OrderRepo orderRepo;
-  OrderProvider({@required this.orderRepo});
+  OrderProvider({required this.orderRepo});
 
-  List<OrderModel> _pendingList;
-  List<OrderModel> _deliveredList;
-  List<OrderModel> _canceledList;
-  int _addressIndex;
-  int _billingAddressIndex;
+  List<OrderModel> _pendingList=[];
+  List<OrderModel> _deliveredList=[];
+  List<OrderModel> _canceledList=[];
+  int _addressIndex=0;
+  int _billingAddressIndex=0;
   int get billingAddressIndex => _billingAddressIndex;
-  int _shippingIndex;
+  int _shippingIndex=0;
   bool _isLoading = false;
   bool _isRefund = false;
   bool get isRefund => _isRefund;
-  List<ShippingMethodModel> _shippingList;
+  List<ShippingMethodModel> _shippingList=[];
   int _paymentMethodIndex = 0;
   bool _onlyDigital = true;
   bool get onlyDigital => _onlyDigital;
@@ -43,26 +44,26 @@ class OrderProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   List<ShippingMethodModel> get shippingList => _shippingList;
   int get paymentMethodIndex => _paymentMethodIndex;
-  XFile _imageFile;
-  XFile get imageFile => _imageFile;
+  XFile? _imageFile;
+  XFile get imageFile => _imageFile!;
   List <XFile>_refundImage = [];
   List<XFile> get refundImage => _refundImage;
 
-  RefundInfoModel _refundInfoModel;
-  RefundInfoModel get refundInfoModel => _refundInfoModel;
-  RefundResultModel _refundResultModel;
-  RefundResultModel get refundResultModel => _refundResultModel;
+  RefundInfoModel? _refundInfoModel;
+  RefundInfoModel get refundInfoModel => _refundInfoModel!;
+  RefundResultModel? _refundResultModel;
+  RefundResultModel get refundResultModel => _refundResultModel!;
 
 
 
 
   Future<void> initOrderList(BuildContext context) async {
     ApiResponse apiResponse = await orderRepo.getOrderList();
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _pendingList = [];
       _deliveredList = [];
       _canceledList = [];
-      apiResponse.response.data.forEach((order) {
+      apiResponse.response!.data.forEach((order) {
         OrderModel orderModel = OrderModel.fromJson(order);
         if (orderModel.orderStatus == AppConstants.PENDING || orderModel.orderStatus == AppConstants.CONFIRMED || orderModel.orderStatus ==AppConstants.OUT_FOR_DELIVERY
             || orderModel.orderStatus == AppConstants.PROCESSING || orderModel.orderStatus == AppConstants.PROCESSED) {
@@ -88,16 +89,16 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<OrderDetailsModel> _orderDetails;
+  List<OrderDetailsModel> _orderDetails=[];
   List<OrderDetailsModel> get orderDetails => _orderDetails;
 
   Future <void> getOrderDetails(String orderID, BuildContext context, String languageCode) async {
-    _orderDetails = null;
+    _orderDetails = [];
     notifyListeners();
     ApiResponse apiResponse = await orderRepo.getOrderDetails(orderID, languageCode);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _orderDetails = [];
-      apiResponse.response.data.forEach((order) => _orderDetails.add(OrderDetailsModel.fromJson(order)));
+      apiResponse.response!.data.forEach((order) => _orderDetails.add(OrderDetailsModel.fromJson(order)));
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
@@ -105,13 +106,13 @@ class OrderProvider with ChangeNotifier {
   }
 
 
-  OrderModel _orderModel;
-  OrderModel get orderModel => _orderModel;
+  OrderModel? _orderModel;
+  OrderModel get orderModel => _orderModel!;
 
   Future <void> getOrderFromOrderId(String orderID, BuildContext context) async {
     ApiResponse apiResponse = await orderRepo.getOrderFromOrderId(orderID);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      _orderModel = OrderModel.fromJson(apiResponse.response.data);
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      _orderModel = OrderModel.fromJson(apiResponse.response!.data);
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
@@ -128,11 +129,11 @@ class OrderProvider with ChangeNotifier {
      apiResponse = await orderRepo.walletPaymentPlaceOrder(addressID, couponCode,couponAmount, billingAddressId, orderNote):
      apiResponse = await orderRepo.placeOrder(addressID, couponCode,couponAmount, billingAddressId, orderNote);
     _isLoading = false;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      _addressIndex = null;
-      _billingAddressIndex = null;
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      _addressIndex = 0;
+      _billingAddressIndex = 0;
 
-      String message = apiResponse.response.data.toString();
+      String message = apiResponse.response!.data.toString();
       callback(true, message, '');
     } else {
       String errorMessage;
@@ -141,8 +142,8 @@ class OrderProvider with ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors![0].message);
+        errorMessage = errorResponse.errors![0].message;
       }
       callback(false, errorMessage, '-1');
     }
@@ -166,12 +167,12 @@ class OrderProvider with ChangeNotifier {
 
   Future<void> initShippingList(BuildContext context, int sellerID) async {
     _paymentMethodIndex = 0;
-    _shippingIndex = null;
-    _addressIndex = null;
+    _shippingIndex = 0;
+    _addressIndex = 0;
     ApiResponse apiResponse = await orderRepo.getShippingMethod(sellerID);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _shippingList = [];
-      apiResponse.response.data.forEach((shippingMethod) => _shippingList.add(ShippingMethodModel.fromJson(shippingMethod)));
+      apiResponse.response!.data.forEach((shippingMethod) => _shippingList.add(ShippingMethodModel.fromJson(shippingMethod)));
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
@@ -179,12 +180,12 @@ class OrderProvider with ChangeNotifier {
   }
 
   void shippingAddressNull(){
-    _addressIndex = null;
+    _addressIndex = 0;
     notifyListeners();
   }
 
   void billingAddressNull(){
-    _billingAddressIndex = null;
+    _billingAddressIndex = 0;
     notifyListeners();
   }
 
@@ -197,21 +198,22 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  OrderModel _trackingModel;
-  OrderModel get trackingModel => _trackingModel;
+  OrderModel? _trackingModel;
+  OrderModel get trackingModel => _trackingModel!;
 
   Future<void> initTrackingInfo(String orderID, BuildContext context) async {
       ApiResponse apiResponse = await orderRepo.getTrackingInfo(orderID);
-      if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-        _trackingModel = OrderModel.fromJson(apiResponse.response.data);
+      if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+        _trackingModel = OrderModel.fromJson(apiResponse.response!.data);
       } else {
+        _trackingModel=OrderModel(id: 0, customerId: 0, customerType: "", paymentStatus: "", orderStatus: "", paymentMethod: "", transactionRef: "", orderAmount: 0, shippingAddress: 0, billingAddress: 0,  sellerId: 0, shippingMethodId: 0, shippingCost: 0, createdAt: "", updatedAt: "", discountAmount: 0, discountType: "", orderNote: "", orderType: "", extraDiscount: 0, extraDiscountType: "", thirdPartyServiceNam: "", thirdPartyTrackingId: "");
         ApiChecker.checkApi(context, apiResponse);
       }
       notifyListeners();
   }
 
 
-  void setPaymentMethod(int index) {
+   setPaymentMethod(int index) {
     _paymentMethodIndex = index;
     notifyListeners();
   }
@@ -222,7 +224,7 @@ class OrderProvider with ChangeNotifier {
     }else {
       _imageFile = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 20);
       if (_imageFile != null) {
-        _refundImage.add(_imageFile);
+        _refundImage.add(_imageFile!);
 
       }
     }
@@ -237,7 +239,7 @@ class OrderProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     http.StreamedResponse response = await orderRepo.refundRequest(orderDetailsId, amount, refundReason,refundImage, token);
-    if (response.statusCode == 200) {
+    if (response!.statusCode == 200) {
       getRefundReqInfo(context, orderDetailsId);
       _imageFile = null;
       _refundImage = [];
@@ -256,14 +258,14 @@ class OrderProvider with ChangeNotifier {
   Future<ApiResponse> getRefundReqInfo(BuildContext context, int orderDetailId) async {
     _isRefund = true;
     ApiResponse apiResponse = await orderRepo.getRefundInfo(orderDetailId);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      _refundInfoModel = RefundInfoModel.fromJson(apiResponse.response.data);
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      _refundInfoModel = RefundInfoModel.fromJson(apiResponse.response!.data);
       _isRefund = false;
-    } else if(apiResponse.response.statusCode == 202){
+    } else if(apiResponse.response!.statusCode == 202){
       _isRefund = false;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor:Colors.red,
-        content: Text('${apiResponse.response.data['message']}'),
+        content: Text('${apiResponse.response!.data['message']}'),
       ));
     }
     else {
@@ -278,9 +280,9 @@ class OrderProvider with ChangeNotifier {
     _isLoading =true;
 
     ApiResponse apiResponse = await orderRepo.getRefundResult(orderDetailId);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _isLoading = false;
-      _refundResultModel = RefundResultModel.fromJson(apiResponse.response.data);
+      _refundResultModel = RefundResultModel.fromJson(apiResponse.response!.data);
     } else {
       _isLoading = false;
       ApiChecker.checkApi(context, apiResponse);
@@ -292,7 +294,7 @@ class OrderProvider with ChangeNotifier {
   Future<ApiResponse> cancelOrder(BuildContext context, int orderId) async {
     _isLoading = true;
     ApiResponse apiResponse = await orderRepo.cancelOrder(orderId);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _isLoading = false;
 
     } else {

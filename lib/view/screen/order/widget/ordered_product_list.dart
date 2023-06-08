@@ -6,7 +6,7 @@ import 'package:medosedo_ecommerce/view/screen/order/widget/order_details_widget
 class OrderProductList extends StatelessWidget {
   final OrderProvider order;
   final String orderType;
-  const OrderProductList({Key key, this.order, this.orderType}) : super(key: key);
+  const OrderProductList({Key? key, required this.order, required this.orderType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

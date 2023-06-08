@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 class ProductModel {
-  int _totalSize;
-  int _limit;
-  int _offset;
-  List<Product> _products;
+  int _totalSize=0;
+  int _limit=0;
+  int _offset=0;
+  List<Product> _products=[];
 
   ProductModel(
-      {int totalSize, int limit, int offset, List<Product> products}) {
-    this._totalSize = totalSize;
-    this._limit = limit;
-    this._offset = offset;
-    this._products = products;
+      { int? totalSize,  int? limit,  int? offset,  List<Product>? products}) {
+    this._totalSize = totalSize!;
+    this._limit = limit!;
+    this._offset = offset!;
+    this._products = products!;
   }
 
   int get totalSize => _totalSize;
@@ -43,93 +43,93 @@ class ProductModel {
 }
 
 class Product {
-  int _id;
-  String _addedBy;
-  int _userId;
-  String _name;
-  String _slug;
-  String _productType;
-  List<CategoryIds> _categoryIds;
-  String _unit;
-  List<String> _images;
-  String _thumbnail;
-  List<ProductColors> _colors;
-  List<String> _attributes;
-  List<ChoiceOptions> _choiceOptions;
-  List<Variation> _variation;
-  double _unitPrice;
-  double _purchasePrice;
-  double _tax;
-  String _taxModel;
-  int _minQty;
-  int _refundable;
-  String _digitalProductType;
-  String _digitalFileReady;
-  String _taxType;
-  double _discount;
-  String _discountType;
-  int _currentStock;
-  String _details;
-  String _createdAt;
-  String _updatedAt;
-  List<Rating> _rating;
-  double _shippingCost;
-  int _isMultiPly;
-  int _reviewCount;
-  String _videoUrl;
-  int _minimumOrderQty;
+  int _id=0;
+  String _addedBy='';
+  int _userId=0;
+  String _name='';
+   String _slug='';
+   String _productType='';
+   List<CategoryIds> _categoryIds=[];
+  String _unit='';
+  List<String> _images=[];
+  String _thumbnail='';
+  List<ProductColors> _colors=[];
+  List<String> _attributes=[];
+  List<ChoiceOptions> _choiceOptions=[];
+   List<Variation> _variation=[];
+  double _unitPrice=0;
+   double _purchasePrice=0;
+   double _tax=0;
+  String _taxModel='';
+  int _minQty=0;
+  int _refundable=0;
+  String _digitalProductType='';
+  String _digitalFileReady='';
+  String _taxType='';
+  double _discount=0;
+  String _discountType='';
+  int _currentStock=0;
+  String _details='';
+  String _createdAt='';
+  String _updatedAt='';
+  List<Rating> _rating=[];
+  double _shippingCost=0;
+  int _isMultiPly=0;
+  int _reviewCount=0;
+  String _videoUrl='';
+  int _minimumOrderQty=0;
 
 
 
   Product(
-      {int id,
-        String addedBy,
-        int userId,
-        String name,
-        String slug,
-        String productType,
-        List<CategoryIds> categoryIds,
-        String unit,
-        int minQty,
-        int refundable,
-        String digitalProductType,
-        String digitalFileReady,
-        List<String> images,
-        String thumbnail,
-        List<ProductColors> colors,
-        String variantProduct,
-        List<String> attributes,
-        List<ChoiceOptions> choiceOptions,
-        List<Variation> variation,
-        double unitPrice,
-        double purchasePrice,
-        double tax,
-        String taxModel,
-        String taxType,
-        double discount,
-        String discountType,
-        int currentStock,
-        String details,
-        String attachment,
-        String createdAt,
-        String updatedAt,
-        int featuredStatus,
-        List<Rating> rating,
-        double shippingCost,
-        int isMultiPly,
-        int reviewCount,
-        String videoUrl,
-        int minimumOrderQty,
+      { int? id=0,
+         String? addedBy='',
+         int? userId=0,
+         String? name='',
+         String? slug='',
+         String? productType='',
+         List<CategoryIds>? categoryIds,
+         String? unit='',
+         int? minQty=0,
+         int? refundable=0,
+         String? digitalProductType='',
+         String? digitalFileReady='',
+         List<String>? images,
+         String? thumbnail='',
+         List<ProductColors>? colors,
+         String? variantProduct='',
+         List<String>? attributes,
+         List<ChoiceOptions>? choiceOptions,
+         List<Variation>? variation,
+         double? unitPrice,
+         double? purchasePrice,
+         double? tax,
+         String? taxModel,
+         String? taxType,
+         double? discount,
+         String? discountType,
+         int? currentStock,
+         String? details,
+         String? attachment,
+         String? createdAt,
+         String? updatedAt,
+         int? featuredStatus,
+         List<Rating>? rating,
+         double? shippingCost,
+         int? isMultiPly,
+         int? reviewCount,
+         String? videoUrl,
+         int? minimumOrderQty,
 
       }) {
-    this._id = id;
-    this._addedBy = addedBy;
-    this._userId = userId;
-    this._name = name;
-    this._slug = slug;
-    this._categoryIds = categoryIds;
-    this._unit = unit;
-    this._minQty = minQty;
+    this._id = id!;
+    this._addedBy = addedBy!;
+    this._userId = userId!;
+    this._name = name!;
+    this._slug = slug!;
+    this._categoryIds = categoryIds??[];
+    this._unit = unit!;
+    this._minQty = minQty!;
     if (refundable != null) {
       this._refundable = refundable;
     }
@@ -139,31 +139,31 @@ class Product {
     if (digitalFileReady != null) {
       this._digitalFileReady = digitalFileReady;
     }
-    this._images = images;
-    this._thumbnail = thumbnail;
-    this._colors = colors;
-    this._attributes = attributes;
-    this._choiceOptions = choiceOptions;
-    this._variation = variation;
-    this._unitPrice = unitPrice;
-    this._purchasePrice = purchasePrice;
-    this._tax = tax;
-    this._taxModel = taxModel;
-    this._taxType = taxType;
-    this._discount = discount;
-    this._discountType = discountType;
-    this._currentStock = currentStock;
-    this._details = details;
-    this._createdAt = createdAt;
-    this._updatedAt = updatedAt;
-    this._rating = rating;
-    this._shippingCost = shippingCost;
-    this._isMultiPly = isMultiPly;
-    this._reviewCount = reviewCount;
+    this._images = images??[];
+    this._thumbnail = thumbnail!;
+    this._colors = colors??[];
+    this._attributes = attributes??[];
+    this._choiceOptions = choiceOptions??[];
+    this._variation = variation=[];
+    this._unitPrice = unitPrice??0;
+    this._purchasePrice = purchasePrice??0;
+    this._tax = tax??0;
+    this._taxModel = taxModel??'';
+    this._taxType = taxType??'';
+    this._discount = discount??0;
+    this._discountType = discountType??'';
+    this._currentStock = currentStock??0;
+    this._details = details??'';
+    this._createdAt = createdAt??'';
+    this._updatedAt = updatedAt??'';
+    this._rating = rating??[];
+    this._shippingCost = shippingCost??0;
+    this._isMultiPly = isMultiPly??0;
+    this._reviewCount = reviewCount??0;
     if (videoUrl != null) {
       this._videoUrl = videoUrl;
     }
-    this._minimumOrderQty = minimumOrderQty;
+    this._minimumOrderQty = minimumOrderQty??0;
   }
 
   int get id => _id;
@@ -203,12 +203,12 @@ class Product {
   int get minimumOrderQuantity => _minimumOrderQty;
 
   Product.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _addedBy = json['added_by'];
-    _userId = json['user_id'];
-    _name = json['name'];
-    _slug = json['slug'];
-    _productType = json['product_type'];
+    _id = json['id']??0;
+    _addedBy = json['added_by']??'';
+    _userId = json['user_id']??0;
+    _name = json['name']??'';
+    _slug = json['slug']??'';
+    _productType = json['product_type']??'';
     if (json['category_ids'] != null) {
       _categoryIds = [];
       try{
@@ -221,8 +221,8 @@ class Product {
         });
       }
     }
-    _unit = json['unit'];
-    _minQty = json['min_qty'];
+    _unit = json['unit']??'';
+    _minQty = json['min_qty']??0;
 
     if(json['refundable']!=null){
       _refundable = int.parse(json['refundable'].toString());
@@ -305,11 +305,11 @@ class Product {
     if(json['discount'] != null ){
       _discount = json['discount'].toDouble();
     }
-    _discountType = json['discount_type'];
-    _currentStock = json['current_stock'];
-    _details = json['details'];
-    _createdAt = json['created_at'];
-    _updatedAt = json['updated_at'];
+    _discountType = json['discount_type']??'';
+    _currentStock = json['current_stock']??0;
+    _details = json['details']??'';
+    _createdAt = json['created_at']??'';
+    _updatedAt = json['updated_at']??'';
     if (json['rating'] != null) {
       _rating = [];
       json['rating'].forEach((v) {
@@ -327,7 +327,7 @@ class Product {
     if(json['reviews_count']!=null){
       _reviewCount = int.parse(json['reviews_count'].toString());
     }
-    _videoUrl = json['video_url'];
+    _videoUrl = json['video_url']??'';
     if(json['minimum_order_qty'] != null){
       try{
         _minimumOrderQty = json['minimum_order_qty'];
@@ -390,10 +390,10 @@ class Product {
 }
 
 class CategoryIds {
-  int _position;
+  int _position=0;
 
-  CategoryIds({int position}) {
-    this._position = position;
+  CategoryIds({ int? position}) {
+    this._position = position!;
   }
 
   int get position => _position;
@@ -410,12 +410,12 @@ class CategoryIds {
 }
 
 class ProductColors {
-  String _name;
-  String _code;
+  String _name='';
+  String _code='';
 
-  ProductColors({String name, String code}) {
-    this._name = name;
-    this._code = code;
+  ProductColors({ String? name,  String? code}) {
+    this._name = name!;
+    this._code = code!;
   }
 
   String get name => _name;
@@ -435,14 +435,14 @@ class ProductColors {
 }
 
 class ChoiceOptions {
-  String _name;
-  String _title;
-  List<String> _options;
+  String _name='';
+  String _title='';
+  List<String> _options=[];
 
-  ChoiceOptions({String name, String title, List<String> options}) {
-    this._name = name;
-    this._title = title;
-    this._options = options;
+  ChoiceOptions({ String? name,  String? title,  List<String>? options}) {
+    this._name = name!;
+    this._title = title!;
+    this._options = options!;
   }
 
   String get name => _name;
@@ -468,16 +468,16 @@ class ChoiceOptions {
 }
 
 class Variation {
-  String _type;
-  double _price;
-  String _sku;
-  int _qty;
+  String _type='';
+  double _price=0;
+  String _sku='';
+   int _qty=0;
 
-  Variation({String type, double price, String sku, int qty}) {
-    this._type = type;
-    this._price = price;
-    this._sku = sku;
-    this._qty = qty;
+  Variation({ String? type,  double? price,  String? sku,  int? qty}) {
+    this._type = type!;
+    this._price = price!;
+    this._sku = sku!;
+    this._qty = qty!;
   }
 
   String get type => _type;
@@ -503,16 +503,16 @@ class Variation {
 }
 
 class Rating {
-  String _average;
-  int _productId;
+  String? _average;
+  int? _productId;
 
-  Rating({String average, int productId}) {
-    this._average = average;
-    this._productId = productId;
+  Rating({ String? average,  int? productId}) {
+    this._average = average!;
+    this._productId = productId!;
   }
 
-  String get average => _average;
-  int get productId => _productId;
+  String get average => _average!;
+  int get productId => _productId!;
 
   Rating.fromJson(Map<String, dynamic> json) {
     _average = json['average'].toString();

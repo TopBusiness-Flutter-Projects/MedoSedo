@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 showCustomModalDialog(
   BuildContext context, {
-  String title,
-  String content,
-  Function cancelOnPressed,
-  Function submitOnPressed,
-  String cancelButtonText,
-  String submitButtonText,
+  String title="",
+  String? content,
+  Function? cancelOnPressed,
+  Function? submitOnPressed,
+  String? cancelButtonText,
+  String? submitButtonText,
 }) {
   showGeneralDialog(
     context: context,
@@ -18,15 +18,15 @@ showCustomModalDialog(
     transitionDuration: Duration(milliseconds: 300),
     pageBuilder: (context, anim1, anim2) => CupertinoAlertDialog(
       title: Text(title),
-      content: Text(content),
+      content: Text(content!),
       actions: <Widget>[
         TextButton(
-          child: Text(submitButtonText),
-          onPressed: submitOnPressed,
+          child: Text(submitButtonText!),
+          onPressed: submitOnPressed!(),
         ),
         TextButton(
-          child: Text(cancelButtonText),
-          onPressed: cancelOnPressed,
+          child: Text(cancelButtonText!),
+          onPressed: cancelOnPressed!(),
         ),
       ],
     ),

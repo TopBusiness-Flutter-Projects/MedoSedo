@@ -5,10 +5,11 @@ import 'package:medosedo_ecommerce/data/datasource/remote/exception/api_error_ha
 import 'package:medosedo_ecommerce/data/model/body/support_ticket_body.dart';
 import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class SupportTicketRepo {
   final DioClient dioClient;
-  SupportTicketRepo({@required this.dioClient});
+  SupportTicketRepo({required this.dioClient});
 
   Future<ApiResponse> sendSupportTicket(SupportTicketBody supportTicketModel) async {
     try {

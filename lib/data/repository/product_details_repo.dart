@@ -6,10 +6,11 @@ import 'package:medosedo_ecommerce/data/model/body/review_body.dart';
 import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
 import 'package:http/http.dart' as http;
-
+import 'dart:async';
+import 'dart:convert';
 class ProductDetailsRepo {
   final DioClient dioClient;
-  ProductDetailsRepo({@required this.dioClient});
+  ProductDetailsRepo({required this.dioClient});
 
   Future<ApiResponse> getProduct(String productID) async {
     try {

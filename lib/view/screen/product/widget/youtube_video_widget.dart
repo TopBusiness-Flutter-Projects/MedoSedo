@@ -3,7 +3,7 @@ import 'package:medosedo_ecommerce/utill/dimensions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 class YoutubeVideoWidget extends StatelessWidget {
   final String url;
-  YoutubeVideoWidget({@required this.url});
+  YoutubeVideoWidget({required this.url});
 
   @override
   Widget build(BuildContext context) {

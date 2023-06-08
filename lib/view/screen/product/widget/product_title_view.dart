@@ -11,14 +11,14 @@ import 'package:provider/provider.dart';
 
 class ProductTitleView extends StatelessWidget {
   final pd.ProductDetailsModel productModel;
-  final String averageRatting;
-  ProductTitleView({@required this.productModel, this.averageRatting});
+  final String? averageRatting;
+  ProductTitleView({required this.productModel, this.averageRatting});
 
   @override
   Widget build(BuildContext context) {
 
     double _startingPrice = 0;
-    double _endingPrice;
+    double _endingPrice=0;
     if(productModel.variation != null && productModel.variation.length != 0) {
       List<double> _priceList = [];
       productModel.variation.forEach((variation) => _priceList.add(variation.price));
@@ -87,7 +87,7 @@ class ProductTitleView extends StatelessWidget {
               Row(children: [
                 Icon(Icons.star, color: Colors.orange,),
                 Text('${productModel.reviews != null ? productModel.reviews.length > 0 ?
-                double.parse(averageRatting) : 0.0 : 0.0}')
+                double.parse(averageRatting!) : 0.0 : 0.0}')
               ],),
 
             ]),

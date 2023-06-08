@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class PaymentInfo extends StatelessWidget {
   final OrderProvider order;
-  const PaymentInfo({Key key, this.order}) : super(key: key);
+  const PaymentInfo({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

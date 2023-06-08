@@ -38,8 +38,8 @@ class CheckoutScreen extends StatefulWidget {
   final int sellerId;
   final bool onlyDigital;
 
-  CheckoutScreen({@required this.cartList, this.fromProductDetails = false,
-    @required this.discount, @required this.tax, @required this.totalOrderAmount, @required this.shippingFee, this.sellerId, this.onlyDigital = false});
+  CheckoutScreen({required this.cartList, this.fromProductDetails = false,
+    required this.discount, required this.tax, required this.totalOrderAmount, required this.shippingFee, this.sellerId=0, this.onlyDigital = false});
 
 
   @override
@@ -52,10 +52,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _orderNoteController = TextEditingController();
   final FocusNode _orderNoteNode = FocusNode();
   double _order = 0;
-  bool _digitalPayment;
-  bool _cod;
-  bool _billingAddress;
-  double _couponDiscount;
+  bool _digitalPayment=false;
+  bool _cod=false;
+  bool _billingAddress=false;
+  double _couponDiscount=0;
 
 
   TextEditingController paymentByController = TextEditingController();
@@ -330,10 +330,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     children: [
                                       Container(
                                         child: Text(
-                                          Provider.of<OrderProvider>(context,listen: false).addressIndex == null ?
+                                          Provider.of<OrderProvider>(context,listen: false)!.addressIndex == null ?
                                           '${getTranslated('address_type', context)}' :
                                           Provider.of<ProfileProvider>(context, listen: false).addressList[
-                                          Provider.of<OrderProvider>(context, listen: false).addressIndex].addressType,
+                                          Provider.of<OrderProvider>(context, listen: false).addressIndex].addressType!,
                                           style: titilliumBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
                                           maxLines: 3, overflow: TextOverflow.fade,
                                         ),
@@ -346,7 +346,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                           Provider.of<OrderProvider>(context,listen: false).addressIndex == null ?
                                           getTranslated('add_your_address', context) :
                                           Provider.of<ProfileProvider>(context, listen: false).addressList[
-                                            shipping.addressIndex].address,
+                                            shipping.addressIndex].address!,
                                           style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
                                           maxLines: 3, overflow: TextOverflow.fade,
                                         ),
@@ -389,7 +389,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         child: Text(
                                           Provider.of<OrderProvider>(context).billingAddressIndex == null ? '${getTranslated('address_type', context)}'
                                               : Provider.of<ProfileProvider>(context, listen: false).billingAddressList[
-                                          Provider.of<OrderProvider>(context, listen: false).billingAddressIndex].addressType,
+                                          Provider.of<OrderProvider>(context, listen: false).billingAddressIndex].addressType!,
                                           style: titilliumBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
                                           maxLines: 1, overflow: TextOverflow.fade,
                                         ),
@@ -399,7 +399,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         child: Text(
                                           Provider.of<OrderProvider>(context).billingAddressIndex == null ? getTranslated('add_your_address', context)
                                               : Provider.of<ProfileProvider>(context, listen: false).billingAddressList[
-                                                shipping.billingAddressIndex].address,
+                                                shipping.billingAddressIndex].address!,
                                           style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
                                           maxLines: 3, overflow: TextOverflow.fade,
                                         ),
@@ -651,13 +651,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
 class PaymentButton extends StatelessWidget {
   final String image;
-  final Function onTap;
-  PaymentButton({@required this.image, this.onTap});
+  final Function? onTap;
+  PaymentButton({required this.image, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: onTap!(),
       child: Container(
         height: 45,
         margin: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),

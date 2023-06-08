@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 class BottomCartView extends StatefulWidget {
   final ProductDetailsModel product;
-  BottomCartView({@required this.product});
+  BottomCartView({required this.product});
 
   @override
   State<BottomCartView> createState() => _BottomCartViewState();

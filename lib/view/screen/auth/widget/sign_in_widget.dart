@@ -25,24 +25,24 @@ class SignInWidget extends StatefulWidget {
 }
 
 class _SignInWidgetState extends State<SignInWidget> {
-  TextEditingController _emailController;
-  TextEditingController _passwordController;
-  GlobalKey<FormState> _formKeyLogin;
+  TextEditingController? _emailController;
+  TextEditingController? _passwordController;
+  GlobalKey<FormState>? _formKeyLogin;
 
   @override
   void initState() {
     super.initState();
-    _formKeyLogin = GlobalKey<FormState>();
+
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _emailController.text = Provider.of<AuthProvider>(context, listen: false).getUserEmail() ?? null;
-    _passwordController.text = Provider.of<AuthProvider>(context, listen: false).getUserPassword() ?? null;
+    _emailController!.text = (Provider.of<AuthProvider>(context, listen: false).getUserEmail() ?? "");
+    _passwordController!.text = (Provider.of<AuthProvider>(context, listen: false).getUserPassword() ?? "");
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    _emailController!.dispose();
+    _passwordController!.dispose();
     super.dispose();
   }
 
@@ -50,12 +50,20 @@ class _SignInWidgetState extends State<SignInWidget> {
   FocusNode _passNode = FocusNode();
   LoginModel loginBody = LoginModel();
 
-  void loginUser() async {
-    if (_formKeyLogin.currentState.validate()) {
-      _formKeyLogin.currentState.save();
+ Future<void> loginUser()  async {
+   await Future.delayed(Duration(seconds: 1));
+   if(_formKeyLogin==null){
+     _formKeyLogin = GlobalKey<FormState>();
+print("llll"+ _formKeyLogin!.currentState!.validate().toString());
+   }
+  // print("llll"+ _formKeyLogin!.currentState!.validate().toString());
+    if (_formKeyLogin!=null&&_formKeyLogin!.currentState!=null&&
 
-      String _email = _emailController.text.trim();
-      String _password = _passwordController.text.trim();
+        _formKeyLogin!.currentState!.validate()) {
+      _formKeyLogin!.currentState!.save();
+
+      String _email = _emailController!.text.trim();
+      String _password = _passwordController!.text.trim();
 
       if (_email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -77,7 +85,7 @@ class _SignInWidgetState extends State<SignInWidget> {
 
         loginBody.email = _email;
         loginBody.password = _password;
-        await Provider.of<AuthProvider>(context, listen: false).login(loginBody, route);
+        login();
       }
     }
   }
@@ -86,12 +94,12 @@ class _SignInWidgetState extends State<SignInWidget> {
     if (isRoute) {
       if(token==null || token.isEmpty){
         if(Provider.of<SplashProvider>(context,listen: false).configModel.emailVerification){
-          Provider.of<AuthProvider>(context, listen: false).checkEmail(_emailController.text.toString(),
+          Provider.of<AuthProvider>(context, listen: false).checkEmail(_emailController!.text.toString(),
               temporaryToken).then((value) async {
             if (value.isSuccess) {
-              Provider.of<AuthProvider>(context, listen: false).updateEmail(_emailController.text.toString());
+              Provider.of<AuthProvider>(context, listen: false).updateEmail(_emailController!.text.toString());
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => VerificationScreen(
-                  temporaryToken,'',_emailController.text.toString())), (route) => false);
+                  temporaryToken,'',_emailController!.text.toString())), (route) => false);
 
             }
           });
@@ -112,7 +120,7 @@ class _SignInWidgetState extends State<SignInWidget> {
   @override
   Widget build(BuildContext context) {
     Provider.of<AuthProvider>(context, listen: false).isRemember;
-
+    _formKeyLogin = GlobalKey<FormState>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.MARGIN_SIZE_LARGE),
       child: Form(
@@ -156,7 +164,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                       checkColor: ColorResources.WHITE,
                       activeColor: Theme.of(context).primaryColor,
                       value: authProvider.isRemember,
-                      onChanged: authProvider.updateRemember,),),
+                      onChanged: authProvider.updateRemember(!authProvider.isRemember)),),
 
 
                   Text(getTranslated('REMEMBER', context), style: titilliumRegular),
@@ -180,7 +188,9 @@ class _SignInWidgetState extends State<SignInWidget> {
               Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor,),),) :
-              CustomButton(onTap: loginUser, buttonText: getTranslated('SIGN_IN', context)),),
+              CustomButton(onTap: loginUser,
+                  buttonText: getTranslated('SIGN_IN',
+                      context)),),
             SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
 
 
@@ -216,6 +226,11 @@ class _SignInWidgetState extends State<SignInWidget> {
       ),
     );
 
+
+  }
+
+  Future<void> login() async {
+    await Provider.of<AuthProvider>(context, listen: false).login(loginBody, route);
 
   }
 

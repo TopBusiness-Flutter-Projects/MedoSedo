@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 class ReviewBottomSheet extends StatefulWidget {
   final String productID;
   final Function callback;
-  ReviewBottomSheet({@required this.productID, @required this.callback});
+  ReviewBottomSheet({required this.productID, required this.callback});
 
   @override
   _ReviewBottomSheetState createState() => _ReviewBottomSheetState();
@@ -109,7 +109,7 @@ class _ReviewBottomSheetState extends State<ReviewBottomSheet> {
                       onTap: () async {
                         if(index == 0 || _files[index-1].path.isNotEmpty) {
                           ImagePicker imagePicker = ImagePicker();
-                          XFile pickedFile = await imagePicker.pickImage(source: ImageSource.gallery,
+                          XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.gallery,
                               maxWidth: 500, maxHeight: 500, imageQuality: 50);
                           if(pickedFile != null) {
                             _files[index] = File(pickedFile.path);
@@ -189,14 +189,14 @@ class _ReviewBottomSheetState extends State<ReviewBottomSheet> {
 
 class MyPainter extends CustomPainter {
   Color lineColor =  Colors.transparent;
-  Color completeColor;
+  Color? completeColor;
   double width;
-  MyPainter({this.completeColor, this.width});
+  MyPainter({this.completeColor, this.width=0});
 
   @override
   void paint(Canvas canvas, Size size) {
     Paint complete = new Paint()
-      ..color = completeColor
+      ..color = completeColor!
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = width;

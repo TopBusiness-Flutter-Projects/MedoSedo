@@ -8,17 +8,19 @@ import 'package:medosedo_ecommerce/view/screen/order/order_details_screen.dart';
 import 'package:medosedo_ecommerce/main.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'dart:async';
+import "dart:io";
+import 'dart:convert';
 class MyNotification {
 
   static Future<void> initialize(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidInitialize = new AndroidInitializationSettings('notification_icon');
     var iOSInitialize = new IOSInitializationSettings();
     var initializationsSettings = new InitializationSettings(android: androidInitialize, iOS: iOSInitialize);
-    flutterLocalNotificationsPlugin.initialize(initializationsSettings, onSelectNotification: (String payload) async {
+    flutterLocalNotificationsPlugin.initialize(initializationsSettings, onSelectNotification: (String? payload) async {
       try{
         if(payload != null && payload.isNotEmpty) {
-          MyApp.navigatorKey.currentState.push(
+          MyApp.navigatorKey.currentState!.push(
               MaterialPageRoute(builder: (context) => OrderDetailsScreen(orderId: int.parse(payload),orderType: 'default_type')));
         }
       }catch (e) {}
@@ -26,15 +28,15 @@ class MyNotification {
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("onMessage: ${message.notification.title}/${message.notification.body}/${message.notification.titleLocKey}");
+      print("onMessage: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
       showNotification(message, flutterLocalNotificationsPlugin, false);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print("onOpenApp: ${message.notification.title}/${message.notification.body}/${message.notification.titleLocKey}");
+      print("onOpenApp: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
       try{
-        if(message.notification.titleLocKey != null && message.notification.titleLocKey.isNotEmpty) {
-          MyApp.navigatorKey.currentState.push(
-              MaterialPageRoute(builder: (context) => OrderDetailsScreen(orderId: int.parse(message.notification.titleLocKey),orderType: 'default_type')));
+        if(message.notification!.titleLocKey != null && message.notification!.titleLocKey!.isNotEmpty) {
+          MyApp.navigatorKey.currentState!.push(
+              MaterialPageRoute(builder: (context) => OrderDetailsScreen(orderId: int.parse(message.notification!.titleLocKey!),orderType: 'default_type')));
         }
       }catch (e) {}
     });
@@ -44,7 +46,7 @@ class MyNotification {
     String _title;
     String _body;
     String _orderID;
-    String _image;
+    String _image='';
     if(data) {
       _title = message.data['title'];
       _body = message.data['body'];
@@ -53,17 +55,17 @@ class MyNotification {
           ? message.data['image'].startsWith('http') ? message.data['image']
           : '${AppConstants.BASE_URL}/storage/app/public/notification/${message.data['image']}' : null;
     }else {
-      _title = message.notification.title;
-      _body = message.notification.body;
-      _orderID = message.notification.titleLocKey;
+      _title = message.notification!.title!;
+      _body = message.notification!.body!;
+      _orderID = message.notification!.titleLocKey!;
       if(Platform.isAndroid) {
-        _image = (message.notification.android.imageUrl != null && message.notification.android.imageUrl.isNotEmpty)
-            ? message.notification.android.imageUrl.startsWith('http') ? message.notification.android.imageUrl
-            : '${AppConstants.BASE_URL}/storage/app/public/notification/${message.notification.android.imageUrl}' : null;
+        _image = ((message.notification!.android!.imageUrl != null && message.notification!.android!.imageUrl!.isNotEmpty)
+            ? message.notification!.android!.imageUrl!.startsWith('http') ? message.notification!.android!.imageUrl
+            : '${AppConstants.BASE_URL}/storage/app/public/notification/${message.notification!.android!.imageUrl}' : null)!;
       }else if(Platform.isIOS) {
-        _image = (message.notification.apple.imageUrl != null && message.notification.apple.imageUrl.isNotEmpty)
-            ? message.notification.apple.imageUrl.startsWith('http') ? message.notification.apple.imageUrl
-            : '${AppConstants.BASE_URL}/storage/app/public/notification/${message.notification.apple.imageUrl}' : null;
+        _image = ((message.notification!.apple!.imageUrl != null && message.notification!.apple!.imageUrl!.isNotEmpty)
+            ? message.notification!.apple!.imageUrl!.startsWith('http') ? message.notification!.apple!.imageUrl
+            : '${AppConstants.BASE_URL}/storage/app/public/notification/${message.notification!.apple!.imageUrl}' : null)!;
       }
     }
 
@@ -131,5 +133,5 @@ class MyNotification {
 }
 
 Future<dynamic> myBackgroundMessageHandler(RemoteMessage message) async {
-  print("onBackground: ${message.notification.title}/${message.notification.body}/${message.notification.titleLocKey}");
+  print("onBackground: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
 }

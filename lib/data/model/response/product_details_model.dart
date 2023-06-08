@@ -2,111 +2,111 @@ import 'package:medosedo_ecommerce/data/model/response/product_model.dart';
 import 'package:medosedo_ecommerce/data/model/response/seller_model.dart';
 
 class ProductDetailsModel {
-  int _id;
-  String _addedBy;
-  int _userId;
-  String _name;
-  String _slug;
-  String _productType;
-  List<CategoryIds> _categoryIds;
-  int _brandId;
-  String _unit;
-  int _minQty;
-  int _refundable;
-  String _digitalProductType;
-  String _digitalFileReady;
-  List<String> _images;
-  String _thumbnail;
-  int _featured;
-  String _videoProvider;
-  String _videoUrl;
-  List<Colors> _colors;
-  int _variantProduct;
-  List<int> _attributes;
-  List<ChoiceOptions> _choiceOptions;
-  List<Variation> _variation;
-  int _published;
-  double _unitPrice;
-  double _purchasePrice;
-  double _tax;
-  String _taxModel;
-  String _taxType;
-  double _discount;
-  String _discountType;
-  int _currentStock;
-  int _minimumOrderQty;
-  String _details;
-  int _freeShipping;
-  String _createdAt;
-  String _updatedAt;
-  int _status;
-  int _featuredStatus;
-  String _metaTitle;
-  String _metaDescription;
-  String _metaImage;
-  int _requestStatus;
-  String _deniedNote;
-  double _shippingCost;
-  int _multiplyQty;
-  String _code;
-  int _reviewsCount;
-  String _averageReview;
-  List<Reviews> _reviews;
-  Seller _seller;
+  late  int _id;
+  late String _addedBy;
+  late int _userId;
+  late  String _name;
+  late  String _slug;
+  late  String _productType;
+  late List<CategoryIds> _categoryIds;
+  late  int _brandId;
+  late String _unit;
+  late int _minQty;
+  late int _refundable;
+  late  String _digitalProductType;
+  late String _digitalFileReady;
+  late List<String> _images;
+  late String _thumbnail;
+  late int _featured;
+  late String _videoProvider;
+  late String _videoUrl;
+  late List<Colors> _colors;
+  late int _variantProduct;
+  late List<int> _attributes;
+  late List<ChoiceOptions> _choiceOptions;
+  late List<Variation> _variation;
+  late int _published;
+  late double _unitPrice;
+  late double _purchasePrice;
+  late double _tax;
+  late String _taxModel;
+  late String _taxType;
+  late double _discount;
+  late String _discountType;
+  late int _currentStock;
+  late int _minimumOrderQty;
+  late String _details;
+  late int _freeShipping;
+  late  String _createdAt;
+  late String _updatedAt;
+  late int _status;
+  late int _featuredStatus;
+  late String _metaTitle;
+  late String _metaDescription;
+  late String _metaImage;
+  late int _requestStatus;
+  late String _deniedNote;
+  late double _shippingCost;
+  late int _multiplyQty;
+  late String _code;
+  late int _reviewsCount;
+  late String _averageReview;
+  late List<Reviews> _reviews;
+  late Seller _seller;
 
 
   ProductDetailsModel(
-      {int id,
-        String addedBy,
-        int userId,
-        String name,
-        String slug,
-        String productType,
-        List<CategoryIds> categoryIds,
-        int brandId,
-        String unit,
-        int minQty,
-        int refundable,
-        String digitalProductType,
-        String digitalFileReady,
-        List<String> images,
-        String thumbnail,
-        int featured,
-        String videoProvider,
-        String videoUrl,
-        List<Colors> colors,
-        int variantProduct,
-        List<int> attributes,
-        List<ChoiceOptions> choiceOptions,
-        List<Variation> variation,
-        int published,
-        double unitPrice,
-        double purchasePrice,
-        double tax,
-        String taxModel,
-        String taxType,
-        double discount,
-        String discountType,
-        int currentStock,
-        int minimumOrderQty,
-        String details,
-        int freeShipping,
-        String createdAt,
-        String updatedAt,
-        int status,
-        int featuredStatus,
-        String metaTitle,
-        String metaDescription,
-        String metaImage,
-        int requestStatus,
-        String deniedNote,
-        double shippingCost,
-        int multiplyQty,
-        String code,
-        int reviewsCount,
-        String averageReview,
-        List<Reviews> reviews,
-        Seller seller,
+      {required int id,
+        required String addedBy,
+        required int userId,
+        required String name,
+        required String slug,
+        required String productType,
+        required List<CategoryIds> categoryIds,
+        required int brandId,
+        required String unit,
+        required int minQty,
+        required int refundable,
+        required String digitalProductType,
+        required String digitalFileReady,
+        required List<String> images,
+        required String thumbnail,
+        required int featured,
+        required String videoProvider,
+        required String videoUrl,
+        required List<Colors> colors,
+        required int variantProduct,
+        required List<int> attributes,
+        required List<ChoiceOptions> choiceOptions,
+        required List<Variation> variation,
+        required int published,
+        required double unitPrice,
+        required double purchasePrice,
+        required double tax,
+        required String taxModel,
+        required String taxType,
+        required double discount,
+        required String discountType,
+        required int currentStock,
+        required int minimumOrderQty,
+        required String details,
+        required int freeShipping,
+        required String createdAt,
+        required String updatedAt,
+        required int status,
+        required int featuredStatus,
+        required String metaTitle,
+        required String metaDescription,
+        required String metaImage,
+        required int requestStatus,
+        required String deniedNote,
+        required double shippingCost,
+        required int multiplyQty,
+        required String code,
+        required int reviewsCount,
+        required String averageReview,
+        required List<Reviews> reviews,
+        required Seller seller,
       }) {
     if (id != null) {
       this._id = id;
@@ -399,7 +399,7 @@ class ProductDetailsModel {
         _reviews.add(new Reviews.fromJson(v));
       });
     }
-    _seller = json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
+    _seller = (json['seller'] != null ? new Seller.fromJson(json['seller']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -474,10 +474,10 @@ class ProductDetailsModel {
 }
 
 class CategoryIds {
-  String _id;
-  int _position;
+  late String _id;
+  late int _position;
 
-  CategoryIds({String id, int position}) {
+  CategoryIds({required String id, required int position}) {
     if (id != null) {
       this._id = id;
     }
@@ -504,10 +504,10 @@ class CategoryIds {
 }
 
 class Colors {
-  String _name;
-  String _code;
+  late String _name;
+  late String _code;
 
-  Colors({String name, String code}) {
+  Colors({required String name, required String code}) {
     if (name != null) {
       this._name = name;
     }
@@ -536,28 +536,28 @@ class Colors {
 
 
 class Reviews {
-  int _id;
-  int _productId;
-  int _customerId;
-  String _comment;
-  String _attachment;
-  int _rating;
-  int _status;
-  String _createdAt;
-  String _updatedAt;
-  Customer _customer;
+  late int _id;
+  late int _productId;
+  late  int _customerId;
+  late  String _comment;
+  late  String _attachment;
+  late  int _rating;
+  late int _status;
+  late String _createdAt;
+  late String _updatedAt;
+  late Customer _customer;
 
   Reviews(
-      {int id,
-        int productId,
-        int customerId,
-        String comment,
-        String attachment,
-        int rating,
-        int status,
-        String createdAt,
-        String updatedAt,
-        Customer customer}) {
+      {required int id,
+        required int productId,
+        required int customerId,
+        required String comment,
+        required String attachment,
+        required int rating,
+        required int status,
+        required String createdAt,
+        required String updatedAt,
+        required Customer customer}) {
     if (id != null) {
       this._id = id;
     }
@@ -612,9 +612,9 @@ class Reviews {
     _status = json['status'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
-    _customer = json['customer'] != null
+    _customer = (json['customer'] != null
         ? new Customer.fromJson(json['customer'])
-        : null;
+        : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -636,20 +636,20 @@ class Reviews {
 }
 
 class Customer {
-  int _id;
-  String _fName;
-  String _lName;
-  String _phone;
-  String _image;
-  String _email;
+  late int _id;
+  late String _fName;
+  late String _lName;
+  late String _phone;
+  late  String _image;
+  late String _email;
 
   Customer(
-      {int id,
-        String fName,
-        String lName,
-        String phone,
-        String image,
-        String email,
+      {required int id,
+        required String fName,
+        required String lName,
+        required String phone,
+        required String image,
+        required String email,
       }) {
     if (id != null) {
       this._id = id;

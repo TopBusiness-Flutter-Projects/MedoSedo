@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -13,13 +14,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CartRepo{
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
-  CartRepo({@required this.dioClient, @required this.sharedPreferences});
+  CartRepo({required this.dioClient, required this.sharedPreferences});
 
 
-  List<CartModel> getCartList() {
-    List<String> carts = sharedPreferences.getStringList(AppConstants.CART_LIST);
+  Future<List<CartModel>> getCartList() async {
+    List<String>? carts =await sharedPreferences.getStringList(AppConstants.CART_LIST);
     List<CartModel> cartList = [];
-    carts.forEach((cart) => cartList.add(CartModel.fromJson(jsonDecode(cart))) );
+    carts!.forEach((cart) => cartList.add(CartModel.fromJson(jsonDecode(cart))) );
     return cartList;
   }
 

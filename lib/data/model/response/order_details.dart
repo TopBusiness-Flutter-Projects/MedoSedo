@@ -2,46 +2,46 @@ import 'package:medosedo_ecommerce/data/model/response/product_model.dart';
 import 'package:medosedo_ecommerce/data/model/response/seller_model.dart';
 
 class OrderDetailsModel {
-  int _id;
-  int _orderId;
-  int _productId;
-  int _sellerId;
-  String _digitalFileAfterSell;
-  Product _productDetails;
-  int _qty;
-  double _price;
-  double _tax;
-  String _taxModel;
-  double _discount;
-  String _deliveryStatus;
-  String _paymentStatus;
-  String _createdAt;
-  String _updatedAt;
-  int _shippingMethodId;
-  String _variant;
-  int _refundReq;
-  Seller _seller;
+  late int _id;
+  late  int _orderId;
+  late  int _productId;
+  late int _sellerId;
+  late String _digitalFileAfterSell;
+  late Product _productDetails;
+  late int _qty;
+  late double _price;
+  late double _tax;
+  late String _taxModel;
+  late double _discount;
+  late String _deliveryStatus;
+  late String _paymentStatus;
+  late String _createdAt;
+  late String _updatedAt;
+  late int _shippingMethodId;
+  late String _variant;
+  late int _refundReq;
+  late Seller _seller;
 
   OrderDetailsModel(
-      {int id,
-        int orderId,
-        int productId,
-        int sellerId,
-        String digitalFileAfterSell,
-        Product productDetails,
-        int qty,
-        double price,
-        double tax,
-        String taxModel,
-        double discount,
-        String deliveryStatus,
-        String paymentStatus,
-        String createdAt,
-        String updatedAt,
-        int shippingMethodId,
-        String variant,
-        int refundReq,
-        Seller seller,
+      {required int id,
+        required int orderId,
+        required int productId,
+        required int sellerId,
+        required String digitalFileAfterSell,
+        required Product productDetails,
+        required int qty,
+        required double price,
+        required double tax,
+        required String taxModel,
+        required double discount,
+        required String deliveryStatus,
+        required String paymentStatus,
+        required String createdAt,
+        required String updatedAt,
+        required int shippingMethodId,
+        required String variant,
+        required int refundReq,
+        required Seller seller,
       }) {
     this._id = id;
     this._orderId = orderId;
@@ -112,7 +112,7 @@ class OrderDetailsModel {
     _shippingMethodId = json['shipping_method_id'];
     _variant = json['variant'];
     _refundReq = json['refund_request'];
-    _seller = json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
+    _seller = (json['seller'] != null ? new Seller.fromJson(json['seller']) : null)!;
 
   }
 

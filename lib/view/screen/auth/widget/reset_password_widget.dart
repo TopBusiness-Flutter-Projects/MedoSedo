@@ -12,18 +12,18 @@ import 'package:provider/provider.dart';
 class ResetPasswordWidget extends StatefulWidget {
   final String mobileNumber;
   final String otp;
-  const ResetPasswordWidget({Key key,@required this.mobileNumber,@required this.otp}) : super(key: key);
+  const ResetPasswordWidget({Key? key,required this.mobileNumber,required this.otp}) : super(key: key);
 
   @override
   _ResetPasswordWidgetState createState() => _ResetPasswordWidgetState();
 }
 
 class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
-  TextEditingController _passwordController;
-  TextEditingController _confirmPasswordController;
+  TextEditingController? _passwordController;
+  TextEditingController? _confirmPasswordController;
   FocusNode _newPasswordNode = FocusNode();
   FocusNode _confirmPasswordNode = FocusNode();
-  GlobalKey<FormState> _formKeyReset;
+  GlobalKey<FormState>? _formKeyReset;
 
   @override
   void initState() {
@@ -34,8 +34,8 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
 
 
   void resetPassword() async {
-      String _password = _passwordController.text.trim();
-      String _confirmPassword = _confirmPasswordController.text.trim();
+      String _password = _passwordController!.text.trim();
+      String _confirmPassword = _confirmPasswordController!.text.trim();
 
       if (_password.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

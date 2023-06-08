@@ -13,7 +13,7 @@ class AddressWidget extends StatelessWidget {
 
   final AddressModel addressModel;
   final int index;
-  AddressWidget({@required this.addressModel, @required this.index});
+  AddressWidget({required this.addressModel, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class AddressWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(7),
               color: ColorResources.getChatIcon(context),
               boxShadow: [
-                BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 200], spreadRadius: 0.5, blurRadius: 0.5)
+                BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 200]!, spreadRadius: 0.5, blurRadius: 0.5)
               ],
             ),
             child: Column(
@@ -53,11 +53,11 @@ class AddressWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  addressModel.addressType,
+                                  addressModel.addressType!,
                                   style: robotoRegular.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.FONT_SIZE_LARGE),
                                 ),
                                 Text(
-                                  addressModel.address,
+                                  addressModel.address!,
                                   style: robotoRegular.copyWith(color: ColorResources.getTextTitle(context), fontSize: Dimensions.FONT_SIZE_LARGE),
                                 ),
                               ],
@@ -75,7 +75,7 @@ class AddressWidget extends StatelessWidget {
                               valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
                             ),
                           ));
-                          Provider.of<LocationProvider>(context, listen: false).deleteUserAddressByID(addressModel.id, index,
+                          Provider.of<LocationProvider>(context, listen: false).deleteUserAddressByID(addressModel.id!, index,
                                   (bool isSuccessful, String message) {
                             Navigator.pop(context);
                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

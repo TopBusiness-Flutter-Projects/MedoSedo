@@ -7,7 +7,7 @@ class ProductShimmer extends StatelessWidget {
   final bool isEnabled;
   final bool isHomePage;
 
-  ProductShimmer({@required this.isEnabled, @required this.isHomePage});
+  ProductShimmer({required this.isEnabled, required this.isHomePage});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +34,8 @@ class ProductShimmer extends StatelessWidget {
             ],
           ),
           child: Shimmer.fromColors(
-            baseColor: Colors.grey[300],
-            highlightColor: Colors.grey[100],
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
             enabled: isEnabled,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

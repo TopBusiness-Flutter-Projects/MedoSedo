@@ -13,7 +13,7 @@ import 'package:medosedo_ecommerce/view/screen/loyaltyPoint/widget/loyalty_point
 import 'package:provider/provider.dart';
 class LoyaltyPointScreen extends StatefulWidget {
 
-  const LoyaltyPointScreen({Key key}) : super(key: key);
+  const LoyaltyPointScreen({Key? key}) : super(key: key);
 
   @override
   State<LoyaltyPointScreen> createState() => _LoyaltyPointScreenState();
@@ -41,7 +41,7 @@ class _LoyaltyPointScreenState extends State<LoyaltyPointScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         onRefresh: () async {
           Provider.of<WalletTransactionProvider>(context, listen: false).getTransactionList(context,1,reload: true);
-          return false;
+         // return  false;
         },
         child: CustomScrollView(
           controller: _scrollController,

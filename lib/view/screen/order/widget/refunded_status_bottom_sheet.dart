@@ -19,7 +19,7 @@ class RefundResultBottomSheet extends StatefulWidget {
   final Product product;
   final int orderDetailsId;
   final OrderDetailsModel orderDetailsModel;
-  RefundResultBottomSheet({@required this.product, @required this.orderDetailsId, this.orderDetailsModel});
+  RefundResultBottomSheet({required this.product, required this.orderDetailsId, required this.orderDetailsModel});
 
   @override
   _RefundResultBottomSheetState createState() => _RefundResultBottomSheetState();
@@ -35,7 +35,9 @@ class _RefundResultBottomSheetState extends State<RefundResultBottomSheet> {
       child: Scaffold(
         body: Column(
           children: [
-            CustomAppBar(title: getTranslated('refund_details', context)),
+            CustomAppBar(title: getTranslated('refund_details', context), onActionPressed:(){
+
+            },),
             SingleChildScrollView(
               child: Consumer<OrderProvider>(builder: (context,refundReq,_) {
                 return Padding(padding: mediaQueryData.viewInsets, child: Container(

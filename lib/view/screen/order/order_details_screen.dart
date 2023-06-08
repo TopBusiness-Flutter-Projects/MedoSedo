@@ -19,14 +19,16 @@ import 'package:medosedo_ecommerce/view/basewidget/amount_widget.dart';
 import 'package:medosedo_ecommerce/view/basewidget/title_row.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/auth_provider.dart';
+
 class OrderDetailsScreen extends StatefulWidget {
-  final bool isNotification;
-  final int orderId;
-  final String orderType;
-  final double extraDiscount;
-  final String extraDiscountType;
-  OrderDetailsScreen({@required this.orderId, @required this.orderType,
-    this.extraDiscount, this.extraDiscountType, this.isNotification = false});
+  final bool? isNotification;
+  final int? orderId;
+  final String? orderType;
+  final double? extraDiscount;
+  final String? extraDiscountType;
+  OrderDetailsScreen({ this.orderId,  this.orderType,
+     this.extraDiscount,  this.extraDiscountType, this.isNotification = false});
 
   @override
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
@@ -39,23 +41,24 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     await Provider.of<OrderProvider>(context, listen: false).initTrackingInfo(widget.orderId.toString(), context);
     await Provider.of<OrderProvider>(context, listen: false).getOrderFromOrderId(widget.orderId.toString(), context);
     await Provider.of<OrderProvider>(context, listen: false).getOrderDetails(widget.orderId.toString(), context,
-      Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode,
+      Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode!,
     );
   }
 
   @override
   void initState() {
     super.initState();
+    if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
     _loadData(context);
     Provider.of<OrderProvider>(context, listen: false).digitalOnly(true);
-  }
+  }}
 
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async{
-        widget.isNotification?
+        widget!.isNotification!?
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen())):Navigator.pop(context);
         return true;
       },
@@ -64,7 +67,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         appBar: AppBar(iconTheme: IconThemeData(color: ColorResources.getTextTitle(context)),
           backgroundColor: Theme.of(context).cardColor,leading: InkWell(
               onTap: (){
-                widget.isNotification?
+                widget!.isNotification!?
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen())):Navigator.pop(context);
               },
               child: Icon(Icons.keyboard_backspace)),title: Text(getTranslated('ORDER_DETAILS', context),
@@ -85,34 +88,30 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
 
 
-                  if (order.orderDetails != null) {
-                    order.orderDetails.forEach((orderDetails) {
-                      if(orderDetails.productDetails?.productType != null && orderDetails.productDetails.productType != "physical" ){
-                        order.digitalOnly(false, isUpdate: false);
-                      }
-                    });
-
-
-
-                    order.orderDetails.forEach((orderDetails) {
-                      print('---> ${orderDetails.taxModel}');
-                      _order = _order + (orderDetails.price * orderDetails.qty);
-                      _discount = _discount + orderDetails.discount;
-                        _tax = _tax + orderDetails.tax;
-
-
-                    });
-
-
-                    if(widget.orderType == 'POS'){
-                      if(widget.extraDiscountType == 'percent'){
-                        eeDiscount = _order * (widget.extraDiscount/100);
-                      }else{
-                        eeDiscount = widget.extraDiscount;
-                      }
+                  order.orderDetails.forEach((orderDetails) {
+                    if(orderDetails.productDetails?.productType != null && orderDetails.productDetails.productType != "physical" ){
+                      order.digitalOnly(false, isUpdate: false);
                     }
+                  });
 
 
+
+                  order.orderDetails.forEach((orderDetails) {
+                    print('---> ${orderDetails.taxModel}');
+                    _order = _order + (orderDetails.price * orderDetails.qty);
+                    _discount = _discount + orderDetails.discount;
+                      _tax = _tax + orderDetails.tax;
+
+
+                  });
+
+
+                  if(widget.orderType == 'POS'){
+                    if(widget.extraDiscountType == 'percent'){
+                      eeDiscount = _order * (widget.extraDiscount!/100);
+                    }else{
+                      eeDiscount = widget!.extraDiscount!;
+                    }
                   }
 
 
@@ -131,8 +130,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             children: <TextSpan>[
                               TextSpan(text: getTranslated('ORDER_ID', context),
                                   style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,
-                                    color: Theme.of(context).textTheme.bodyLarge.color,)),
-                              TextSpan(text: order.trackingModel.id.toString(),
+                                    color: Theme.of(context).textTheme.bodyLarge!.color!,)),
+                              TextSpan( text:order!.trackingModel!=null?order.trackingModel.id.toString():"",
                                   style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE,
                                       color: ColorResources.getPrimary(context))),
                                 ],
@@ -166,7 +165,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   order.onlyDigital?
                                   Expanded(child: Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 1),
-                                    child: Text(' ${order.orderModel !=null  && order.orderModel.shippingAddressData != null ?
+                                    child: Text(' ${order.orderModel.shippingAddressData != null ?
                                     order.orderModel.shippingAddressData.address :''}', maxLines: 3, overflow: TextOverflow.ellipsis,
                                         style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
                                   )):SizedBox(),
@@ -175,7 +174,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             SizedBox(height: order.onlyDigital? Dimensions.PADDING_SIZE_LARGE:0),
 
 
-                            order.orderModel !=null && order.orderModel.billingAddressData != null?
+                            order.orderModel.billingAddressData != null?
                             Row(mainAxisAlignment:MainAxisAlignment.start, crossAxisAlignment:CrossAxisAlignment.start,
                               children: [
                                 Text('${getTranslated('billing_address', context)} :',
@@ -192,7 +191,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         ),
                       ),
 
-                      order.orderModel != null && order.orderModel.orderNote != null?
+                      order.orderModel.orderNote != null?
                       Padding(padding : EdgeInsets.all(Dimensions.MARGIN_SIZE_SMALL),
                         child: Text.rich(
                           TextSpan(children: [
@@ -220,7 +219,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       SellerSection(order: order),
 
 
-                      OrderProductList(order: order,orderType: widget.orderType),
+                      OrderProductList(order: order,orderType: widget.orderType!),
 
 
                       SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),

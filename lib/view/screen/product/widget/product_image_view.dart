@@ -17,7 +17,7 @@ import 'package:share/share.dart';
 
 class ProductImageView extends StatelessWidget {
   final pd.ProductDetailsModel productModel;
-  ProductImageView({@required this.productModel});
+  ProductImageView({required this.productModel});
 
   final PageController _controller = PageController();
 
@@ -34,7 +34,7 @@ class ProductImageView extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-              boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 300],
+              boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 300]!,
                   spreadRadius: 1, blurRadius: 5)],
               gradient: Provider.of<ThemeProvider>(context).darkTheme ? null : LinearGradient(
                 colors: [ColorResources.WHITE, ColorResources.IMAGE_BG],

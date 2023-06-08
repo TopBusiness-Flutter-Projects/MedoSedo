@@ -1,14 +1,14 @@
 import 'package:medosedo_ecommerce/data/model/response/product_model.dart';
 
 class WishListModel {
-  int id;
-  int customerId;
-  int productId;
-  String createdAt;
-  String updatedAt;
-  Product product;
+  late int id;
+  late int customerId;
+  late int productId;
+  late String createdAt;
+  late String updatedAt;
+  late Product product;
 
-  WishListModel({this.id, this.customerId, this.productId, this.createdAt, this.updatedAt, this.product});
+  WishListModel({required this.id, required this.customerId, required this.productId, required this.createdAt, required this.updatedAt, required this.product});
 
   WishListModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -16,7 +16,7 @@ class WishListModel {
     productId = json['product_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    product = json['product'] != null ? new Product.fromJson(json['product']) : null;
+    product = (json['product'] != null ? new Product.fromJson(json['product']) : null)!;
   }
 
   Map<String, dynamic> toJson() {

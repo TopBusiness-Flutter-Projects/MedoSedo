@@ -9,14 +9,14 @@ import 'package:medosedo_ecommerce/view/screen/wallet/widget/transaction_widget.
 import 'package:provider/provider.dart';
 
 class TransactionListView extends StatelessWidget {
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
   TransactionListView({ this.scrollController});
 
   @override
   Widget build(BuildContext context) {
     int offset = 1;
     scrollController?.addListener(() {
-      if(scrollController.position.maxScrollExtent == scrollController.position.pixels
+      if(scrollController!.position.maxScrollExtent == scrollController!.position.pixels
           && Provider.of<WalletTransactionProvider>(context, listen: false).transactionList.length != 0
           && !Provider.of<WalletTransactionProvider>(context, listen: false).isLoading) {
         int pageSize;

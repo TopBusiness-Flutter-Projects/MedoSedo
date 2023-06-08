@@ -1,16 +1,16 @@
 class TransactionModel {
-  int _limit;
-  int _offset;
-  double _totalWalletBalance;
-  int _totalWalletTransactio;
-  List<WalletTransactioList> _walletTransactioList;
+  late  int _limit;
+  late  int _offset;
+  late double _totalWalletBalance;
+  late int _totalWalletTransactio;
+  late List<WalletTransactioList> _walletTransactioList;
 
   TransactionModel(
-      {int limit,
-        int offset,
-        double totalWalletBalance,
-        int totalWalletTransactio,
-        List<WalletTransactioList> walletTransactioList}) {
+      {required int limit,
+        required int offset,
+        required double totalWalletBalance,
+        required int totalWalletTransactio,
+        required List<WalletTransactioList> walletTransactioList}) {
     if (limit != null) {
       this._limit = limit;
     }
@@ -68,30 +68,30 @@ class TransactionModel {
 }
 
 class WalletTransactioList {
-  int _id;
-  int _userId;
-  String _transactionId;
-  double _credit;
-  double _debit;
-  double _adminBonus;
-  double _balance;
-  String _transactionType;
-  String _reference;
-  String _createdAt;
-  String _updatedAt;
+  late int _id;
+  late int _userId;
+  late String _transactionId;
+  late double _credit;
+  late double _debit;
+  late double _adminBonus;
+  late double _balance;
+  late String _transactionType;
+  late String _reference;
+  late String _createdAt;
+  late String _updatedAt;
 
   WalletTransactioList(
-      {int id,
-        int userId,
-        String transactionId,
-        double credit,
-        double debit,
-        double adminBonus,
-        double balance,
-        String transactionType,
-        String reference,
-        String createdAt,
-        String updatedAt}) {
+      {required int id,
+        required int userId,
+        required String transactionId,
+        required double credit,
+        required double debit,
+        required double adminBonus,
+        required double balance,
+        required String transactionType,
+        required String reference,
+        required String createdAt,
+        required String updatedAt}) {
     if (id != null) {
       this._id = id;
     }

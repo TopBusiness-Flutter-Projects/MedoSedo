@@ -12,7 +12,7 @@ import 'package:medosedo_ecommerce/view/screen/topSeller/top_seller_product_scre
 import 'package:provider/provider.dart';
 class FooterBannersView extends StatelessWidget {
   final int index;
-  const FooterBannersView({Key key, this.index}) : super(key: key);
+  const FooterBannersView({Key? key, this.index=0}) : super(key: key);
 
   _clickBannerRedirect(BuildContext context, int id, Product product,  String type){
 
@@ -65,10 +65,10 @@ class FooterBannersView extends StatelessWidget {
       return InkWell(
         onTap: () {
           _clickBannerRedirect(context,
-              footerBannerProvider.footerBannerList[index].resourceId,
+              footerBannerProvider.footerBannerList[index].resourceId!,
               footerBannerProvider.footerBannerList[index].resourceType =='product'?
-              footerBannerProvider.footerBannerList[index].product : null,
-              footerBannerProvider.footerBannerList[index].resourceType);
+              footerBannerProvider.footerBannerList[index].product! : Product(),
+              footerBannerProvider.footerBannerList[index].resourceType!);
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2.0),

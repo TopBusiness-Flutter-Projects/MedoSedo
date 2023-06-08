@@ -1,5 +1,7 @@
 
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:medosedo_ecommerce/data/model/body/selected_shipping_type.dart';
 import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
@@ -12,15 +14,17 @@ import 'package:medosedo_ecommerce/data/model/response/shipping_method_model.dar
 import 'package:medosedo_ecommerce/data/model/response/shipping_model.dart';
 import 'package:medosedo_ecommerce/data/repository/cart_repo.dart';
 import 'package:medosedo_ecommerce/helper/api_checker.dart';
+import 'dart:async';
+import 'dart:convert';
 
 class CartProvider extends ChangeNotifier {
   final CartRepo cartRepo;
-  CartProvider({@required this.cartRepo});
+  CartProvider({required this.cartRepo});
 
   List<CartModel> _cartList = [];
   List<ChosenShippingMethodModel> _chosenShippingList = [];
   List<ChosenShippingMethodModel> get chosenShippingList =>_chosenShippingList;
-  List<ShippingModel> _shippingList;
+  List<ShippingModel> _shippingList=[];
   List<ShippingModel> get shippingList => _shippingList;
   List<bool> _isSelectedList = [];
   double _amount = 0.0;
@@ -28,8 +32,8 @@ class CartProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool _isXyz = false;
   bool  get isXyz => _isXyz;
-  CartModel cart;
-  String _updateQuantityErrorText;
+  CartModel? cart;
+  String _updateQuantityErrorText='';
   String get addOrderStatusErrorText => _updateQuantityErrorText;
   bool _getData = true;
   bool _addToCartLoading = false;
@@ -47,11 +51,11 @@ class CartProvider extends ChangeNotifier {
   List<int> get chosenShippingMethodIndex=>_chosenShippingMethodIndex;
 
 
-  void getCartData() {
+  Future<void> getCartData() async {
     _cartList = [];
     _isSelectedList = [];
     _isSelectAll = true;
-    _cartList.addAll(cartRepo.getCartList());
+    _cartList.addAll(await cartRepo.getCartList());
     _cartList.forEach((cart) {
       _isSelectedList.add(true);
       _amount = _amount + (cart.discountedPrice * cart.quantity);
@@ -106,9 +110,9 @@ class CartProvider extends ChangeNotifier {
   Future<ApiResponse> getCartDataAPI(BuildContext context) async {
     _isXyz = true;
     ApiResponse apiResponse = await cartRepo.getCartListData();
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _cartList = [];
-      apiResponse.response.data.forEach((cart) => _cartList.add(CartModel.fromJson(cart)));
+      apiResponse.response!.data.forEach((cart) => _cartList.add(CartModel.fromJson(cart)));
       _isXyz = false;
     } else {
       _isXyz = false;
@@ -126,8 +130,8 @@ class CartProvider extends ChangeNotifier {
     apiResponse = await cartRepo.updateQuantity(key, quantity);
     _isLoading = false;
 
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      String message = apiResponse.response.data['message'].toString();
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      String message = apiResponse.response!.data['message'].toString();
       responseModel = ResponseModel( message,true);
       await getCartDataAPI(context);
     } else {
@@ -137,8 +141,8 @@ class CartProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors![0].message);
+        errorMessage = errorResponse.errors![0].message;
       }
       _updateQuantityErrorText = errorMessage;
       responseModel = ResponseModel( errorMessage,false);
@@ -198,9 +202,9 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
     ApiResponse apiResponse = await cartRepo.addToCartListData(cart, choices, variationIndexes);
     _addToCartLoading = false;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _addToCartLoading = false;
-      Map map = apiResponse.response.data;
+      Map map = apiResponse.response!.data;
       String message = map["message"];
       callback(true, message);
       getCartDataAPI(context);
@@ -213,8 +217,8 @@ class CartProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors![0].message);
+        errorMessage = errorResponse.errors![0].message;
       }
       callback(false, errorMessage);
 
@@ -233,8 +237,8 @@ class CartProvider extends ChangeNotifier {
     getCartDataAPI(context);
     _isLoading = false;
 
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      String message = apiResponse.response.data.toString();
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      String message = apiResponse.response!.data.toString();
       responseModel = ResponseModel( message,true);
       getCartDataAPI(context);
       getChosenShippingMethod(context);
@@ -245,8 +249,8 @@ class CartProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors![0].message);
+        errorMessage = errorResponse.errors![0].message;
       }
       _updateQuantityErrorText = errorMessage;
       responseModel = ResponseModel( errorMessage,false);
@@ -273,9 +277,9 @@ class CartProvider extends ChangeNotifier {
     for(int i=0; i<sellerIdList.length; i++) {
       ApiResponse apiResponse = await cartRepo.getShippingMethod(sellerIdList[i],sellerTypeList[i] );
 
-      if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+      if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
         List<ShippingMethodModel> _shippingMethodList =[];
-        apiResponse.response.data.forEach((shipping) => _shippingMethodList.add(ShippingMethodModel.fromJson(shipping)));
+        apiResponse.response!.data.forEach((shipping) => _shippingMethodList.add(ShippingMethodModel.fromJson(shipping)));
 
         _shippingList[i].shippingMethodList =[];
         _shippingList[i].shippingMethodList.addAll(_shippingMethodList);
@@ -311,10 +315,10 @@ class CartProvider extends ChangeNotifier {
     _shippingList = [];
     await getChosenShippingMethod(context);
     ApiResponse apiResponse = await cartRepo.getShippingMethod(1,'admin');
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _shippingList.add(ShippingModel(-1, '', []));
       List<ShippingMethodModel> _shippingMethodList =[];
-      apiResponse.response.data.forEach((shipping) => _shippingMethodList.add(ShippingMethodModel.fromJson(shipping)));
+      apiResponse.response!.data.forEach((shipping) => _shippingMethodList.add(ShippingMethodModel.fromJson(shipping)));
 
       _shippingList[0].shippingMethodList =[];
       _shippingList[0].shippingMethodList.addAll(_shippingMethodList);
@@ -342,9 +346,9 @@ class CartProvider extends ChangeNotifier {
 
   Future<void> getChosenShippingMethod(BuildContext context) async {
     ApiResponse apiResponse = await cartRepo.getChosenShippingMethod();
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _chosenShippingList = [];
-      apiResponse.response.data.forEach((shipping) => _chosenShippingList.add(ChosenShippingMethodModel.fromJson(shipping)));
+      apiResponse.response!.data.forEach((shipping) => _chosenShippingList.add(ChosenShippingMethodModel.fromJson(shipping)));
       notifyListeners();
     } else {
       ApiChecker.checkApi(context, apiResponse);
@@ -364,7 +368,7 @@ class CartProvider extends ChangeNotifier {
   void initShippingMethodIndexList(int length){
     _shippingList =[];
     for(int i =0; i< length; i++){
-      _shippingList.add(ShippingModel(0,'', null));
+      _shippingList.add(ShippingModel(0,'', []));
     }
 
   }
@@ -378,7 +382,7 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
     ApiResponse apiResponse = await cartRepo.addShippingMethod(id,cartGroupId);
     _isLoading = false;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       //Map map = await jsonDecode(apiResponse.response.data);
       //json.decode(apiResponse.response.data);
 
@@ -393,8 +397,8 @@ class CartProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors![0].message);
+        errorMessage = errorResponse.errors![0].message;
       }
       callback(false, errorMessage);
       notifyListeners();
@@ -402,13 +406,13 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<void> uploadToServer(BuildContext context) async {
-    if(cartRepo.getCartList().length > 0) {
-      for(int index=0; index<cartRepo.getCartList().length; index++) {
+    if((await cartRepo.getCartList()).length > 0) {
+      for(int index=0; index<(await cartRepo.getCartList()).length; index++) {
         await addToCartAPI(
-          cartRepo.getCartList()[index], (success, message) {}, context,
-          cartRepo.getCartList()[index].choiceOptions, cartRepo.getCartList()[index].variationIndexes,
+          (await cartRepo.getCartList())[index], (success, message) {}, context,
+          (await cartRepo.getCartList())[index].choiceOptions, (await cartRepo.getCartList())[index].variationIndexes,
         );
-        if(index == cartRepo.getCartList().length-1) {
+        if(index == (await cartRepo.getCartList()).length-1) {
           _cartList = [];
           cartRepo.addToCartList([]);
           notifyListeners();
@@ -417,7 +421,7 @@ class CartProvider extends ChangeNotifier {
     }
   }
 
-  String _selectedShippingType;
+  String _selectedShippingType='';
   String get selectedShippingType=>_selectedShippingType;
 
   List<SelectedShippingType> _selectedShippingTypeList = [];
@@ -425,8 +429,8 @@ class CartProvider extends ChangeNotifier {
 
   Future<void> getSelectedShippingType(BuildContext context, int sellerId, String sellerType) async {
     ApiResponse apiResponse = await cartRepo.getSelectedShippingType(sellerId, sellerType);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-     _selectedShippingType = apiResponse.response.data['shipping_type'];
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+     _selectedShippingType = apiResponse.response!.data['shipping_type'];
      _selectedShippingTypeList.add(SelectedShippingType(sellerId: sellerId, selectedShippingType: _selectedShippingType));
     } else {
       ApiChecker.checkApi(context, apiResponse);

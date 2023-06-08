@@ -31,7 +31,7 @@ class ProductDetails extends StatefulWidget {
   final int productId;
   final String slug;
   final bool isFromWishList;
-  ProductDetails({@required this.productId, @required this.slug, this.isFromWishList = false});
+  ProductDetails({required this.productId, required this.slug, this.isFromWishList = false});
 
 
 
@@ -94,7 +94,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         body: RefreshIndicator(
           onRefresh: ()async{
             _loadData(context);
-            return true;
+           // return true;
           },
           child: Consumer<ProductDetailsProvider>(
             builder: (context, details, child) {

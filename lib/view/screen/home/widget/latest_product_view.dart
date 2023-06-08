@@ -7,7 +7,7 @@ import 'package:medosedo_ecommerce/view/basewidget/product_widget.dart';
 import 'package:provider/provider.dart';
 
 class LatestProductView extends StatelessWidget {
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
   LatestProductView({this.scrollController});
 
@@ -15,8 +15,8 @@ class LatestProductView extends StatelessWidget {
   Widget build(BuildContext context) {
     int offset = 1;
     scrollController?.addListener(() {
-      if (scrollController.position.maxScrollExtent ==
-              scrollController.position.pixels &&
+      if (scrollController!.position.maxScrollExtent ==
+              scrollController!.position.pixels &&
           Provider.of<ProductProvider>(context, listen: false)
                   .lProductList
                   .length !=

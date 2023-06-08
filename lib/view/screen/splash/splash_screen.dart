@@ -25,7 +25,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   GlobalKey<ScaffoldMessengerState> _globalKey = GlobalKey();
-  StreamSubscription<ConnectivityResult> _onConnectivityChanged;
+  late StreamSubscription<ConnectivityResult> _onConnectivityChanged;
 
   @override
   void initState() {
@@ -62,7 +62,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _route() {
-    Provider.of<SplashProvider>(context, listen: false).initConfig(context).then((bool isSuccess) {
+    Provider.of<SplashProvider>(context, listen: false).initConfig(context).
+    then((bool isSuccess) {
       if(isSuccess) {
         Provider.of<SplashProvider>(context, listen: false).initSharedPrefData();
         Timer(Duration(seconds: 1), () {
@@ -74,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DashBoardScreen()));
             } else {
-              if(Provider.of<SplashProvider>(context, listen: false).showIntro()) {
+              if(Provider.of<SplashProvider>(context, listen: false).showIntro()!) {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => OnBoardingScreen(
                   indicatorColor: ColorResources.GREY, selectedIndicatorColor: Theme.of(context).primaryColor,
                 )));

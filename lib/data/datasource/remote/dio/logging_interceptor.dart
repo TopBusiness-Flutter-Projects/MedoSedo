@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 
 class LoggingInterceptor extends InterceptorsWrapper {
@@ -15,7 +17,7 @@ class LoggingInterceptor extends InterceptorsWrapper {
   @override
   Future onResponse(Response response, ResponseInterceptorHandler handler) async {
     print(
-        "<-- ${response.statusCode} ${response.requestOptions.method} ${response.requestOptions.path}");
+        "<-- ${response!.statusCode} ${response.requestOptions.method} ${response.requestOptions.path}");
 
     String responseAsString = response.data.toString();
 

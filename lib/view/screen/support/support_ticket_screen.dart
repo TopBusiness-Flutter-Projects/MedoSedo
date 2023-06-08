@@ -131,8 +131,8 @@ class SupportTicketShimmer extends StatelessWidget {
             border: Border.all(color: ColorResources.SELLER_TXT, width: 2),
           ),
           child: Shimmer.fromColors(
-            baseColor: Colors.grey[300],
-            highlightColor: Colors.grey[100],
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
             enabled: Provider.of<SupportTicketProvider>(context).supportTicketList == null,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(height: 10, width: 100, color: ColorResources.WHITE),

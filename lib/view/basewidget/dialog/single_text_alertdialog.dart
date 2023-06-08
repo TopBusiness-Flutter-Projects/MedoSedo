@@ -4,7 +4,7 @@ import 'package:medosedo_ecommerce/utill/custom_themes.dart';
 class SingleTextAlertDialog extends StatelessWidget {
   final String message;
 
-  SingleTextAlertDialog({this.message});
+  SingleTextAlertDialog({this.message=''});
 
   @override
   Widget build(BuildContext context) {

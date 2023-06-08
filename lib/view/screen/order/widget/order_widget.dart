@@ -11,7 +11,7 @@ import 'package:medosedo_ecommerce/view/screen/order/order_details_screen.dart';
 
 class OrderWidget extends StatelessWidget {
   final OrderModel orderModel;
-  OrderWidget({this.orderModel});
+  OrderWidget({required this.orderModel});
 
   @override
   Widget build(BuildContext context) {

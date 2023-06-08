@@ -4,10 +4,11 @@ import 'package:medosedo_ecommerce/data/datasource/remote/exception/api_error_ha
 import 'package:medosedo_ecommerce/data/model/body/MessageBody.dart';
 import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class ChatRepo {
   final DioClient dioClient;
-  ChatRepo({@required this.dioClient});
+  ChatRepo({required this.dioClient});
 
 
 

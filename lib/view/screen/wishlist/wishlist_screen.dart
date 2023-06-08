@@ -18,7 +18,7 @@ class WishListScreen extends StatefulWidget {
 }
 
 class _WishListScreenState extends State<WishListScreen> {
-  bool isGuestMode;
+  bool isGuestMode=false;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class _WishListScreenState extends State<WishListScreen> {
     if(!isGuestMode){
       print('fdbvxjbvxvbxc');
       Provider.of<WishListProvider>(context, listen: false).initWishList(
-        context, Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode,
+        context, Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode!,
       );
     }
 
@@ -43,7 +43,7 @@ class _WishListScreenState extends State<WishListScreen> {
       resizeToAvoidBottomInset: true,
       body: Column(
         children: [
-          CustomAppBar(title: getTranslated('wishList', context)),
+          CustomAppBar(title: getTranslated('wishList', context), onActionPressed: (){},),
 
           Expanded(
             child: isGuestMode ? NotLoggedInWidget() :  Consumer<WishListProvider>(
@@ -52,7 +52,7 @@ class _WishListScreenState extends State<WishListScreen> {
                   backgroundColor: Theme.of(context).primaryColor,
                   onRefresh: () async {
                     await  Provider.of<WishListProvider>(context, listen: false).initWishList(
-                      context, Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode,
+                      context, Provider.of<LocalizationProvider>(context, listen: false).locale.countryCode!,
                     );
                   },
 
@@ -82,8 +82,8 @@ class WishListShimmer extends StatelessWidget {
       padding: EdgeInsets.all(0),
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
-          baseColor: Colors.grey[300],
-          highlightColor: Colors.grey[100],
+          baseColor: Colors.grey[300]!!,
+          highlightColor: Colors.grey[100]!!,
           enabled: Provider.of<WishListProvider>(context).wishList==null,
           child: ListTile(
             leading: Container(height: 50, width: 50, color: ColorResources.WHITE),

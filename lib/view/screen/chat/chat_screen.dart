@@ -12,9 +12,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
-  final int id;
+  final int? id;
   final String name;
-  ChatScreen({ this.id, @required this.name});
+  ChatScreen({ this.id, required this.name});
 
   final ImagePicker picker = ImagePicker();
   final TextEditingController _controller = TextEditingController();
@@ -22,7 +22,7 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ChatProvider>(context, listen: false).getMessageList( context, id, 1);
+    Provider.of<ChatProvider>(context, listen: false).getMessageList( context, id!, 1);
 
     return Scaffold(
       backgroundColor: ColorResources.getIconBg(context),

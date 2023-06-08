@@ -7,13 +7,14 @@ import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/data/model/response/base/error_response.dart';
 import 'package:medosedo_ecommerce/data/model/response/support_ticket_model.dart';
 import 'package:medosedo_ecommerce/data/repository/support_ticket_repo.dart';
+import 'dart:async';
 
 class SupportTicketProvider extends ChangeNotifier {
   final SupportTicketRepo supportTicketRepo;
-  SupportTicketProvider({@required this.supportTicketRepo});
+  SupportTicketProvider({required this.supportTicketRepo});
 
-  List<SupportTicketModel> _supportTicketList;
-  List<SupportReplyModel> _supportReplyList;
+  List<SupportTicketModel> _supportTicketList=[];
+  List<SupportReplyModel> _supportReplyList=[];
   bool _isLoading = false;
 
   List<SupportTicketModel> get supportTicketList => _supportTicketList;
@@ -24,8 +25,8 @@ class SupportTicketProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     ApiResponse apiResponse = await supportTicketRepo.sendSupportTicket(supportTicketBody);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      String message = apiResponse.response.data["message"];
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      String message = apiResponse.response!.data["message"];
       callback(true, message);
       _isLoading = false;
       _supportTicketList.add(SupportTicketModel(description: supportTicketBody.description, type: supportTicketBody.type,
@@ -39,8 +40,8 @@ class SupportTicketProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors![0].message);
+        errorMessage = errorResponse.errors![0].message;
       }
       callback(false, errorMessage);
       _isLoading = false;
@@ -50,9 +51,9 @@ class SupportTicketProvider extends ChangeNotifier {
 
   Future<void> getSupportTicketList(BuildContext context) async {
     ApiResponse apiResponse = await supportTicketRepo.getSupportTicketList();
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _supportTicketList = [];
-      apiResponse.response.data.forEach((supportTicket) => _supportTicketList.add(SupportTicketModel.fromJson(supportTicket)));
+      apiResponse.response!.data.forEach((supportTicket) => _supportTicketList.add(SupportTicketModel.fromJson(supportTicket)));
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
@@ -60,11 +61,11 @@ class SupportTicketProvider extends ChangeNotifier {
   }
 
   Future<void> getSupportTicketReplyList(BuildContext context, int ticketID) async {
-    _supportReplyList = null;
+    _supportReplyList = [];
     ApiResponse apiResponse = await supportTicketRepo.getSupportReplyList(ticketID.toString());
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _supportReplyList = [];
-      apiResponse.response.data.forEach((supportReply) => _supportReplyList.add(SupportReplyModel.fromJson(supportReply)));
+      apiResponse.response!.data.forEach((supportReply) => _supportReplyList.add(SupportReplyModel.fromJson(supportReply)));
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
@@ -73,7 +74,7 @@ class SupportTicketProvider extends ChangeNotifier {
 
   Future<void> sendReply(BuildContext context, int ticketID, String message) async {
     ApiResponse apiResponse = await supportTicketRepo.sendReply(ticketID.toString(), message);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _supportReplyList.add(SupportReplyModel(customerMessage: message, createdAt: DateConverter.localDateToIsoString(DateTime.now())
       ));
     } else {

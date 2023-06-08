@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class ProductWidget extends StatelessWidget {
   final Product productModel;
-  ProductWidget({@required this.productModel});
+  ProductWidget({required this.productModel});
 
   @override
   Widget build(BuildContext context) {

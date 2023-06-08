@@ -14,7 +14,7 @@ import 'package:shimmer/shimmer.dart';
 
 class ReviewWidget extends StatelessWidget {
   final ReviewModel reviewModel;
-  ReviewWidget({@required this.reviewModel});
+  ReviewWidget({required this.reviewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -108,8 +108,8 @@ class ReviewShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300],
-      highlightColor: Colors.grey[100],
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
       enabled: Provider.of<ProductDetailsProvider>(context).reviewList == null,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [

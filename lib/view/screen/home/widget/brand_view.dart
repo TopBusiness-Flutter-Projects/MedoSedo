@@ -11,7 +11,7 @@ import 'package:shimmer/shimmer.dart';
 
 class BrandView extends StatelessWidget {
   final bool isHomePage;
-  BrandView({@required this.isHomePage});
+  BrandView({required this.isHomePage});
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +150,7 @@ class BrandView extends StatelessWidget {
 
 class BrandShimmer extends StatelessWidget {
   final bool isHomePage;
-  BrandShimmer({@required this.isHomePage});
+  BrandShimmer({required this.isHomePage});
 
   @override
   Widget build(BuildContext context) {
@@ -167,8 +167,8 @@ class BrandShimmer extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
 
         return Shimmer.fromColors(
-          baseColor: Colors.grey[300],
-          highlightColor: Colors.grey[100],
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
           enabled: Provider.of<BrandProvider>(context).brandList.length == 0,
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Expanded(child: Container(decoration: BoxDecoration(color: ColorResources.WHITE, shape: BoxShape.circle))),

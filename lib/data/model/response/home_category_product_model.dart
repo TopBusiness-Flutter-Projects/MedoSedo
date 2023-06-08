@@ -1,28 +1,28 @@
 import 'package:medosedo_ecommerce/data/model/response/product_model.dart';
 
 class HomeCategoryProduct {
-  int id;
-  String name;
-  String slug;
-  String icon;
-  int parentId;
-  int position;
-  String createdAt;
-  String updatedAt;
-  List<Product> products;
-  List<dynamic> translations;
+  late int id;
+  late String name;
+  late String slug;
+  late String icon;
+  late int parentId;
+  late int position;
+  late String createdAt;
+  late String updatedAt;
+  late List<Product> products;
+  late List<dynamic> translations;
 
   HomeCategoryProduct(
-      {this.id,
-        this.name,
-        this.slug,
-        this.icon,
-        this.parentId,
-        this.position,
-        this.createdAt,
-        this.updatedAt,
-        this.products,
-        this.translations});
+      {required this.id,
+        required this.name,
+        required this.slug,
+        required this.icon,
+        required this.parentId,
+        required this.position,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.products,
+        required this.translations});
 
   HomeCategoryProduct.fromJson(Map<String, dynamic> json) {
     id = json['id'];

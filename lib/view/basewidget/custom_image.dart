@@ -3,11 +3,11 @@ import 'package:medosedo_ecommerce/utill/images.dart';
 
 class CustomImage extends StatelessWidget {
   final String image;
-  final double height;
-  final double width;
+  final double? height;
+  final double? width;
   final BoxFit fit;
   final String placeholder;
-  CustomImage({@required this.image, this.height, this.width, this.fit = BoxFit.cover, this.placeholder = Images.placeholder});
+  CustomImage({required this.image, this.height, this.width, this.fit = BoxFit.cover, this.placeholder = Images.placeholder});
 
   @override
   Widget build(BuildContext context) {

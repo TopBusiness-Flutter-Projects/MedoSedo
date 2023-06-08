@@ -12,31 +12,32 @@ import 'package:medosedo_ecommerce/helper/api_checker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
+import 'dart:async';
+import 'dart:convert';
 import 'order_provider.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final ProfileRepo profileRepo;
-  ProfileProvider({@required this.profileRepo});
+  ProfileProvider({required this.profileRepo});
 
   List<String> _addressTypeList = [];
   String _addressType = '';
-  UserInfoModel _userInfoModel;
+  UserInfoModel? _userInfoModel;
   bool _isLoading = false;
   bool _isDeleting = false;
   bool get isDeleting => _isDeleting;
   List<AddressModel> _addressList =[];
   List<AddressModel> _billingAddressList = [];
   List<AddressModel> _shippingAddressList = [];
-  bool _hasData;
+  bool _hasData=false;
   bool _isHomeAddress = true;
-  String _addAddressErrorText;
-  double _balance;
+  String _addAddressErrorText='';
+  double _balance=0;
   double get balance =>_balance;
 
   List<String> get addressTypeList => _addressTypeList;
   String get addressType => _addressType;
-  UserInfoModel get userInfoModel => _userInfoModel;
+  UserInfoModel get userInfoModel => _userInfoModel!;
   bool get isLoading => _isLoading;
   List<AddressModel> get addressList => _addressList;
   List<AddressModel> get billingAddressList => _billingAddressList;
@@ -81,11 +82,11 @@ class ProfileProvider extends ChangeNotifier {
 
   Future<void> initAddressList(BuildContext context) async {
     ApiResponse apiResponse = await profileRepo.getAllAddress();
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _addressList = [];
       _billingAddressList =[];
       _shippingAddressList =[];
-      apiResponse.response.data.forEach((address) {
+      apiResponse.response!.data.forEach((address) {
         AddressModel addressModel = AddressModel.fromJson(address);
         if(addressModel.isBilling == 1){
           _billingAddressList.add(addressModel);
@@ -107,9 +108,9 @@ class ProfileProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     ApiResponse apiResponse = await profileRepo.removeAddressByID(id);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _addressList.removeAt(index);
-      Map map = apiResponse.response.data;
+      Map map = apiResponse.response!.data;
       String message = map["message"];
       initAddressList(context);
       Provider.of<OrderProvider>(context, listen: false).shippingAddressNull();
@@ -127,11 +128,11 @@ class ProfileProvider extends ChangeNotifier {
   Future<String> getUserInfo(BuildContext context) async {
     String userID = '-1';
     ApiResponse apiResponse = await profileRepo.getUserInfo();
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      _userInfoModel = UserInfoModel.fromJson(apiResponse.response.data);
-      userID = _userInfoModel.id.toString();
-      _balance = _userInfoModel.walletBalance;
-      print('===> nai keno==>${_userInfoModel.walletBalance}');
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      _userInfoModel = UserInfoModel.fromJson(apiResponse.response!.data);
+      userID = _userInfoModel!.id.toString();
+      _balance = _userInfoModel!.walletBalance;
+      print('===> nai keno==>${_userInfoModel!.walletBalance}');
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
@@ -144,9 +145,9 @@ class ProfileProvider extends ChangeNotifier {
     _isDeleting = true;
     notifyListeners();
     ApiResponse apiResponse = await profileRepo.deleteUserAccount(customerId);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _isLoading = false;
-      Map map = apiResponse.response.data;
+      Map map = apiResponse.response!.data;
       String message = map ['message'];
       Fluttertoast.showToast(
           msg: message,
@@ -170,10 +171,10 @@ class ProfileProvider extends ChangeNotifier {
   void initAddressTypeList(BuildContext context) async {
     if (_addressTypeList.length == 0) {
       ApiResponse apiResponse = await profileRepo.getAddressTypeList();
-      if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+      if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
         _addressTypeList.clear();
-        _addressTypeList.addAll(apiResponse.response.data);
-        _addressType = apiResponse.response.data[0];
+        _addressTypeList.addAll(apiResponse.response!.data);
+        _addressType = apiResponse.response!.data[0];
       } else {
         ApiChecker.checkApi(context, apiResponse);
       }
@@ -188,8 +189,8 @@ class ProfileProvider extends ChangeNotifier {
     ApiResponse apiResponse = await profileRepo.addAddress(addressModel);
     _isLoading = false;
 
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      Map map = apiResponse.response.data;
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      Map map = apiResponse.response!.data;
       if(_addressList == null) {
         _addressList = [];
       }
@@ -203,8 +204,8 @@ class ProfileProvider extends ChangeNotifier {
         errorMessage = apiResponse.error.toString();
       } else {
         ErrorResponse errorResponse = apiResponse.error;
-        print(errorResponse.errors[0].message);
-        errorMessage = errorResponse.errors[0].message;
+        print(errorResponse.errors![0].message);
+        errorMessage = errorResponse.errors![0].message;
       }
       callback(false, errorMessage);
     }
@@ -218,15 +219,15 @@ class ProfileProvider extends ChangeNotifier {
     ResponseModel responseModel;
     http.StreamedResponse response = await profileRepo.updateProfile(updateUserModel, pass, file, token);
     _isLoading = false;
-    if (response.statusCode == 200) {
+    if (response!.statusCode == 200) {
       Map map = jsonDecode(await response.stream.bytesToString());
       String message = map["message"];
       _userInfoModel = updateUserModel;
       responseModel = ResponseModel(message, true);
       print(message);
     } else {
-      print('${response.statusCode} ${response.reasonPhrase}');
-      responseModel = ResponseModel('${response.statusCode} ${response.reasonPhrase}', false);
+      print('${response!.statusCode} ${response.reasonPhrase}');
+      responseModel = ResponseModel('${response!.statusCode} ${response.reasonPhrase}', false);
     }
     notifyListeners();
     return responseModel;
@@ -234,13 +235,13 @@ class ProfileProvider extends ChangeNotifier {
 
   // save office and home address
   void saveHomeAddress(String homeAddress) {
-    profileRepo.saveHomeAddress(homeAddress).then((_) {
+    (profileRepo.saveHomeAddress(homeAddress)!)?.then((_) {
       notifyListeners();
     });
   }
 
   void saveOfficeAddress(String officeAddress) {
-    profileRepo.saveOfficeAddress(officeAddress).then((_) {
+    profileRepo.saveOfficeAddress(officeAddress)!?.then((_) {
       notifyListeners();
     });
   }

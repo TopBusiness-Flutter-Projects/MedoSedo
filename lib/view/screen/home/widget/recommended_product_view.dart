@@ -18,7 +18,8 @@ class RecommendedProductView extends StatelessWidget {
       children: [
         Consumer<ProductProvider>(
           builder: (context, recommended, child) {
-            String ratting = recommended.recommendedProduct != null && recommended.recommendedProduct.rating != null && recommended.recommendedProduct.rating.length != 0? recommended.recommendedProduct.rating[0].average : "0";
+            String ratting = recommended.recommendedProduct != null
+                && recommended.recommendedProduct.rating != null && recommended.recommendedProduct.rating.length != 0? recommended.recommendedProduct.rating[0].average : "0";
 
             return recommended.recommendedProduct != null?
             InkWell(

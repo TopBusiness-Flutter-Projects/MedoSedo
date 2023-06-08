@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class NetworkInfo {
   final Connectivity connectivity;
   NetworkInfo(this.connectivity);
@@ -39,7 +40,7 @@ class NetworkInfo {
   }
 
   static Future<bool> _updateConnectivityStatus() async {
-     bool _isConnected;
+     bool _isConnected=false;
      try {
        final List<InternetAddress> _result = await InternetAddress.lookup('google.com');
        if(_result.isNotEmpty && _result[0].rawAddress.isNotEmpty) {

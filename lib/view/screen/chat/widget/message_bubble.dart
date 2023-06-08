@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class MessageBubble extends StatelessWidget {
   final Message message;
-  MessageBubble({@required this.message});
+  MessageBubble({required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,8 @@ class MessageBubble extends StatelessWidget {
     String baseUrl = Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0 ?
     Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl:
     Provider.of<SplashProvider>(context, listen: false).baseUrls.deliveryManImage;
-    String image = Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0 ?
-    message.sellerInfo != null? message.sellerInfo?.shops[0]?.image :'' : message.deliveryMan.image;
+    String? image = Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0 ?
+    message.sellerInfo != null? message.sellerInfo?.shops![0]?.image :'' : message.deliveryMan.image;
 
     return Row(crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

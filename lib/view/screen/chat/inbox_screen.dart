@@ -24,7 +24,7 @@ class InboxScreen extends StatefulWidget {
 class _InboxScreenState extends State<InboxScreen> {
 
 
-  bool isGuestMode;
+  bool isGuestMode=false;
   @override
   void initState() {
     bool isFirstTime = true;

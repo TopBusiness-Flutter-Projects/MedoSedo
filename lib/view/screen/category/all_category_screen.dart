@@ -35,7 +35,7 @@ class AllCategoryScreen extends StatelessWidget {
                   height: double.infinity,
                   decoration: BoxDecoration(
                     color: Theme.of(context).highlightColor,
-                    boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 200],
+                    boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 200]!,
                         spreadRadius: 1, blurRadius: 1)],
                   ),
                   child: ListView.builder(
@@ -62,7 +62,7 @@ class AllCategoryScreen extends StatelessWidget {
                   itemCount: categoryProvider.categoryList[categoryProvider.categorySelectedIndex].subCategories.length+1,
                   itemBuilder: (context, index) {
 
-                    SubCategory _subCategory;
+                    SubCategory? _subCategory;
                     if(index != 0) {
                       _subCategory = categoryProvider.categoryList[categoryProvider.categorySelectedIndex].subCategories[index-1];
                     }
@@ -81,14 +81,14 @@ class AllCategoryScreen extends StatelessWidget {
                           },
                         ),
                       );
-                    }else if (_subCategory.subSubCategories.length != 0) {
+                    }else if (_subCategory!.subSubCategories.length != 0) {
                       return Ink(
                         color: Theme.of(context).highlightColor,
                         child: Theme(
                           data: Provider.of<ThemeProvider>(context).darkTheme ? ThemeData.dark() : ThemeData.light(),
                           child: ExpansionTile(
                             key: Key('${Provider.of<CategoryProvider>(context).categorySelectedIndex}$index'),
-                            title: Text(_subCategory.name, style: titilliumSemiBold.copyWith(color: Theme.of(context).textTheme.bodyLarge.color), maxLines: 2, overflow: TextOverflow.ellipsis),
+                            title: Text(_subCategory.name, style: titilliumSemiBold.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color), maxLines: 2, overflow: TextOverflow.ellipsis),
                             children: _getSubSubCategories(context, _subCategory),
                           ),
                         ),
@@ -98,11 +98,11 @@ class AllCategoryScreen extends StatelessWidget {
                         color: Theme.of(context).highlightColor,
                         child: ListTile(
                           title: Text(_subCategory.name, style: titilliumSemiBold, maxLines: 2, overflow: TextOverflow.ellipsis),
-                          trailing: Icon(Icons.navigate_next, color: Theme.of(context).textTheme.bodyLarge.color),
+                          trailing: Icon(Icons.navigate_next, color: Theme.of(context).textTheme.bodyLarge!.color),
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (_) => BrandAndCategoryProductScreen(
                               isBrand: false,
-                              id: _subCategory.id.toString(),
+                              id: _subCategory!.id.toString(),
                               name: _subCategory.name,
                             )));
                           },
@@ -136,7 +136,7 @@ class AllCategoryScreen extends StatelessWidget {
             ),
             SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
             Flexible(child: Text(getTranslated('all', context), style: titilliumSemiBold.copyWith(
-                color: Theme.of(context).textTheme.bodyLarge.color), maxLines: 2, overflow: TextOverflow.ellipsis,
+                color: Theme.of(context).textTheme.bodyLarge!.color), maxLines: 2, overflow: TextOverflow.ellipsis,
             )),
           ],
         ),
@@ -163,7 +163,7 @@ class AllCategoryScreen extends StatelessWidget {
               ),
               SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
               Flexible(child: Text(subCategory.subSubCategories[index].name, style: titilliumSemiBold.copyWith(
-                  color: Theme.of(context).textTheme.bodyLarge.color), maxLines: 2, overflow: TextOverflow.ellipsis,
+                  color: Theme.of(context).textTheme.bodyLarge!.color), maxLines: 2, overflow: TextOverflow.ellipsis,
               )),
             ],
           ),
@@ -185,7 +185,7 @@ class CategoryItem extends StatelessWidget {
   final String title;
   final String icon;
   final bool isSelected;
-  CategoryItem({@required this.title, @required this.icon, @required this.isSelected});
+  CategoryItem({required this.title, required this.icon, required this.isSelected});
 
   Widget build(BuildContext context) {
     return Container(

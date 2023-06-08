@@ -3,13 +3,14 @@ import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/data/repository/featured_deal_repo.dart';
 import 'package:medosedo_ecommerce/data/model/response/product_model.dart';
 import 'package:medosedo_ecommerce/helper/api_checker.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class FeaturedDealProvider extends ChangeNotifier {
   final FeaturedDealRepo featuredDealRepo;
 
-  FeaturedDealProvider({@required this.featuredDealRepo});
+  FeaturedDealProvider({required this.featuredDealRepo});
 
-  int _featuredDealSelectedIndex;
+  int _featuredDealSelectedIndex=0;
   List<Product> _featuredDealProductList =[];
   List<Product> get featuredDealProductList =>_featuredDealProductList;
   int get featuredDealSelectedIndex => _featuredDealSelectedIndex;
@@ -19,10 +20,10 @@ class FeaturedDealProvider extends ChangeNotifier {
 
 
       ApiResponse apiResponse = await featuredDealRepo.getFeaturedDeal();
-      if (apiResponse.response != null && apiResponse.response.statusCode == 200 && apiResponse.response.data.toString() != '{}') {
+      if (apiResponse.response != null && apiResponse.response!.statusCode == 200 && apiResponse.response!.data!.toString() != '{}') {
         _featuredDealProductList =[];
-        print('----rrr--->${apiResponse.response.data.toString()}');
-        apiResponse.response.data.forEach((fDeal) => _featuredDealProductList.add(Product.fromJson(fDeal)));
+        print('----rrr--->${apiResponse.response!.data.toString()}');
+        apiResponse.response!.data!.forEach((fDeal) => _featuredDealProductList.add(Product.fromJson(fDeal)));
         _featuredDealSelectedIndex = 0;
       } else {
         ApiChecker.checkApi(context, apiResponse);

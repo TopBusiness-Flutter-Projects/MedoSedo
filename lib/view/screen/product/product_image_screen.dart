@@ -10,15 +10,15 @@ import 'package:provider/provider.dart';
 class ProductImageScreen extends StatefulWidget {
   final String title;
   final List<String> imageList;
-  ProductImageScreen({@required this.title, @required this.imageList});
+  ProductImageScreen({required this.title, required this.imageList});
 
   @override
   _ProductImageScreenState createState() => _ProductImageScreenState();
 }
 
 class _ProductImageScreenState extends State<ProductImageScreen> {
-  int pageIndex;
-  PageController _pageController;
+  int pageIndex=0;
+  PageController? _pageController;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
     return Scaffold(
       body: Column(children: [
 
-        CustomAppBar(title: widget.title),
+        CustomAppBar(title: widget.title, onActionPressed: (){}),
 
         Expanded(
           child: Stack(
@@ -54,7 +54,7 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                     width: 20.0,
                     height: 20.0,
                     child: CircularProgressIndicator(
-                      value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes,
+                      value: event == null ? 0 : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
                         valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
                     ),
                   ),
@@ -78,7 +78,7 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                   child: InkWell(
                     onTap: () {
                       if(pageIndex > 0) {
-                        _pageController.animateToPage(pageIndex-1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+                        _pageController!.animateToPage(pageIndex-1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
                       }
                     },
                     child: Icon(Icons.chevron_left_outlined, size: 40),
@@ -97,7 +97,7 @@ class _ProductImageScreenState extends State<ProductImageScreen> {
                   child: InkWell(
                     onTap: () {
                       if(pageIndex < widget.imageList.length) {
-                        _pageController.animateToPage(pageIndex+1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+                        _pageController!.animateToPage(pageIndex+1, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
                       }
                     },
                     child: Icon(Icons.chevron_right_outlined, size: 40),

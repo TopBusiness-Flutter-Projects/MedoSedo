@@ -9,12 +9,12 @@ import 'package:medosedo_ecommerce/view/basewidget/textfield/custom_textfield.da
 
 class WalletPayment extends StatelessWidget {
   final double rotateAngle;
-  final Function onTap;
+  final VoidCallback onTap;
   final double orderAmount;
   final double currentBalance;
 
 
-  WalletPayment({ this.rotateAngle = 0,  @required this.onTap, this.orderAmount, this.currentBalance});
+  WalletPayment({ this.rotateAngle = 0,  required this.onTap, this.orderAmount=0, this.currentBalance=0});
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,7 @@ import 'package:medosedo_ecommerce/helper/api_checker.dart';
 class OnBoardingProvider with ChangeNotifier {
   final OnBoardingRepo onboardingRepo;
 
-  OnBoardingProvider({@required this.onboardingRepo});
+  OnBoardingProvider({required this.onboardingRepo});
 
   List<OnboardingModel> _onBoardingList = [];
   List<OnboardingModel> get onBoardingList => _onBoardingList;
@@ -22,9 +22,9 @@ class OnBoardingProvider with ChangeNotifier {
 
   void initBoardingList(BuildContext context) async {
     ApiResponse apiResponse = await onboardingRepo.getOnBoardingList(context);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _onBoardingList.clear();
-      _onBoardingList.addAll(apiResponse.response.data);
+      _onBoardingList.addAll(apiResponse.response!.data);
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }

@@ -13,9 +13,9 @@ import 'package:provider/provider.dart';
 class CustomExpandedAppBar extends StatelessWidget {
   final String title;
   final Widget child;
-  final Widget bottomChild;
+  final Widget? bottomChild;
   final bool isGuestCheck;
-  CustomExpandedAppBar({@required this.title, @required this.child, this.bottomChild, this.isGuestCheck = false});
+  CustomExpandedAppBar({required this.title, required this.child, this.bottomChild, this.isGuestCheck = false});
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ class FavouriteButton extends StatelessWidget {
   final Color backgroundColor;
   final Color favColor;
   final bool isSelected;
-  final int productId;
+  final int? productId;
   FavouriteButton({this.backgroundColor = Colors.black, this.favColor = Colors.white, this.isSelected = false, this.productId});
 
   @override
@@ -30,8 +30,8 @@ class FavouriteButton extends StatelessWidget {
           showAnimatedDialog(context, GuestDialog(), isFlip: true);
         } else {
           Provider.of<WishListProvider>(context, listen: false).isWish ?
-          Provider.of<WishListProvider>(context, listen: false).removeWishList(productId, feedbackMessage: feedbackMessage) :
-          Provider.of<WishListProvider>(context, listen: false).addWishList(productId, feedbackMessage: feedbackMessage);
+          Provider.of<WishListProvider>(context, listen: false).removeWishList(productId!, feedbackMessage: feedbackMessage) :
+          Provider.of<WishListProvider>(context, listen: false).addWishList(productId!, feedbackMessage: feedbackMessage);
         }
       },
       child: Consumer<WishListProvider>(

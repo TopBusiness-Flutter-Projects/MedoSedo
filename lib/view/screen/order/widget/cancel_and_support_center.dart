@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class CancelAndSupport extends StatelessWidget {
   final OrderModel orderModel;
   final bool fromNotification;
-  const CancelAndSupport({Key key, this.orderModel, this.fromNotification = false}) : super(key: key);
+  const CancelAndSupport({Key? key, required this.orderModel, this.fromNotification = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CancelAndSupport extends StatelessWidget {
 
       CustomButton(buttonText: getTranslated('cancel_order', context),
           onTap: () => Provider.of<OrderProvider>(context,listen: false).cancelOrder(context, orderModel.id).then((value) {
-            if(value.response.statusCode == 200){
+            if(value.response!.statusCode == 200){
               Provider.of<OrderProvider>(context, listen: false).initOrderList(context);
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(

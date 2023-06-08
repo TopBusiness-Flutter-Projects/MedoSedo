@@ -3,17 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class AppLocalization {
   AppLocalization(this.locale);
 
-  final Locale locale;
+   final Locale locale;
 
-  static AppLocalization of(BuildContext context) {
+  static AppLocalization? of(BuildContext context) {
     return Localizations.of<AppLocalization>(context, AppLocalization);
   }
 
-  Map<String, String> _localizedValues;
+  Map<String, String>? _localizedValues;
 
   Future<void> load() async {
     String jsonStringValues = await rootBundle.loadString('assets/language/${locale.languageCode}.json');
@@ -21,8 +22,8 @@ class AppLocalization {
     _localizedValues = mappedJson.map((key, value) => MapEntry(key, value.toString()));
   }
 
-  String translate(String key) {
-    return _localizedValues[key];
+  String? translate(String key) {
+    return _localizedValues![key];
   }
 
   static const LocalizationsDelegate<AppLocalization> delegate = _DemoLocalizationsDelegate();

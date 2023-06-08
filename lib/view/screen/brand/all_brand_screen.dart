@@ -54,7 +54,7 @@ class AllBrandScreen extends StatelessWidget {
             child: Image.asset(Images.filter_image, color: ColorResources.WHITE),
           ),
           onSelected: (value) {
-            Provider.of<BrandProvider>(context, listen: false).sortBrandLis(value);
+            Provider.of<BrandProvider>(context, listen: false).sortBrandLis(int.parse(value.toString()));
           },
         )],
       ),

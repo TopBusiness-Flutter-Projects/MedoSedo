@@ -31,7 +31,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   void initState() {
     _countryDialCode = CountryCode.fromCountryCode(
-        Provider.of<SplashProvider>(context, listen: false).configModel.countryCode).dialCode;
+        Provider.of<SplashProvider>(context, listen: false).configModel.countryCode).dialCode!;
     super.initState();
   }
 
@@ -91,14 +91,14 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 Row(children: [
                   CodePickerWidget(
                     onChanged: (CountryCode countryCode) {
-                      _countryDialCode = countryCode.dialCode;
+                      _countryDialCode = countryCode.dialCode!;
                       },
                     initialSelection: _countryDialCode,
                     favorite: [_countryDialCode],
                     showDropDownButton: true,
                     padding: EdgeInsets.zero,
                     showFlagMain: true,
-                    textStyle: TextStyle(color: Theme.of(context).textTheme.displayLarge.color),
+                    textStyle: TextStyle(color: Theme.of(context).textTheme.displayLarge!.color!),
                   ),
 
 

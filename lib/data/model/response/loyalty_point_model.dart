@@ -1,14 +1,14 @@
 class LoyaltyPointModel {
-  int _limit;
-  int _offset;
-  int _totalLoyaltyPoint;
-  List<LoyaltyPointList> _loyaltyPointList;
+  late int _limit;
+  late int _offset;
+  late int _totalLoyaltyPoint;
+  late List<LoyaltyPointList> _loyaltyPointList;
 
   LoyaltyPointModel(
-      {int limit,
-        int offset,
-        int totalLoyaltyPoint,
-        List<LoyaltyPointList> loyaltyPointList}) {
+      {required int limit,
+        required int offset,
+        required int totalLoyaltyPoint,
+        required List<LoyaltyPointList> loyaltyPointList}) {
     if (limit != null) {
       this._limit = limit;
     }
@@ -55,28 +55,28 @@ class LoyaltyPointModel {
 }
 
 class LoyaltyPointList {
-  int _id;
-  int _userId;
-  String _transactionId;
-  int _credit;
-  int _debit;
-  int _balance;
-  String _reference;
-  String _transactionType;
-  String _createdAt;
-  String _updatedAt;
+  late int _id;
+  late int _userId;
+  late String _transactionId;
+  late int _credit;
+  late int _debit;
+  late int _balance;
+  late String _reference;
+  late String _transactionType;
+  late String _createdAt;
+  late String _updatedAt;
 
   LoyaltyPointList(
-      {int id,
-        int userId,
-        String transactionId,
-        int credit,
-        int debit,
-        int balance,
-        String reference,
-        String transactionType,
-        String createdAt,
-        String updatedAt}) {
+      {required int id,
+        required int userId,
+        required String transactionId,
+        required int credit,
+        required int debit,
+        required int balance,
+        required String reference,
+        required String transactionType,
+        required String createdAt,
+        required String updatedAt}) {
     if (id != null) {
       this._id = id;
     }

@@ -11,16 +11,16 @@ import 'package:provider/provider.dart';
 
 class SelectLocationScreen extends StatefulWidget {
   final GoogleMapController googleMapController;
-  SelectLocationScreen({@required this.googleMapController});
+  SelectLocationScreen({required this.googleMapController});
 
   @override
   _SelectLocationScreenState createState() => _SelectLocationScreenState();
 }
 
 class _SelectLocationScreenState extends State<SelectLocationScreen> {
-  GoogleMapController _controller;
+  GoogleMapController? _controller;
   TextEditingController _locationController = TextEditingController();
-  CameraPosition _cameraPosition;
+  CameraPosition? _cameraPosition;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    _controller!.dispose();
   }
 
   void _openSearchDialog(BuildContext context, GoogleMapController mapController) async {
@@ -70,7 +70,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                           indoorViewEnabled: true,
                           mapToolbarEnabled: true,
                           onCameraIdle: () {
-                            locationProvider.updatePosition(_cameraPosition, false, null, context);
+                            locationProvider.updatePosition(_cameraPosition!, false, "", context);
                           },
                           onCameraMove: ((_position) => _cameraPosition = _position),
                           // markers: Set<Marker>.of(locationProvider.markers),
@@ -80,7 +80,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                         ),
                         locationProvider.pickAddress != null
                             ? InkWell(
-                          onTap: () => _openSearchDialog(context, _controller),
+                          onTap: () => _openSearchDialog(context, _controller!),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE, vertical: 18.0),

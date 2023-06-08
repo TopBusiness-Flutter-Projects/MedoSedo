@@ -8,11 +8,11 @@ import 'package:medosedo_ecommerce/view/basewidget/textfield/custom_textfield.da
 
 class OfflinePaymentDialog extends StatelessWidget {
   final double rotateAngle;
-  final Function onTap;
-  final TextEditingController paymentBy;
-  final TextEditingController transactionId;
-  final TextEditingController paymentNote;
-  OfflinePaymentDialog({ this.rotateAngle = 0,  @required this.onTap, this.paymentBy, this.transactionId, this.paymentNote});
+  final VoidCallback onTap;
+  final TextEditingController? paymentBy;
+  final TextEditingController? transactionId;
+  final TextEditingController? paymentNote;
+  OfflinePaymentDialog({ this.rotateAngle = 0,  required this.onTap, this.paymentBy, this.transactionId, this.paymentNote});
 
   @override
   Widget build(BuildContext context) {

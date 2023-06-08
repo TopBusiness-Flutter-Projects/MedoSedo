@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 class RefundBottomSheet extends StatefulWidget {
   final Product product;
   final int orderDetailsId;
-  RefundBottomSheet({@required this.product, @required this.orderDetailsId});
+  RefundBottomSheet({required this.product, required this.orderDetailsId});
 
   @override
   _RefundBottomSheetState createState() => _RefundBottomSheetState();
@@ -34,7 +34,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
       child: Scaffold(
         body: Column(
           children: [
-            CustomAppBar(title: getTranslated('refund_request', context)),
+            CustomAppBar(title: getTranslated('refund_request', context),),
 
             SingleChildScrollView(
               child: Consumer<OrderProvider>(

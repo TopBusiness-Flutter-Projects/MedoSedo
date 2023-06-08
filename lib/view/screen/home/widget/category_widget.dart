@@ -8,7 +8,7 @@ import 'package:medosedo_ecommerce/utill/images.dart';
 import 'package:provider/provider.dart';
 class CategoryWidget extends StatelessWidget {
   final Category category;
-  const CategoryWidget({Key key, @required this.category}) : super(key: key);
+  const CategoryWidget({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

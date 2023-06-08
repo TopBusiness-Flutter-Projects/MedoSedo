@@ -22,7 +22,7 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  bool isGuestMode;
+  bool? isGuestMode;
   @override
   void initState() {
     Provider.of<OrderProvider>(context, listen: false).initOrderList(context);
@@ -37,7 +37,7 @@ class _OrderScreenState extends State<OrderScreen> {
       body: Column(
         children: [
           CustomAppBar(title: getTranslated('ORDER', context), isBackButtonExist: widget.isBacButtonExist),
-          isGuestMode ? SizedBox() :
+          isGuestMode! ? SizedBox() :
           Provider.of<OrderProvider>(context).pendingList != null ?
           Consumer<OrderProvider>(
             builder: (context, orderProvider, child) => Padding(
@@ -51,7 +51,7 @@ class _OrderScreenState extends State<OrderScreen> {
               ],),),) : SizedBox(),
 
 
-          isGuestMode ? Expanded(child: NotLoggedInWidget()) :
+          isGuestMode! ? Expanded(child: NotLoggedInWidget()) :
           Provider.of<OrderProvider>(context).pendingList != null ?
           Consumer<OrderProvider>(
             builder: (context, order, child) {

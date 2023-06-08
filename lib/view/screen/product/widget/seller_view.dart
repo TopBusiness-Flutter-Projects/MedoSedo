@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 
 class SellerView extends StatelessWidget {
   final String sellerId;
-  SellerView({@required this.sellerId});
+  SellerView({required this.sellerId});
 
   @override
   Widget build(BuildContext context) {

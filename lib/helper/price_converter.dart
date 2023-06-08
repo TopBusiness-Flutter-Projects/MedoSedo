@@ -3,7 +3,7 @@ import 'package:medosedo_ecommerce/provider/splash_provider.dart';
 import 'package:provider/provider.dart';
 
 class PriceConverter {
-  static String convertPrice(BuildContext context, double price, {double discount, String discountType}) {
+  static String convertPrice(BuildContext context, double price, { double? discount,  String? discountType}) {
     if(discount != null && discountType != null){
       if(discountType == 'amount' || discountType == 'flat') {
         price = price - discount;

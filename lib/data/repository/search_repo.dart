@@ -7,11 +7,12 @@ import 'package:medosedo_ecommerce/data/datasource/remote/exception/api_error_ha
 import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class SearchRepo {
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
-  SearchRepo({@required this.dioClient, @required this.sharedPreferences});
+  SearchRepo({required this.dioClient, required this.sharedPreferences});
 
   Future<ApiResponse> getSearchProductList(String query) async {
     try {
@@ -25,9 +26,9 @@ class SearchRepo {
   // for save home address
   Future<void> saveSearchAddress(String searchAddress) async {
     try {
-      List<String> searchKeywordList = sharedPreferences.getStringList(AppConstants.SEARCH_ADDRESS);
-      if (!searchKeywordList.contains(searchAddress)) {
-        searchKeywordList.add(searchAddress);
+      List<String>? searchKeywordList = sharedPreferences.getStringList(AppConstants.SEARCH_ADDRESS);
+      if (!searchKeywordList!.contains(searchAddress)) {
+        searchKeywordList!.add(searchAddress);
       }
       await sharedPreferences.setStringList(AppConstants.SEARCH_ADDRESS, searchKeywordList);
     } catch (e) {

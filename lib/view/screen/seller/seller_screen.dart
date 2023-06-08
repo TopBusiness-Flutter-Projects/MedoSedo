@@ -21,7 +21,7 @@ import 'package:provider/provider.dart';
 
 class SellerScreen extends StatefulWidget {
   final SellerModel seller;
-  SellerScreen({@required this.seller});
+  SellerScreen({required this.seller});
 
   @override
   State<SellerScreen> createState() => _SellerScreenState();
@@ -59,7 +59,7 @@ class _SellerScreenState extends State<SellerScreen> {
 
       body: Column(
         children: [
-          CustomAppBar(title: '${widget.seller.seller.fName}'+' ''${widget.seller.seller.lName}'),
+          CustomAppBar(title: '${widget.seller.seller.fName}'+' ''${widget.seller.seller.lName}', onActionPressed: (){}),
 
           Expanded(
             child: ListView(

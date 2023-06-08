@@ -54,7 +54,7 @@ class CurrencyDialog extends StatelessWidget {
                 index = i;
               },
               children: _valueList.map((value) {
-                return Center(child: Text(value, style: TextStyle(color: Theme.of(context).textTheme.bodyLarge.color)));
+                return Center(child: Text(value, style: TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color)));
               }).toList(),
             );
           },

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:medosedo_ecommerce/data/datasource/remote/dio/dio_client.dart';
 import 'package:medosedo_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
@@ -6,7 +8,7 @@ import 'package:medosedo_ecommerce/utill/app_constants.dart';
 
 class BrandRepo {
   final DioClient dioClient;
-  BrandRepo({@required this.dioClient});
+  BrandRepo({required this.dioClient});
 
   Future<ApiResponse> getBrandList() async {
 

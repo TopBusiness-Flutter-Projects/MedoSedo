@@ -10,7 +10,7 @@ class OrderTypeButton extends StatelessWidget {
   final int index;
   final List<OrderModel> orderList;
 
-  OrderTypeButton({@required this.text, @required this.index, @required this.orderList});
+  OrderTypeButton({required this.text, required this.index, required this.orderList});
 
   @override
   Widget build(BuildContext context) {

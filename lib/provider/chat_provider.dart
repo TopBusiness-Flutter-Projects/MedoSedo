@@ -6,23 +6,24 @@ import 'package:medosedo_ecommerce/data/model/response/chat_model.dart';
 import 'package:medosedo_ecommerce/data/model/response/message_model.dart';
 import 'package:medosedo_ecommerce/data/repository/chat_repo.dart';
 import 'package:medosedo_ecommerce/helper/api_checker.dart';
-
+import 'dart:async';
+import 'dart:convert';
 
 class ChatProvider extends ChangeNotifier {
   final ChatRepo chatRepo;
-  ChatProvider({@required this.chatRepo});
+  ChatProvider({required this.chatRepo});
 
 
   bool _isSendButtonActive = false;
   bool get isSendButtonActive => _isSendButtonActive;
-  List<Chat> _chatList;
+  List<Chat> _chatList=[];
   List<Chat> get chatList => _chatList;
   List<Message> _messageList = [];
   List<Message> get messageList => _messageList;
   bool _isSearching = false;
   bool get isSearching => _isSearching;
-  File _imageFile;
-  File get imageFile => _imageFile;
+ File? _imageFile;
+  File get imageFile => _imageFile!;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -38,8 +39,8 @@ class ChatProvider extends ChangeNotifier {
     }
     _isLoading = true;
     ApiResponse apiResponse = await chatRepo.getChatList(_userTypeIndex == 0? 'seller' : 'delivery-man', offset);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      _chatList = ChatModel.fromJson(apiResponse.response.data).chat;
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      _chatList = ChatModel.fromJson(apiResponse.response!.data).chat!;
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
@@ -54,8 +55,8 @@ class ChatProvider extends ChangeNotifier {
     }
     _isLoading = true;
     ApiResponse apiResponse = await chatRepo.getMessageList(_userTypeIndex == 0? 'seller' : 'delivery-man', id, offset);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-      _messageList = MessageModel.fromJson(apiResponse.response.data).message;
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      _messageList = MessageModel.fromJson(apiResponse.response!.data).message;
 
     } else {
       ApiChecker.checkApi(context, apiResponse);
@@ -69,7 +70,7 @@ class ChatProvider extends ChangeNotifier {
   void sendMessage(MessageBody messageBody, BuildContext context) async {
     _isSendButtonActive = true;
     ApiResponse apiResponse = await chatRepo.sendMessage(messageBody, _userTypeIndex == 0? 'seller' : 'delivery-man');
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       getMessageList(context, messageBody.id, 1);
 
     } else {
@@ -91,7 +92,7 @@ class ChatProvider extends ChangeNotifier {
   }
 
   void removeImage(String text) {
-    _imageFile = null;
+    _imageFile = null!;
     text.isEmpty ? _isSendButtonActive = false : _isSendButtonActive = true;
     notifyListeners();
   }

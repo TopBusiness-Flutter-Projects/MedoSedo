@@ -19,7 +19,7 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   PageController _pageController = PageController();
   int _pageIndex = 0;
-  List<Widget> _screens ;
+  List<Widget> _screens=[] ;
   GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
 
   bool singleVendor = false;
@@ -56,7 +56,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         key: _scaffoldKey,
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Theme.of(context).primaryColor,
-          unselectedItemColor: Theme.of(context).textTheme.bodyLarge.color,
+          unselectedItemColor: Theme.of(context).textTheme.bodyLarge!.color,
           showUnselectedLabels: true,
           currentIndex: _pageIndex,
           type: BottomNavigationBarType.fixed,
@@ -80,7 +80,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   BottomNavigationBarItem _barItem(String icon, String label, int index) {
     return BottomNavigationBarItem(
       icon: Image.asset(icon, color: index == _pageIndex ?
-      Theme.of(context).primaryColor : Theme.of(context).textTheme.bodyLarge.color.withOpacity(0.5),
+      Theme.of(context).primaryColor : Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.5),
         height: 25, width: 25,
       ),
       label: label,

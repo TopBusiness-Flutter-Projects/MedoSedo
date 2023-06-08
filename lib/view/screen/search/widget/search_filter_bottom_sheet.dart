@@ -126,7 +126,7 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
 class MyCheckBox extends StatelessWidget {
   final String title;
   final int index;
-  MyCheckBox({@required this.title, @required this.index});
+  MyCheckBox({required this.title, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +136,7 @@ class MyCheckBox extends StatelessWidget {
       activeColor: Colors.transparent,
       value: Provider.of<SearchProvider>(context).filterIndex == index,
       onChanged: (isChecked) {
-        if(isChecked) {
+        if(isChecked!) {
           Provider.of<SearchProvider>(context, listen: false).setFilterIndex(index);
         }
       },

@@ -10,7 +10,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class SpecificationScreen extends StatelessWidget {
   final String specification;
-  SpecificationScreen({@required this.specification});
+  SpecificationScreen({required this.specification});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SpecificationScreen extends StatelessWidget {
     return Scaffold(
       body: Column(children: [
 
-        CustomAppBar(title: getTranslated('specification', context)),
+        CustomAppBar(title: getTranslated('specification', context), onActionPressed: (){}),
 
         Expanded(child: SingleChildScrollView(child: Html(data: specification,
           tagsList: Html.tags,

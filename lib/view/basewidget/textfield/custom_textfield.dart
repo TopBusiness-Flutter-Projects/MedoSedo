@@ -11,20 +11,20 @@ extension EmailValidator on String {
 }
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final TextInputType textInputType;
-  final int maxLine;
-  final FocusNode focusNode;
-  final FocusNode nextNode;
-  final TextInputAction textInputAction;
-  final bool isPhoneNumber;
-  final bool isValidator;
-  final String validatorMessage;
-  final Color fillColor;
-  final TextCapitalization capitalization;
-  final bool isBorder;
-  final TextAlign textAlign;
+  final TextEditingController? controller;
+  final String? hintText;
+  final TextInputType? textInputType;
+  final int? maxLine;
+  final FocusNode? focusNode;
+  final FocusNode? nextNode;
+  final TextInputAction? textInputAction;
+  final bool? isPhoneNumber;
+  final bool? isValidator;
+  final String? validatorMessage;
+  final Color? fillColor;
+  final TextCapitalization? capitalization;
+  final bool? isBorder;
+  final TextAlign? textAlign;
 
   CustomTextField(
       {this.controller,
@@ -47,19 +47,19 @@ class CustomTextField extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        border: isBorder? Border.all(width: .8,color: Theme.of(context).hintColor):null,
+        border: isBorder!? Border.all(width: .8,color: Theme.of(context).hintColor):null,
         color: Theme.of(context).highlightColor,
-        borderRadius: isPhoneNumber ? BorderRadius.only(topRight: Radius.circular(6), bottomRight: Radius.circular(6)) : BorderRadius.circular(6),
+        borderRadius: isPhoneNumber! ? BorderRadius.only(topRight: Radius.circular(6), bottomRight: Radius.circular(6)) : BorderRadius.circular(6),
         boxShadow: [
           BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 3, offset: Offset(0, 1)) // changes position of shadow
         ],
       ),
       child: TextFormField(
-        textAlign: textAlign != null? textAlign : isBorder? TextAlign.center:TextAlign.start,
+        textAlign: textAlign != null? textAlign! : isBorder!? TextAlign.center:TextAlign.start,
         controller: controller,
         maxLines: maxLine ?? 1,
-        textCapitalization: capitalization,
-        maxLength: isPhoneNumber ? 15 : null,
+        textCapitalization: capitalization!,
+        maxLength: isPhoneNumber! ? 15 : null,
         focusNode: focusNode,
         keyboardType: textInputType ?? TextInputType.text,
         //keyboardType: TextInputType.number,
@@ -69,10 +69,10 @@ class CustomTextField extends StatelessWidget {
           FocusScope.of(context).requestFocus(nextNode);
         },
         //autovalidate: true,
-        inputFormatters: [isPhoneNumber ? FilteringTextInputFormatter.digitsOnly : FilteringTextInputFormatter.singleLineFormatter],
+        inputFormatters: [isPhoneNumber! ? FilteringTextInputFormatter.digitsOnly : FilteringTextInputFormatter.singleLineFormatter],
         validator: (input){
-          if(input.isEmpty){
-            if(isValidator){
+          if(input!.isEmpty){
+            if(isValidator!){
               return validatorMessage??"";
             }
           }

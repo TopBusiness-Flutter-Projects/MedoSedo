@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/data/model/response/top_seller_model.dart';
@@ -7,10 +9,10 @@ import 'package:medosedo_ecommerce/helper/api_checker.dart';
 class TopSellerProvider extends ChangeNotifier {
   final TopSellerRepo topSellerRepo;
 
-  TopSellerProvider({@required this.topSellerRepo});
+  TopSellerProvider({required this.topSellerRepo});
 
   List<TopSellerModel> _topSellerList = [];
-  int _topSellerSelectedIndex;
+  int _topSellerSelectedIndex=0;
 
   List<TopSellerModel> get topSellerList => _topSellerList;
   int get topSellerSelectedIndex => _topSellerSelectedIndex;
@@ -18,9 +20,9 @@ class TopSellerProvider extends ChangeNotifier {
   Future<void> getTopSellerList(bool reload, BuildContext context) async {
     if (_topSellerList.length == 0 || reload) {
       ApiResponse apiResponse = await topSellerRepo.getTopSeller();
-      if (apiResponse.response != null && apiResponse.response.statusCode == 200 && apiResponse.response.data.toString() != '{}') {
+      if (apiResponse.response != null && apiResponse.response!.statusCode == 200 && apiResponse.response!.data.toString() != '{}') {
         _topSellerList.clear();
-        apiResponse.response.data.forEach((category) => _topSellerList.add(TopSellerModel.fromJson(category)));
+        apiResponse.response!.data.forEach((category) => _topSellerList.add(TopSellerModel.fromJson(category)));
         _topSellerSelectedIndex = 0;
       } else {
         ApiChecker.checkApi(context, apiResponse);

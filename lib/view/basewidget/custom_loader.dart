@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 class CustomLoader extends StatefulWidget {
   const CustomLoader({
-    Key key,
+    Key? key,
     this.color,
     this.size = 50.0,
     this.itemBuilder,
@@ -15,20 +15,20 @@ class CustomLoader extends StatefulWidget {
         assert(size != null),
         super(key: key);
 
-  final Color color;
+  final Color? color;
   final double size;
-  final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder? itemBuilder;
   final Duration duration;
-  final AnimationController controller;
+  final AnimationController? controller;
 
   @override
   _CustomLoaderState createState() => _CustomLoaderState();
 }
 
 class _CustomLoaderState extends State<CustomLoader> with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animationCurve;
-  Animation<double> animationSize;
+  AnimationController? controller;
+  Animation<double>? animationCurve;
+  Animation<double>? animationSize;
 
   @override
   void initState() {
@@ -37,34 +37,34 @@ class _CustomLoaderState extends State<CustomLoader> with SingleTickerProviderSt
     controller = (widget.controller ?? AnimationController(vsync: this, duration: widget.duration))
       ..addListener(() => setState(() {}))
       ..repeat(reverse: true);
-    final animation = CurvedAnimation(parent: controller, curve: Curves.easeInOutCubic);
+    final animation = CurvedAnimation(parent: controller!, curve: Curves.easeInOutCubic);
     animationCurve = Tween(begin: 1.0, end: 0.0).animate(animation);
     animationSize = Tween(begin: 0.5, end: 1.0).animate(animation);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final sizeValue = widget.size * animationSize.value;
+    final sizeValue = widget.size * animationSize!.value;
     return Center(
       child: Transform(
-        transform: Matrix4.identity()..rotateZ(animationCurve.value * math.pi),
+        transform: Matrix4.identity()..rotateZ(animationCurve!.value * math.pi),
         alignment: FractionalOffset.center,
         child: SizedBox.fromSize(
           size: Size.square(sizeValue),
-          child: _itemBuilder(0, 0.5 * sizeValue * animationCurve.value),
+          child: _itemBuilder(0, 0.5 * sizeValue * animationCurve!.value),
         ),
       ),
     );
   }
 
   Widget _itemBuilder(int index, double curveValue) => widget.itemBuilder != null
-      ? widget.itemBuilder(context, index)
+      ? widget.itemBuilder!(context, index)
       : DecoratedBox(
     decoration: BoxDecoration(
       color: widget.color,

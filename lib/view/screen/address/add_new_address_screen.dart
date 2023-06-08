@@ -26,8 +26,8 @@ import 'package:provider/provider.dart';
 class AddNewAddressScreen extends StatefulWidget {
   final bool isEnableUpdate;
   final bool fromCheckout;
-  final AddressModel address;
-  final bool isBilling;
+  final AddressModel? address;
+  final bool? isBilling;
   AddNewAddressScreen({this.isEnableUpdate = false, this.address, this.fromCheckout = false, this.isBilling});
 
   @override
@@ -45,17 +45,17 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
   final FocusNode _numberNode = FocusNode();
   final FocusNode _cityNode = FocusNode();
   final FocusNode _zipNode = FocusNode();
-  GoogleMapController _controller;
-  CameraPosition _cameraPosition;
+  GoogleMapController? _controller;
+  CameraPosition? _cameraPosition;
   bool _updateAddress = true;
-  Address _address;
+  Address? _address;
 
   String zip = '',  country = '';
 
   @override
   void initState() {
     super.initState();
-    if(widget.isBilling){
+    if(widget.isBilling!){
       _address = Address.billing;
     }else{
       _address = Address.shipping;
@@ -74,12 +74,12 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
     _checkPermission(() => Provider.of<LocationProvider>(context, listen: false).getCurrentLocation(context, true, mapController: _controller),context);
     if (widget.isEnableUpdate && widget.address != null) {
       _updateAddress = false;
-      Provider.of<LocationProvider>(context, listen: false).updatePosition(CameraPosition(target: LatLng(double.parse(widget.address.latitude), double.parse(widget.address.longitude))), true, widget.address.address, context);
-      _contactPersonNameController.text = '${widget.address.contactPersonName}';
-      _contactPersonNumberController.text = '${widget.address.phone}';
-      if (widget.address.addressType == 'Home') {
+      Provider.of<LocationProvider>(context, listen: false).updatePosition(CameraPosition(target: LatLng(double.parse(widget.address!.latitude!), double.parse(widget.address!.longitude!))), true, widget.address!.address!, context);
+      _contactPersonNameController.text = '${widget.address!.contactPersonName}';
+      _contactPersonNumberController.text = '${widget.address!.phone}';
+      if (widget.address!.addressType == 'Home') {
         Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(0, false);
-      } else if (widget.address.addressType == 'Workplace') {
+      } else if (widget.address!.addressType == 'Workplace') {
         Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(1, false);
       } else {
         Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(2, false);
@@ -129,12 +129,12 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         mapType: MapType.normal,
                                         initialCameraPosition: CameraPosition(
                                           target: widget.isEnableUpdate
-                                              ? LatLng(double.parse(widget.address.latitude) ?? 0.0, double.parse(widget.address.longitude) ?? 0.0)
+                                              ? LatLng(double.parse(widget.address!.latitude!) ?? 0.0, double.parse(widget.address!.longitude!) ?? 0.0)
                                               : LatLng(locationProvider.position.latitude ?? 0.0, locationProvider.position.longitude ?? 0.0),
                                           zoom: 17,
                                         ),
                                         onTap: (latLng) {
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => SelectLocationScreen(googleMapController: _controller)));
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => SelectLocationScreen(googleMapController: _controller!)));
                                         },
                                         zoomControlsEnabled: false,
                                         compassEnabled: false,
@@ -142,7 +142,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         mapToolbarEnabled: false,
                                         onCameraIdle: () {
                                           if(_updateAddress) {
-                                            locationProvider.updatePosition(_cameraPosition, true, null, context);
+                                            locationProvider.updatePosition(_cameraPosition!, true, "", context);
                                           }else {
                                             _updateAddress = true;
                                           }
@@ -196,7 +196,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                           onTap: () {
 
                                             Navigator.of(context).push(MaterialPageRoute(
-                                                builder: (BuildContext context) => SelectLocationScreen(googleMapController: _controller)));
+                                                builder: (BuildContext context) => SelectLocationScreen(googleMapController: _controller!)));
                                           },
                                           child: Container(
                                             width: 30,
@@ -223,7 +223,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                   child: Center(
                                       child: Text(
                                         getTranslated('add_the_location_correctly', context),
-                                        style: Theme.of(context).textTheme.displayMedium.copyWith(color: ColorResources.getTextTitle(context), fontSize: Dimensions.FONT_SIZE_SMALL),
+                                        style: Theme.of(context).textTheme.displayMedium!.copyWith(color: ColorResources.getTextTitle(context), fontSize: Dimensions.FONT_SIZE_SMALL),
                                       )),
                                 ),
 
@@ -234,7 +234,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                   child: Text(
                                     getTranslated('label_us', context),
                                     style:
-                                    Theme.of(context).textTheme.displaySmall.copyWith(color: ColorResources.getHint(context), fontSize: Dimensions.FONT_SIZE_LARGE),
+                                    Theme.of(context).textTheme.displaySmall!.copyWith(color: ColorResources.getHint(context), fontSize: Dimensions.FONT_SIZE_LARGE),
                                   ),
                                 ),
 
@@ -280,7 +280,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         Radio<Address>(
                                           value: Address.shipping,
                                           groupValue: _address,
-                                          onChanged: (Address value) {
+                                          onChanged: ( value) {
                                             setState(() {
                                               _address = value;
                                             });
@@ -295,7 +295,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         Radio<Address>(
                                           value: Address.billing,
                                           groupValue: _address,
-                                          onChanged: (Address value) {
+                                          onChanged: ( value) {
                                             setState(() {
                                               _address = value;
                                             });
@@ -314,7 +314,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                   padding: const EdgeInsets.only(top: 5,),
                                   child: Text(
                                     getTranslated('delivery_address', context),
-                                    style: Theme.of(context).textTheme.displaySmall.copyWith(color: ColorResources.getHint(context), fontSize: Dimensions.FONT_SIZE_LARGE),
+                                    style: Theme.of(context).textTheme.displaySmall?.copyWith(color: ColorResources.getHint(context), fontSize: Dimensions.FONT_SIZE_LARGE),
                                   ),
                                 ),
 
@@ -362,7 +362,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                     items: locationProvider.restrictedZipList,
                                     itemAsString: (RestrictedZipModel u) => u.zipcode,
                                     onChanged: (value){
-                                      _zipCodeController.text = value.zipcode;
+                                      _zipCodeController.text = value!.zipcode;
                                     },
                                     dropdownDecoratorProps: DropDownDecoratorProps(
                                       dropdownSearchDecoration: InputDecoration(labelText: "zip"),
@@ -398,7 +398,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                           ),
                                         ),
                                         onChanged: (value){
-                                          _countryCodeController.text = value;
+                                          _countryCodeController.text = value!;
                                           print('value===>$value');
                                         },
 
@@ -413,9 +413,9 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         child: CountryPickerDropdown(
                                           initialValue: country,
                                           itemBuilder: _buildDropdownItemForCountry,
-                                          onValuePicked: (Country country) {
-                                            print("${country.name}");
-                                            _countryCodeController.text = country.name;
+                                          onValuePicked: ( country) {
+                                            print("${country!.name}");
+                                            _countryCodeController.text = country.name!;
                                             //locationProvider.searchCountryController.text = country.name;
                                           },
                                         ),
@@ -473,12 +473,12 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                       country:  _countryCodeController.text,
                                       isBilling: _address == Address.billing ? 1:0,
                                       address: locationProvider.locationController.text ?? '',
-                                      latitude: widget.isEnableUpdate ? locationProvider.position.latitude.toString() ?? widget.address.latitude : locationProvider.position.latitude.toString() ?? '',
-                                      longitude: widget.isEnableUpdate ? locationProvider.position.longitude.toString() ?? widget.address.longitude
+                                      latitude: widget.isEnableUpdate ? locationProvider.position.latitude.toString() ?? widget.address!.latitude! : locationProvider.position.latitude.toString() ?? '',
+                                      longitude: widget.isEnableUpdate ? locationProvider.position.longitude.toString() ?? widget.address!.longitude!
                                           : locationProvider.position.longitude.toString() ?? '',
                                     );
                                     if (widget.isEnableUpdate) {
-                                      addressModel.id = widget.address.id;
+                                      addressModel.id = widget.address!.id;
                                       // addressModel.method = 'put';
                                       locationProvider.updateAddress(context, addressModel: addressModel, addressId: addressModel.id).then((value) {});
                                     } else {

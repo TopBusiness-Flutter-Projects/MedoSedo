@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -57,14 +58,14 @@ Future<void> main() async {
   await di.init();
   final NotificationAppLaunchDetails? notificationAppLaunchDetails =
   await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  int? _orderID;
+  int _orderID=0;
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
-    _orderID = (notificationAppLaunchDetails!.payload != null && notificationAppLaunchDetails!.payload!.isNotEmpty)
-        ? int.parse(notificationAppLaunchDetails!.payload!) : null;
+    _orderID = ((notificationAppLaunchDetails!.payload != null && notificationAppLaunchDetails.payload!.isNotEmpty)
+        ? int.parse(notificationAppLaunchDetails!.payload!) : null)!;
   }
   final RemoteMessage? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();
   if (remoteMessage != null) {
-    _orderID = remoteMessage.notification!.titleLocKey != null ? int.parse(remoteMessage!.notification!.titleLocKey!) : null;
+    _orderID = (remoteMessage.notification!.titleLocKey != null ? int.parse(remoteMessage.notification!.titleLocKey!) : null)!;
   }
   print('========-notification-----$_orderID----===========');
 
@@ -107,8 +108,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final int? orderId;
-  MyApp({@required this.orderId});
+  final int orderId;
+  MyApp({ this.orderId=0});
 
   static final navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -132,8 +133,8 @@ class MyApp extends StatelessWidget {
         FallbackLocalizationDelegate()
       ],
       supportedLocales: _locals,
-      home: orderId == null ? SplashScreen() : OrderDetailsScreen(
-        orderId: orderId!, orderType: 'default_type',isNotification: true),
+      home: orderId == 0 ? SplashScreen() : OrderDetailsScreen(
+        orderId: orderId, orderType: 'default_type',isNotification: true),
     );
   }
 }

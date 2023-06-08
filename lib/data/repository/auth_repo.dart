@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -15,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthRepo {
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
-  AuthRepo({@required this.dioClient, @required this.sharedPreferences});
+  AuthRepo({required this.dioClient, required this.sharedPreferences});
 
 
   Future<ApiResponse> socialLogin(SocialLoginModel socialLogin) async {
@@ -71,7 +72,7 @@ class AuthRepo {
   }
 
   Future<String> _getDeviceToken() async {
-    String _deviceToken;
+    String? _deviceToken;
     if(Platform.isIOS) {
       _deviceToken = await FirebaseMessaging.instance.getAPNSToken();
     }else {
@@ -81,12 +82,12 @@ class AuthRepo {
     if (_deviceToken != null) {
       print('--------Device Token---------- '+_deviceToken);
     }
-    return _deviceToken;
+    return _deviceToken!;
   }
 
   // for  user token
   Future<void> saveUserToken(String token) async {
-    dioClient.updateHeader(token, null);
+    dioClient.updateHeader(token, null!);
 
     try {
       await sharedPreferences.setString(AppConstants.TOKEN, token);
@@ -103,7 +104,7 @@ class AuthRepo {
   // for  user token
   Future<void> saveAuthToken(String token) async {
     dioClient.token = token;
-    dioClient.dio.options.headers = {
+    dioClient.dio!.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token'
     };

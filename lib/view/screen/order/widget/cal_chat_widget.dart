@@ -8,12 +8,13 @@ import 'package:medosedo_ecommerce/utill/images.dart';
 import 'package:medosedo_ecommerce/view/screen/chat/chat_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:async';
+import "dart:io";
 class CallAndChatWidget extends StatelessWidget {
   final OrderProvider orderProvider;
   final OrderModel orderModel;
   final bool isSeller;
-  const CallAndChatWidget({Key key, this.orderProvider, this.isSeller = false, this.orderModel}) : super(key: key);
+  const CallAndChatWidget({Key? key, required this.orderProvider, this.isSeller = false, required this.orderModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

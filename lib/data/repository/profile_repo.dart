@@ -10,11 +10,12 @@ import 'package:medosedo_ecommerce/data/model/response/user_info_model.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
+import 'dart:async';
+import 'dart:convert';
 class ProfileRepo {
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
-  ProfileRepo({@required this.dioClient, @required this.sharedPreferences});
+  ProfileRepo({required this.dioClient, required this.sharedPreferences});
 
   Future<ApiResponse> getAddressTypeList() async {
     try {

@@ -32,7 +32,7 @@ class AddressListScreen extends StatelessWidget {
       body: Column(
         children: [
 
-          CustomAppBar(title: getTranslated('ADDRESS_LIST', context)),
+          CustomAppBar(title: getTranslated('ADDRESS_LIST', context), onActionPressed: (){}),
 
           isGuestMode ?
           Expanded(child: NotLoggedInWidget()) : Consumer<ProfileProvider>(
@@ -66,11 +66,11 @@ class AddressListScreen extends StatelessWidget {
                                 showCustomModalDialog(
                                   context,
                                   title: getTranslated('REMOVE_ADDRESS', context),
-                                  content: profileProvider.shippingAddressList[index].address,
+                                  content: profileProvider.shippingAddressList[index].address!,
                                   cancelButtonText: getTranslated('CANCEL', context),
                                   submitButtonText: getTranslated('REMOVE', context),
                                   submitOnPressed: () {
-                                    Provider.of<ProfileProvider>(context, listen: false).removeAddressById(profileProvider.shippingAddressList[index].id, index, context);
+                                    Provider.of<ProfileProvider>(context, listen: false).removeAddressById(profileProvider.shippingAddressList[index].id!, index, context);
                                     Provider.of<ProfileProvider>(context, listen: false).initAddressList(context);
                                     Navigator.of(context).pop();
                                   },

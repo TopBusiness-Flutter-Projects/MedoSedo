@@ -5,13 +5,14 @@ import 'package:medosedo_ecommerce/data/repository/coupon_repo.dart';
 import 'package:medosedo_ecommerce/helper/price_converter.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/view/basewidget/show_custom_snakbar.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class CouponProvider extends ChangeNotifier {
   final CouponRepo couponRepo;
-  CouponProvider({@required this.couponRepo});
+  CouponProvider({required this.couponRepo});
 
-  CouponModel _coupon;
-  double _discount;
+  late CouponModel _coupon;
+  double _discount=0;
   bool _isLoading = false;
   CouponModel get coupon => _coupon;
   double get discount => _discount;
@@ -24,10 +25,10 @@ class CouponProvider extends ChangeNotifier {
     _discount = 0;
     notifyListeners();
     ApiResponse apiResponse = await couponRepo.getCoupon(coupon);
-    if (apiResponse.response != null  && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null  && apiResponse.response!.statusCode == 200) {
       _isLoading = false;
       _couponCode = coupon;
-      Map map = apiResponse.response.data;
+      Map map = apiResponse.response!.data;
       String dis = map['coupon_discount'].toString();
       print('=========>$dis');
       if(map['coupon_discount'] !=null){
@@ -37,16 +38,16 @@ class CouponProvider extends ChangeNotifier {
           '${PriceConverter.convertPrice(context, _discount)} '
           '${getTranslated('discount', context)}', context, isError: false);
     } else {
-      showCustomSnackBar(apiResponse.response.data, context, isToaster: true);
+      showCustomSnackBar(apiResponse.response!.data, context, isToaster: true);
     }
     _isLoading = false;
     notifyListeners();
   }
 
   void removePrevCouponData() {
-    _coupon = null;
+    _coupon = null!;
     _isLoading = false;
-    _discount = null;
-    _coupon = null;
+    _discount = null!;
+    _coupon = null!;
   }
 }

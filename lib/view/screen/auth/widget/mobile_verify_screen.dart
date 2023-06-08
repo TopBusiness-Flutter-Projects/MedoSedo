@@ -22,7 +22,7 @@ class MobileVerificationScreen extends StatefulWidget {
 
 class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
 
-  TextEditingController _numberController;
+  TextEditingController? _numberController;
   final FocusNode _numberFocus = FocusNode();
   String _countryDialCode = '+880';
 
@@ -30,14 +30,14 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
   void initState() {
     super.initState();
     _numberController = TextEditingController();
-    _countryDialCode = CountryCode.fromCountryCode(Provider.of<SplashProvider>(context, listen: false).configModel.countryCode).dialCode;
+    _countryDialCode = CountryCode.fromCountryCode(Provider.of<SplashProvider>(context, listen: false).configModel.countryCode).dialCode!;
   }
 
 
   @override
   Widget build(BuildContext context) {
-    final number = ModalRoute.of(context).settings.arguments;
-    _numberController.text = number;
+    final number = ModalRoute.of(context)!.settings.arguments;
+    _numberController!.text = number.toString();
     return Scaffold(
 
       body: SafeArea(
@@ -77,14 +77,14 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
                         child: Row(children: [
                           CodePickerWidget(
                             onChanged: (CountryCode countryCode) {
-                              _countryDialCode = countryCode.dialCode;
+                              _countryDialCode = countryCode.dialCode!;
                             },
                             initialSelection: _countryDialCode,
                             favorite: [_countryDialCode],
                             showDropDownButton: true,
                             padding: EdgeInsets.zero,
                             showFlagMain: true,
-                            textStyle: TextStyle(color: Theme.of(context).textTheme.displayLarge.color),
+                            textStyle: TextStyle(color: Theme.of(context).textTheme.displayLarge!.color),
 
                           ),
 
@@ -107,8 +107,8 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen> {
                       CustomButton(
                         buttonText: getTranslated('continue', context),
                         onTap: () async {
-                          String _number = _countryDialCode+_numberController.text.trim();
-                          String _numberChk = _numberController.text.trim();
+                          String _number = _countryDialCode+_numberController!.text.trim();
+                          String _numberChk = _numberController!.text.trim();
 
                           if (_numberChk.isEmpty) {
                             showCustomSnackBar(getTranslated('enter_phone_number', context), context);

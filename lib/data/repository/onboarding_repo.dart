@@ -6,10 +6,11 @@ import 'package:medosedo_ecommerce/data/model/response/base/api_response.dart';
 import 'package:medosedo_ecommerce/data/model/response/onboarding_model.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
-
+import 'dart:async';
+import 'dart:convert';
 class OnBoardingRepo{
   final DioClient dioClient;
-  OnBoardingRepo({@required this.dioClient});
+  OnBoardingRepo({required this.dioClient});
 
   Future<ApiResponse> getOnBoardingList(BuildContext context) async {
     try {

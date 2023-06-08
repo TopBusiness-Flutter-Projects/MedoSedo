@@ -31,7 +31,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
-  GlobalKey<FormState> _formKey;
+  GlobalKey<FormState>? _formKey;
 
   FocusNode _fNameFocus = FocusNode();
   FocusNode _lNameFocus = FocusNode();
@@ -45,8 +45,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
 
   addUser() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey!.currentState!.validate()) {
+      _formKey!.currentState!.save();
       isEmailVerified = true;
 
       String _firstName = _firstNameController.text.trim();
@@ -152,7 +152,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   void initState() {
     super.initState();
     Provider.of<SplashProvider>(context,listen: false).configModel;
-    _countryDialCode = CountryCode.fromCountryCode(Provider.of<SplashProvider>(context, listen: false).configModel.countryCode).dialCode;
+    _countryDialCode = CountryCode.fromCountryCode(Provider.of<SplashProvider>(context, listen: false).configModel.countryCode).dialCode!;
 
 
     _formKey = GlobalKey<FormState>();
@@ -216,14 +216,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 child: Row(children: [
                   CodePickerWidget(
                     onChanged: (CountryCode countryCode) {
-                      _countryDialCode = countryCode.dialCode;
+                      _countryDialCode = countryCode.dialCode!;
                     },
                     initialSelection: _countryDialCode,
                     favorite: [_countryDialCode],
                     showDropDownButton: true,
                     padding: EdgeInsets.zero,
                     showFlagMain: true,
-                    textStyle: TextStyle(color: Theme.of(context).textTheme.displayLarge.color),
+                    textStyle: TextStyle(color: Theme.of(context).textTheme.displayLarge?.color),
 
                   ),
 

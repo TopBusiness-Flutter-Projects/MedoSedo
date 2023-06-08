@@ -10,22 +10,22 @@ import 'package:medosedo_ecommerce/view/basewidget/textfield/custom_textfield.da
 import 'package:medosedo_ecommerce/view/screen/tracking/tracking_result_screen.dart';
 
 class TrackingScreen extends StatelessWidget {
-  final String orderID;
-  TrackingScreen({@required this.orderID});
+  final String? orderID;
+  TrackingScreen({required this.orderID});
 
   final TextEditingController _orderIdController = TextEditingController();
   final GlobalKey<ScaffoldMessengerState> _globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    _orderIdController.text = orderID;
+    _orderIdController.text = orderID!;
 
     return Scaffold(
       key: _globalKey,
       backgroundColor: ColorResources.getIconBg(context),
       body: Column(
         children: [
-          CustomAppBar(title: getTranslated('TRACKING', context)),
+          CustomAppBar(title: getTranslated('TRACKING', context), onActionPressed: (){}),
 
           Expanded(
             child: ListView(
@@ -70,7 +70,7 @@ class TrackingScreen extends StatelessWidget {
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrackingResultScreen(
                                 orderID: _orderIdController.text)));
                           }else {
-                            _globalKey.currentState.showSnackBar(SnackBar(
+                            _globalKey.currentState!.showSnackBar(SnackBar(
                                 content: Text('Insert track ID'), backgroundColor: Colors.red));
                           }
                         },

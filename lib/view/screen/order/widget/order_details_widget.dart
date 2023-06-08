@@ -26,7 +26,7 @@ class OrderDetailsWidget extends StatefulWidget {
   final String orderType;
   final String paymentStatus;
   final Function callback;
-  OrderDetailsWidget({this.orderDetailsModel, this.callback, this.orderType, this.paymentStatus});
+  OrderDetailsWidget({required this.orderDetailsModel, required this.callback, required this.orderType, required this.paymentStatus});
 
   @override
   State<OrderDetailsWidget> createState() => _OrderDetailsWidgetState();
@@ -42,7 +42,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     _port.listen((dynamic data) {
       // setState((){ });
     });
-    FlutterDownloader.registerCallback(downloadCallback);
+    FlutterDownloader.registerCallback(downloadCallback(widget.orderDetailsModel!.id!.toString(),DownloadTaskStatus(0),0)!);
   }
 
   @override
@@ -52,9 +52,9 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
   }
 
   @pragma('vm:entry-point')
-  static void downloadCallback(String id, DownloadTaskStatus status, int progress) {
-    final SendPort send = IsolateNameServer.lookupPortByName('downloader_send_port');
-    send.send([id, status, progress]);
+  static DownloadCallback? downloadCallback(String id, DownloadTaskStatus status, int progress) {
+    final SendPort? send = IsolateNameServer.lookupPortByName('downloader_send_port');
+    send!.send([id, status, progress]);
   }
 
   @override
@@ -91,94 +91,94 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
 
 
 
-                        Provider.of<OrderProvider>(context).orderTypeIndex == 1 && widget.orderType != "POS"?
+                      Provider.of<OrderProvider>(context).orderTypeIndex == 1 && widget.orderType != "POS"?
+                      InkWell(
+                        onTap: () {
+                          if(Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == 1) {
+                            Provider.of<ProductDetailsProvider>(context, listen: false).removeData();
+                            showModalBottomSheet(context: context, isScrollControlled: true,
+                                backgroundColor: Colors.transparent, builder: (context) =>
+                                    ReviewBottomSheet(
+                                        productID: widget.orderDetailsModel.productDetails.id.toString(),
+                                        callback: widget.callback));
+                          }
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
+                          padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                              horizontal: Dimensions.PADDING_SIZE_SMALL),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_DEFAULT),
+                            border: Border.all(width: 1, color: Theme.of(context).primaryColor),
+                          ),
+
+
+                          child: Text(getTranslated('review', context), style: titilliumRegular.copyWith(
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                            color: ColorResources.getTextTitle(context),
+                          )),
+                        ),
+                      ) : SizedBox.shrink(),
+
+
+                      Consumer<OrderProvider>(builder: (context,refund,_){
+                        return refund.orderTypeIndex == 1 && widget.orderDetailsModel.refundReq == 0 && widget.orderType != "POS"?
                         InkWell(
                           onTap: () {
-                            if(Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == 1) {
-                              Provider.of<ProductDetailsProvider>(context, listen: false).removeData();
-                              showModalBottomSheet(context: context, isScrollControlled: true,
-                                  backgroundColor: Colors.transparent, builder: (context) =>
-                                  ReviewBottomSheet(
-                                      productID: widget.orderDetailsModel.productDetails.id.toString(),
-                                      callback: widget.callback));
-                            }
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
+                            Provider.of<ProductDetailsProvider>(context, listen: false).removeData();
+                            refund.getRefundReqInfo(context, widget.orderDetailsModel.id).then((value) {
+                              if(value.response!.statusCode==200){
+                                Navigator.push(context, MaterialPageRoute(builder: (_) =>
+                                    RefundBottomSheet(product: widget.orderDetailsModel.productDetails,
+                                        orderDetailsId: widget.orderDetailsModel.id)));
+                              }
+                            });},
+
+                          child: refund.isRefund ?
+                          Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor)):
+                          Container(margin: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
                             padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                                 horizontal: Dimensions.PADDING_SIZE_SMALL),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_DEFAULT),
-                              border: Border.all(width: 1, color: Theme.of(context).primaryColor),
-                            ),
+                            decoration: BoxDecoration(color: ColorResources.getPrimary(context),
+                              borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_DEFAULT),),
+
+                            child: Text(getTranslated('refund_request', context),
+                                style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                                  color: Theme.of(context).highlightColor,)),),
+                        ) :SizedBox();
+                      }),
 
 
-                            child: Text(getTranslated('review', context), style: titilliumRegular.copyWith(
-                              fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                              color: ColorResources.getTextTitle(context),
-                            )),
-                          ),
-                        ) : SizedBox.shrink(),
-
-
-                        Consumer<OrderProvider>(builder: (context,refund,_){
-                          return refund.orderTypeIndex == 1 && widget.orderDetailsModel.refundReq == 0 && widget.orderType != "POS"?
-                          InkWell(
-                            onTap: () {
-                              Provider.of<ProductDetailsProvider>(context, listen: false).removeData();
-                              refund.getRefundReqInfo(context, widget.orderDetailsModel.id).then((value) {
-                                    if(value.response.statusCode==200){
-                                      Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                                          RefundBottomSheet(product: widget.orderDetailsModel.productDetails,
-                                              orderDetailsId: widget.orderDetailsModel.id)));
-                                    }
-                              });},
-
-                            child: refund.isRefund ?
-                            Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor)):
-                            Container(margin: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
-                              padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                                  horizontal: Dimensions.PADDING_SIZE_SMALL),
-                              decoration: BoxDecoration(color: ColorResources.getPrimary(context),
-                                borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_DEFAULT),),
-
-                              child: Text(getTranslated('refund_request', context),
-                                  style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                                color: Theme.of(context).highlightColor,)),),
-                          ) :SizedBox();
-                        }),
-
-
-                        Consumer<OrderProvider>(builder: (context,refund,_){
-                             return (Provider.of<OrderProvider>(context).orderTypeIndex == 1 &&
-                                 widget.orderDetailsModel.refundReq != 0 && widget.orderType != "POS")?
-                             InkWell(
-                               onTap: () {
-                                 Provider.of<ProductDetailsProvider>(context, listen: false).removeData();
-                                 refund.getRefundReqInfo(context, widget.orderDetailsModel.id).then((value) {
-                                   if(value.response.statusCode==200){
-                                     Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                                         RefundResultBottomSheet(product: widget.orderDetailsModel.productDetails,
-                                             orderDetailsId: widget.orderDetailsModel.id,
-                                             orderDetailsModel:  widget.orderDetailsModel)));}});},
+                      Consumer<OrderProvider>(builder: (context,refund,_){
+                        return (Provider.of<OrderProvider>(context).orderTypeIndex == 1 &&
+                            widget.orderDetailsModel.refundReq != 0 && widget.orderType != "POS")?
+                        InkWell(
+                          onTap: () {
+                            Provider.of<ProductDetailsProvider>(context, listen: false).removeData();
+                            refund.getRefundReqInfo(context, widget.orderDetailsModel.id).then((value) {
+                              if(value.response!.statusCode==200){
+                                Navigator.push(context, MaterialPageRoute(builder: (_) =>
+                                    RefundResultBottomSheet(product: widget.orderDetailsModel.productDetails,
+                                        orderDetailsId: widget.orderDetailsModel.id,
+                                        orderDetailsModel:  widget.orderDetailsModel)));}});},
 
 
 
-                               child: refund.isLoading?
-                               Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor)):
+                          child: refund.isLoading?
+                          Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor)):
 
-                               Container(margin: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
-                                 padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                                     horizontal: Dimensions.PADDING_SIZE_SMALL),
-                                 decoration: BoxDecoration(color: ColorResources.getPrimary(context),
-                                   borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_DEFAULT),),
+                          Container(margin: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
+                            padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                horizontal: Dimensions.PADDING_SIZE_SMALL),
+                            decoration: BoxDecoration(color: ColorResources.getPrimary(context),
+                              borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_DEFAULT),),
 
-                                 child: Text(getTranslated('refund_status_btn', context),
-                                     style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                                       color: Theme.of(context).highlightColor,)),),
-                             ) :SizedBox();
-                        }),
-                      ],
+                            child: Text(getTranslated('refund_status_btn', context),
+                                style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                                  color: Theme.of(context).highlightColor,)),),
+                        ) :SizedBox();
+                      }),
+                    ],
                     ),
                     SizedBox(height: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
 
@@ -222,7 +222,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
           (widget.orderDetailsModel.variant != null && widget.orderDetailsModel.variant.isNotEmpty) ?
           Padding(
             padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL,
-              top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: Row(children: [
 
               SizedBox(width: 65),
@@ -254,64 +254,64 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
           Dimensions.PADDING_SIZE_EXTRA_LARGE : 0),
           widget.orderDetailsModel.productDetails?.productType =='digital' && widget.paymentStatus == 'paid'?
           Consumer<OrderProvider>(
-            builder: (context, orderProvider, _) {
-              return InkWell(
-                onTap : () async {
-                  if(widget.orderDetailsModel.productDetails.digitalProductType == 'ready_after_sell' &&
-                      widget.orderDetailsModel.digitalFileAfterSell == null ){
+              builder: (context, orderProvider, _) {
+                return InkWell(
+                  onTap : () async {
+                    if(widget.orderDetailsModel.productDetails.digitalProductType == 'ready_after_sell' &&
+                        widget.orderDetailsModel.digitalFileAfterSell == null ){
 
-                    Fluttertoast.showToast(
-                        msg: getTranslated('product_not_uploaded_yet', context),
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: Dimensions.FONT_SIZE_DEFAULT
-                    );
-                  }else{
-                    print('ios url click=====>${'${Provider.of<SplashProvider>(context, listen: false).
-                    baseUrls.digitalProductUrl}/${widget.orderDetailsModel.digitalFileAfterSell}'}');
-                    final status = await Permission.storage.request();
-                    if(status.isGranted){
-                      Directory directory = Directory('/storage/emulated/0/Download');
-                      if (!await directory.exists()) directory = Platform.isAndroid
-                          ? await getExternalStorageDirectory()
-                          : await getApplicationSupportDirectory();
-                      orderProvider.downloadFile(
-                          widget.orderDetailsModel.productDetails.digitalProductType == 'ready_after_sell'?
-                          '${Provider.of<SplashProvider>(context, listen: false).
-                          baseUrls.digitalProductUrl}/${widget.orderDetailsModel.digitalFileAfterSell}':
-                          '${Provider.of<SplashProvider>(context, listen: false).
-                          baseUrls.digitalProductUrl}/${widget.orderDetailsModel.productDetails.digitalFileReady}',
-                          directory.path);
+                      Fluttertoast.showToast(
+                          msg: getTranslated('product_not_uploaded_yet', context),
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: Dimensions.FONT_SIZE_DEFAULT
+                      );
                     }else{
-                      print('=====permission denied=====');
+                      print('ios url click=====>${'${Provider.of<SplashProvider>(context, listen: false).
+                      baseUrls.digitalProductUrl}/${widget.orderDetailsModel.digitalFileAfterSell}'}');
+                      final status = await Permission.storage.request();
+                      if(status.isGranted){
+                        Directory directory = Directory('/storage/emulated/0/Download');
+                        if (!await directory.exists()) directory = (Platform.isAndroid
+                            ? await getExternalStorageDirectory()
+                            : await getApplicationSupportDirectory())!;
+                        orderProvider.downloadFile(
+                            widget.orderDetailsModel.productDetails.digitalProductType == 'ready_after_sell'?
+                            '${Provider.of<SplashProvider>(context, listen: false).
+                            baseUrls.digitalProductUrl}/${widget.orderDetailsModel.digitalFileAfterSell}':
+                            '${Provider.of<SplashProvider>(context, listen: false).
+                            baseUrls.digitalProductUrl}/${widget.orderDetailsModel.productDetails.digitalFileReady}',
+                            directory.path);
+                      }else{
+                        print('=====permission denied=====');
+                      }
                     }
-                  }
 
-                },
-                child: Container(width: 200,
-                  padding: EdgeInsets.only(left: 5),
-                  height: 38,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.FONT_SIZE_EXTRA_SMALL),
+                  },
+                  child: Container(width: 200,
+                    padding: EdgeInsets.only(left: 5),
+                    height: 38,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Dimensions.FONT_SIZE_EXTRA_SMALL),
 
-                    color: Theme.of(context).primaryColor
+                        color: Theme.of(context).primaryColor
+                    ),
+                    alignment: Alignment.center,
+                    child: Center(child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${getTranslated('download', context)}',
+                          style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: Theme.of(context).cardColor),),
+                        SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+                        Container(width: Dimensions.ICON_SIZE_DEFAULT,
+                            child: Image.asset(Images.file_download, color: Theme.of(context).cardColor,))
+                      ],
+                    )),
                   ),
-                  alignment: Alignment.center,
-                  child: Center(child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('${getTranslated('download', context)}',
-                        style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: Theme.of(context).cardColor),),
-                      SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                      Container(width: Dimensions.ICON_SIZE_DEFAULT,
-                          child: Image.asset(Images.file_download, color: Theme.of(context).cardColor,))
-                    ],
-                  )),
-                ),
-              );
-            }
+                );
+              }
           ) : SizedBox(),
           SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
         ],

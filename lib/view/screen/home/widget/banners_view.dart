@@ -88,10 +88,10 @@ class BannersView extends StatelessWidget {
                       return InkWell(
                         onTap: () {
                           _clickBannerRedirect(context,
-                              bannerProvider.mainBannerList[index].resourceId,
-                              bannerProvider.mainBannerList[index].resourceType =='product'?
-                              bannerProvider.mainBannerList[index].product : null,
-                              bannerProvider.mainBannerList[index].resourceType);
+                              bannerProvider.mainBannerList[index].resourceId!,
+                              bannerProvider.mainBannerList[index]!.resourceType =='product'?
+                              bannerProvider!.mainBannerList[index]!.product! : Product(),
+                              bannerProvider.mainBannerList[index].resourceType!);
                         },
                         child: Container(
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
@@ -127,8 +127,8 @@ class BannersView extends StatelessWidget {
                   ),
                 ],
               ) : Center(child: Text('No banner available')) : Shimmer.fromColors(
-                baseColor: Colors.grey[300],
-                highlightColor: Colors.grey[100],
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
                 enabled: bannerProvider.mainBannerList == null,
                 child: Container(margin: EdgeInsets.symmetric(horizontal: 10), decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),

@@ -30,7 +30,7 @@ class OffersScreen extends StatelessWidget {
             itemBuilder: (context, index) {
 
               return InkWell(
-                onTap: () => _launchUrl(Uri.parse(banner.footerBannerList[index].url)),
+                onTap: () => _launchUrl(Uri.parse(banner.footerBannerList[index].url!)),
                 child: Container(
                   margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
                   decoration: BoxDecoration(
@@ -77,8 +77,8 @@ class OfferShimmer extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
-          baseColor: Colors.grey[300],
-          highlightColor: Colors.grey[100],
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
           enabled: Provider.of<BannerProvider>(context).footerBannerList == null,
           child: Container(
             height: 100,

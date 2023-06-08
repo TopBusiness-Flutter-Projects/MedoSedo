@@ -21,10 +21,10 @@ import 'package:medosedo_ecommerce/view/screen/home/widget/products_view.dart';
 import 'package:provider/provider.dart';
 
 class TopSellerProductScreen extends StatefulWidget {
-  final TopSellerModel topSeller;
-  final int topSellerId;
+  final TopSellerModel? topSeller;
+  final int? topSellerId;
 
-  TopSellerProductScreen({@required this.topSeller, this.topSellerId});
+  TopSellerProductScreen({required this.topSeller, this.topSellerId});
 
   @override
   State<TopSellerProductScreen> createState() => _TopSellerProductScreenState();
@@ -36,8 +36,8 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
 
   void _load(){
     Provider.of<ProductProvider>(context, listen: false).clearSellerData();
-    Provider.of<ProductProvider>(context, listen: false).initSellerProductList(widget.topSeller.sellerId.toString(), 1, context);
-    Provider.of<SellerProvider>(context, listen: false).initSeller(widget.topSeller.sellerId.toString(), context);
+    Provider.of<ProductProvider>(context, listen: false).initSellerProductList(widget.topSeller!.sellerId.toString(), 1, context);
+    Provider.of<SellerProvider>(context, listen: false).initSeller(widget.topSeller!.sellerId.toString(), context);
   }
 
 
@@ -50,21 +50,21 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
   @override
   Widget build(BuildContext context) {
 
-    if(widget.topSeller.vacationEndDate != null){
-      DateTime vacationDate = DateTime.parse(widget.topSeller.vacationEndDate);
-      DateTime vacationStartDate = DateTime.parse(widget.topSeller.vacationStartDate);
+    if(widget.topSeller!.vacationEndDate != null){
+      DateTime vacationDate = DateTime.parse(widget.topSeller!.vacationEndDate);
+      DateTime vacationStartDate = DateTime.parse(widget.topSeller!.vacationStartDate);
       final today = DateTime.now();
       final difference = vacationDate.difference(today).inDays;
       final startDate = vacationStartDate.difference(today).inDays;
 
-      if(difference >= 0 && widget.topSeller.vacationStatus == 1 && startDate <= 0){
+      if(difference >= 0 && widget.topSeller!.vacationStatus == 1 && startDate <= 0){
         vacationIsOn = true;
       }
 
       else{
         vacationIsOn = false;
       }
-      print('------=>${widget.topSeller.name}${widget.topSeller.vacationEndDate}/${widget.topSeller.vacationStartDate}${vacationIsOn.toString()}/${difference.toString()}/${startDate.toString()}');
+      print('------=>${widget.topSeller!.name}${widget.topSeller!.vacationEndDate}/${widget.topSeller!.vacationStartDate}${vacationIsOn.toString()}/${difference.toString()}/${startDate.toString()}');
 
     }
 
@@ -75,7 +75,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
       body: Column(
         children: [
 
-          CustomAppBar(title: widget.topSeller.name),
+          CustomAppBar(title: widget.topSeller!.name, onActionPressed: (){}),
 
           Expanded(
             child: ListView(
@@ -91,8 +91,8 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                     borderRadius: BorderRadius.circular(10),
                     child: FadeInImage.assetNetwork(
                       placeholder: Images.placeholder, height: 120, fit: BoxFit.cover,
-                      image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl}/banner/${widget.topSeller.banner != null ?
-                      widget.topSeller.banner : ''}',
+                      image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl}/banner/${widget.topSeller!.banner != null ?
+                      widget.topSeller!.banner : ''}',
                       imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder, height: 120, fit: BoxFit.cover),
                     ),
                   ),
@@ -117,19 +117,19 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                               borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                               child: FadeInImage.assetNetwork(
                                 placeholder: Images.placeholder, height: 80, width: 80, fit: BoxFit.cover,
-                                image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl}/${widget.topSeller.image}',
+                                image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl}/${widget.topSeller!.image}',
                                 imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder, height: 80, width: 80, fit: BoxFit.cover),
                               ),
                             ),
                           ),
-                          if(widget.topSeller.temporaryClose == 1  || vacationIsOn)
+                          if(widget.topSeller!.temporaryClose == 1  || vacationIsOn)
                             Container(width: 80,height: 80,
                               decoration: BoxDecoration(
                                 color: Colors.black.withOpacity(.5),
                                 borderRadius: BorderRadius.all(Radius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL)),
                               ),
                             ),
-                          widget.topSeller.temporaryClose ==1?
+                          widget.topSeller!.temporaryClose ==1?
                           Positioned(top: 0,bottom: 0,left: 0,right: 0,
                             child: Align(
                               alignment: Alignment.center,
@@ -159,7 +159,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                               children: [
                                 Row(children: [
                                     Expanded(child: Text(
-                                      widget.topSeller.name,
+                                      widget.topSeller!.name,
                                       style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,),),
@@ -172,7 +172,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                                           Navigator.push(context,
                                               MaterialPageRoute(builder: (_) =>
                                                   ChatScreen(
-                                                    id: widget.topSeller.sellerId,
+                                                    id: widget.topSeller!.sellerId,
                                                     name: widget.topSeller?.name??'',
                                                   )));
                                         }
@@ -245,7 +245,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                 Padding(
                   padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   child: ProductView(isHomePage: false, productType: ProductType.SELLER_PRODUCT,
-                      scrollController: _scrollController, sellerId: widget.topSeller.id.toString()),
+                      scrollController: _scrollController, sellerId: widget.topSeller!.id.toString()),
                 ),
 
               ],

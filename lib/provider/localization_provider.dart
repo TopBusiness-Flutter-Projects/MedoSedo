@@ -7,13 +7,13 @@ class LocalizationProvider extends ChangeNotifier {
   final SharedPreferences sharedPreferences;
   final DioClient dioClient;
 
-  LocalizationProvider({@required this.sharedPreferences, @required this.dioClient}) {
+  LocalizationProvider({required this.sharedPreferences, required this.dioClient}) {
     _loadCurrentLanguage();
   }
 
   Locale _locale = Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode);
   bool _isLtr = true;
-  int _languageIndex;
+  int _languageIndex=0;
 
   Locale get locale => _locale;
   bool get isLtr => _isLtr;
@@ -22,7 +22,7 @@ class LocalizationProvider extends ChangeNotifier {
   void setLanguage(Locale locale) {
     _locale = locale;
     _isLtr = _locale.languageCode != 'ar';
-    dioClient.updateHeader(null, locale.countryCode);
+    dioClient.updateHeader("", locale.countryCode!);
     for(int index=0; index<AppConstants.languages.length; index++) {
       if(AppConstants.languages[index].languageCode == locale.languageCode) {
         _languageIndex = index;
@@ -48,6 +48,6 @@ class LocalizationProvider extends ChangeNotifier {
 
   _saveLanguage(Locale locale) async {
     sharedPreferences.setString(AppConstants.LANGUAGE_CODE, locale.languageCode);
-    sharedPreferences.setString(AppConstants.COUNTRY_CODE, locale.countryCode);
+    sharedPreferences.setString(AppConstants.COUNTRY_CODE, locale.countryCode!);
   }
 }

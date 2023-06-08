@@ -9,33 +9,33 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class TitleRow extends StatelessWidget {
   final String title;
-  final Function icon;
-  final Function onTap;
-  final Duration eventDuration;
-  final bool isDetailsPage;
-  final bool isFlash;
-  TitleRow({@required this.title,this.icon, this.onTap, this.eventDuration, this.isDetailsPage, this.isFlash = false});
+  final Function? icon;
+  final VoidCallback? onTap;
+  final Duration? eventDuration;
+  final bool? isDetailsPage;
+  final bool? isFlash;
+  TitleRow({required this.title, this.icon,  this.onTap, this.eventDuration, this.isDetailsPage, this.isFlash = false});
 
   @override
   Widget build(BuildContext context) {
-    int days, hours, minutes, seconds;
+    int days=0, hours=0, minutes=0, seconds=0;
     if (eventDuration != null) {
-      days = eventDuration.inDays;
-      hours = eventDuration.inHours - days * 24;
-      minutes = eventDuration.inMinutes - (24 * days * 60) - (hours * 60);
-      seconds = eventDuration.inSeconds - (24 * days * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
+      days = eventDuration!.inDays;
+      hours = eventDuration!.inHours - days * 24;
+      minutes = eventDuration!.inMinutes - (24 * days * 60) - (hours * 60);
+      seconds = eventDuration!.inSeconds - (24 * days * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
     }
 
     return Container(
-      decoration: isFlash? BoxDecoration(
+      decoration: isFlash!? BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL)),
         color: Theme.of(context).primaryColor.withOpacity(.05),
       ):null,
       child: Row(mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            isFlash?
+            isFlash!?
             Padding(
-              padding: isFlash?  EdgeInsets.only(left: Dimensions.PADDING_SIZE_EXTRA_SMALL):EdgeInsets.all(0),
+              padding: isFlash!?  EdgeInsets.only(left: Dimensions.PADDING_SIZE_EXTRA_SMALL):EdgeInsets.all(0),
               child: Image.asset(Images.flash_deal, scale: 4,),
             ):SizedBox(),
             Text(title, style: titleHeader),
@@ -46,13 +46,13 @@ class TitleRow extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
                   child: Row(children: [
                     SizedBox(width: 5),
-                    TimerBox(time: days, day: getTranslated('day', context),),
+                    TimerBox(time: days!, day: getTranslated('day', context),),
                     Text(':', style: TextStyle(color: Theme.of(context).primaryColor)),
-                    TimerBox(time: hours, day: getTranslated('hour', context)),
+                    TimerBox(time: hours!, day: getTranslated('hour', context)),
                     Text(':', style: TextStyle(color: Theme.of(context).primaryColor)),
-                    TimerBox(time: minutes, day: getTranslated('min', context)),
+                    TimerBox(time: minutes!, day: getTranslated('min', context)),
                     Text(':', style: TextStyle(color: Theme.of(context).primaryColor)),
-                    TimerBox(time: seconds,day: getTranslated('sec', context)),
+                    TimerBox(time: seconds!,day: getTranslated('sec', context)),
                     SizedBox(width: 5),
                   ]),
                 ),
@@ -60,7 +60,7 @@ class TitleRow extends StatelessWidget {
             Spacer(),
             icon != null
                 ? InkWell(
-                onTap: icon,
+                onTap: icon!(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child:  SvgPicture.asset(
@@ -73,9 +73,9 @@ class TitleRow extends StatelessWidget {
             )
                 : SizedBox.shrink(),
 
-            onTap != null && isFlash?
+            onTap != null && isFlash!?
             InkWell(
-              onTap: onTap,
+              onTap: onTap!,
               child: Stack(
                 children: [
                   Container(
@@ -97,7 +97,7 @@ class TitleRow extends StatelessWidget {
                   ),
                 ],
               ),
-            ) :onTap != null && !isFlash ?
+            ) :onTap != null && !isFlash! ?
             InkWell(
               onTap: onTap,
               child: Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -124,9 +124,9 @@ class TitleRow extends StatelessWidget {
 class TimerBox extends StatelessWidget {
   final int time;
   final bool isBorder;
-  final String day;
+  final String? day;
 
-  TimerBox({@required this.time, this.isBorder = false, this.day});
+  TimerBox({required this.time, this.isBorder = false, this.day});
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,7 @@ class TimerBox extends StatelessWidget {
                 fontSize: Dimensions.FONT_SIZE_SMALL,
               ),
             ),
-            Text(day, style: titilliumRegular.copyWith(color: isBorder ?
+            Text(day!, style: titilliumRegular.copyWith(color: isBorder ?
             ColorResources.getPrimary(context) : Theme.of(context).highlightColor,
               fontSize: Dimensions.FONT_SIZE_SMALL,)),
           ],
