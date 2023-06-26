@@ -134,7 +134,8 @@ class AppConstants {
   static const String USER_ADDRESS = 'user_address';
 
   static List<LanguageModel> languages = [
-    LanguageModel(imageUrl: '', languageName: 'English', countryCode: 'US', languageCode: 'en'),
     LanguageModel(imageUrl: '', languageName: 'Arabic', countryCode: 'SA', languageCode: 'ar'),
+    LanguageModel(imageUrl: '', languageName: 'English', countryCode: 'US', languageCode: 'en'),
+
   ];
 }
