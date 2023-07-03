@@ -301,7 +301,7 @@ class Product {
     if(json['tax_model'] != null){
       _taxModel = json['tax_model'];
     }
-    _taxType = json['tax_type'];
+    _taxType = json['tax_type']??'';
     if(json['discount'] != null ){
       _discount = json['discount'].toDouble();
     }
