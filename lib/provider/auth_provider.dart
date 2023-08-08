@@ -152,19 +152,19 @@ class AuthProvider with ChangeNotifier {
       // String token = map["token"];
 
       try{
-        message = map["message"];
+        message = map["message"]??'';
 
       }catch(e){
 
       }
       try{
-        token = map["token"];
+        token = map["token"]??'';
 
       }catch(e){
 
       }
       try{
-        temporaryToken = map["temporary_token"];
+        temporaryToken = map["temporary_token"]??'';
 
       }catch(e){
 
