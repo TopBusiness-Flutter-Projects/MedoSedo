@@ -76,6 +76,7 @@ class NotificationShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 10,
+      shrinkWrap: true,
       padding: EdgeInsets.all(0),
       itemBuilder: (context, index) {
         return Container(

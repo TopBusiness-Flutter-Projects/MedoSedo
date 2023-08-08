@@ -89,6 +89,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   void _setPage(int pageIndex) {
     setState(() {
+      print("ddlldld");
+      print(pageIndex);
       _pageController.jumpToPage(pageIndex);
       _pageIndex = pageIndex;
     });

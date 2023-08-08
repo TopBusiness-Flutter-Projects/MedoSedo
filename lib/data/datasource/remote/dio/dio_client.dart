@@ -38,7 +38,7 @@ class DioClient {
     dio!.interceptors.add(loggingInterceptor);
   }
 
-  void updateHeader(String token, String countryCode) {
+  void updateHeader(String token, String? countryCode) {
     token = (token == null ? this.token : token)!;
     countryCode = countryCode == null ? this.countryCode == 'US' ? 'en': this.countryCode!.toLowerCase(): countryCode == 'US' ? 'en' : countryCode.toLowerCase();
     this.token = token;

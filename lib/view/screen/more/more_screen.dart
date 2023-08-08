@@ -47,10 +47,13 @@ class _MoreScreenState extends State<MoreScreen> {
   void initState() {
     isGuestMode = !Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
     if(!isGuestMode) {
+      print("object");
+      print(isGuestMode);
       Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
-      version = Provider.of<SplashProvider>(context,listen: false).configModel.version != null?
+      version = Provider.of<SplashProvider>(context,listen: false).configModel.version.isNotEmpty?
       Provider.of<SplashProvider>(context,listen: false).configModel.version:'version';
       Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
+      print(version);
       if(Provider.of<SplashProvider>(context,listen: false).configModel.walletStatus == 1){
         Provider.of<WalletTransactionProvider>(context, listen: false).getTransactionList(context,1);
       }
@@ -95,9 +98,7 @@ class _MoreScreenState extends State<MoreScreen> {
                     if(isGuestMode) {
                       showAnimatedDialog(context, GuestDialog(), isFlip: true);
                     }else {
-                      if(Provider.of<ProfileProvider>(context, listen: false).userInfoModel != null) {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileScreen()));
-                      }
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileScreen()));
                     }
                   },
                   child: Row(children: [
@@ -172,7 +173,6 @@ class _MoreScreenState extends State<MoreScreen> {
                                   SquareButton(image: Images.wishlist, title: getTranslated('wishlist', context),
                                     navigateTo: WishListScreen(),
                                     count: Provider.of<AuthProvider>(context, listen: false).isLoggedIn() &&
-                                    Provider.of<WishListProvider>(context, listen: false).wishList != null &&
                                     Provider.of<WishListProvider>(context, listen: false).wishList.length > 0 ?
                                     Provider.of<WishListProvider>(context, listen: false).wishList.length : 0, hasCount: false,),
                                 ]),

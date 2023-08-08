@@ -22,14 +22,14 @@ class UserInfoModel {
 
   UserInfoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    method = json['_method'];
+    name = json['name']??'';
+    method = json['_method']??'';
     fName = json['f_name'];
     lName = json['l_name'];
     phone = json['phone'];
     image = json['image'];
     email = json['email'];
-    emailVerifiedAt = json['email_verified_at'];
+    emailVerifiedAt = json['email_verified_at']??'';
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if(json['wallet_balance'] != null){

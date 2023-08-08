@@ -53,48 +53,48 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       String _lastName = _lastNameController.text.trim();
       String _email = _emailController.text.trim();
       String _phone = _phoneController.text.trim();
-      String _phoneNumber = _countryDialCode+_phoneController.text.trim();
+      String _phoneNumber = _countryDialCode!+_phoneController.text.trim();
       String _password = _passwordController.text.trim();
       String _confirmPassword = _confirmPasswordController.text.trim();
 
       if (_firstName.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('first_name_field_is_required', context)),
+          content: Text(getTranslated('first_name_field_is_required', context)!),
           backgroundColor: Colors.red,
         ));
       }else if (_lastName.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('last_name_field_is_required', context)),
+          content: Text(getTranslated('last_name_field_is_required', context)!),
           backgroundColor: Colors.red,
         ));
       } else if (_email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('EMAIL_MUST_BE_REQUIRED', context)),
+          content: Text(getTranslated('EMAIL_MUST_BE_REQUIRED', context)!),
           backgroundColor: Colors.red,
         ));
       }else if (EmailChecker.isNotValid(_email)) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('enter_valid_email_address', context)),
+          content: Text(getTranslated('enter_valid_email_address', context)!),
           backgroundColor: Colors.red,
         ));
       } else if (_phone.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('PHONE_MUST_BE_REQUIRED', context)),
+          content: Text(getTranslated('PHONE_MUST_BE_REQUIRED', context)!),
           backgroundColor: Colors.red,
         ));
       } else if (_password.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('PASSWORD_MUST_BE_REQUIRED', context)),
+          content: Text(getTranslated('PASSWORD_MUST_BE_REQUIRED', context)!),
           backgroundColor: Colors.red,
         ));
       } else if (_confirmPassword.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('CONFIRM_PASSWORD_MUST_BE_REQUIRED', context)),
+          content: Text(getTranslated('CONFIRM_PASSWORD_MUST_BE_REQUIRED', context)!),
           backgroundColor: Colors.red,
         ));
       } else if (_password != _confirmPassword) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('PASSWORD_DID_NOT_MATCH', context)),
+          content: Text(getTranslated('PASSWORD_DID_NOT_MATCH', context)!),
           backgroundColor: Colors.red,
         ));
       } else {
@@ -110,19 +110,19 @@ class _SignUpWidgetState extends State<SignUpWidget> {
     }
   }
 
-  route(bool isRoute, String token, String tempToken, String errorMessage) async {
-    String _phone = _countryDialCode+_phoneController.text.trim();
+  route(bool isRoute, String token, String? tempToken, String? errorMessage) async {
+    String _phone = _countryDialCode!+_phoneController.text.trim();
     if (isRoute) {
-      if(Provider.of<SplashProvider>(context,listen: false).configModel.emailVerification){
-        Provider.of<AuthProvider>(context, listen: false).checkEmail(_emailController.text.toString(), tempToken).then((value) async {
+      if(Provider.of<SplashProvider>(context,listen: false).configModel!.emailVerification!){
+        Provider.of<AuthProvider>(context, listen: false).checkEmail(_emailController.text.toString(), tempToken!).then((value) async {
           if (value.isSuccess) {
             Provider.of<AuthProvider>(context, listen: false).updateEmail(_emailController.text.toString());
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => VerificationScreen(tempToken,'',_emailController.text.toString())), (route) => false);
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => VerificationScreen(tempToken!,'',_emailController.text.toString())), (route) => false);
 
           }
         });
-      }else if(Provider.of<SplashProvider>(context,listen: false).configModel.phoneVerification){
-        Provider.of<AuthProvider>(context, listen: false).checkPhone(_phone,tempToken).then((value) async {
+      }else if(Provider.of<SplashProvider>(context,listen: false).configModel!.phoneVerification!){
+        Provider.of<AuthProvider>(context, listen: false).checkPhone(_phone,tempToken!).then((value) async {
           if (value.isSuccess) {
             Provider.of<AuthProvider>(context, listen: false).updatePhone(_phone);
             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => VerificationScreen(tempToken,_phone,'')), (route) => false);
@@ -131,7 +131,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         });
       }else{
         await Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => DashBoardScreen()), (route) => false);
+       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => DashBoardScreen()), (route) => false);
         _emailController.clear();
         _passwordController.clear();
         _firstNameController.clear();
@@ -143,16 +143,16 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
     }
     else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage), backgroundColor: Colors.red));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage!), backgroundColor: Colors.red));
     }
   }
 
-  String _countryDialCode = "+880";
+  String? _countryDialCode = "+880";
   @override
   void initState() {
     super.initState();
     Provider.of<SplashProvider>(context,listen: false).configModel;
-    _countryDialCode = CountryCode.fromCountryCode(Provider.of<SplashProvider>(context, listen: false).configModel.countryCode).dialCode!;
+    _countryDialCode = CountryCode.fromCountryCode(Provider.of<SplashProvider>(context, listen: false).configModel!.countryCode!).dialCode;
 
 
     _formKey = GlobalKey<FormState>();
@@ -216,14 +216,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 child: Row(children: [
                   CodePickerWidget(
                     onChanged: (CountryCode countryCode) {
-                      _countryDialCode = countryCode.dialCode!;
+                      _countryDialCode = countryCode.dialCode;
                     },
                     initialSelection: _countryDialCode,
                     favorite: [_countryDialCode],
                     showDropDownButton: true,
                     padding: EdgeInsets.zero,
                     showFlagMain: true,
-                    textStyle: TextStyle(color: Theme.of(context).textTheme.displayLarge?.color),
+                    textStyle: TextStyle(color: Theme.of(context).textTheme.displayLarge!.color),
 
                   ),
 
@@ -298,8 +298,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [TextButton(
                   onPressed: () =>
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => DashBoardScreen())),
-                  child: Text(getTranslated('SKIP_FOR_NOW', context),
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => DashBoardScreen())),
+                  child: Text(getTranslated('SKIP_FOR_NOW', context)!,
                       style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT,
                           color: ColorResources.getPrimary(context)))),
                 Icon(Icons.arrow_forward, size: 15,color: Theme.of(context).primaryColor,)

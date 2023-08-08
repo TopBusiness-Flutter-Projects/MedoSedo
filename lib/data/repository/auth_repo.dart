@@ -87,7 +87,9 @@ class AuthRepo {
 
   // for  user token
   Future<void> saveUserToken(String token) async {
-    dioClient.updateHeader(token, null!);
+    print("lllllll00");
+    print(token);
+    dioClient.updateHeader(token, null);
 
     try {
       await sharedPreferences.setString(AppConstants.TOKEN, token);
@@ -137,6 +139,7 @@ class AuthRepo {
   // for verify Email
   Future<ApiResponse> checkEmail(String email, String temporaryToken) async {
     try {
+
       Response response = await dioClient.post(AppConstants.CHECK_EMAIL_URI, data: {"email": email, "temporary_token" : temporaryToken});
         return ApiResponse.withSuccess(response);
     } catch (e) {

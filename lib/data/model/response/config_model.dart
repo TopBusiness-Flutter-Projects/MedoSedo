@@ -255,9 +255,9 @@ class ConfigModel {
         ? new Announcement.fromJson(json['announcement'])
         : null)!;
 
-    if(json['software_version'] != null){
-      _version = json['software_version'];
-    }
+
+      _version = json['software_version']??'';
+
     if(json['business_mode'] != null){
       _businessMode = json['business_mode'];
     }

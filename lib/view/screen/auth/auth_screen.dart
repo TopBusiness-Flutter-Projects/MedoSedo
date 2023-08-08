@@ -27,7 +27,7 @@ class AuthScreen extends StatelessWidget{
         clipBehavior: Clip.none,
         children: [
 
-          Provider.of<ThemeProvider>(context).darkTheme ? SizedBox() 
+          Provider.of<ThemeProvider>(context).darkTheme ? SizedBox()
               : Image.asset(Images.background, fit: BoxFit.fill,
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width),
@@ -59,10 +59,10 @@ class AuthScreen extends StatelessWidget{
                           builder: (context,authProvider,child)=>Row(
                             children: [
                               InkWell(
-                                onTap: () => _pageController.animateToPage(0, duration: Duration(seconds: 1), curve: Curves.easeInOut),
+                                onTap: () => _pageController.animateToPage(0, duration: Duration(milliseconds: 10), curve: Curves.linear),
                                 child: Column(
                                   children: [
-                                    Text(getTranslated('SIGN_IN', context),
+                                    Text(getTranslated('SIGN_IN', context)!,
                                         style: authProvider.selectedIndex == 0 ?
                                         titilliumSemiBold : titilliumRegular),
                                     Container(
@@ -79,11 +79,11 @@ class AuthScreen extends StatelessWidget{
 
                               InkWell(
                                 onTap: () => _pageController.animateToPage(1,
-                                    duration: Duration(seconds: 1), curve: Curves.easeInOut),
+                                    duration: Duration(milliseconds: 10), curve: Curves.linear),
                                 child: Column(
                                   children: [
 
-                                    Text(getTranslated('SIGN_UP', context),
+                                    Text(getTranslated('SIGN_UP', context)!,
                                         style: authProvider.selectedIndex == 1 ?
                                         titilliumSemiBold : titilliumRegular),
 
@@ -132,4 +132,3 @@ class AuthScreen extends StatelessWidget{
     );
   }
 }
-

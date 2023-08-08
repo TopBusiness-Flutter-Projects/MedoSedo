@@ -32,11 +32,11 @@ class _SignInWidgetState extends State<SignInWidget> {
   @override
   void initState() {
     super.initState();
-
+    _formKeyLogin = GlobalKey<FormState>();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _emailController!.text = (Provider.of<AuthProvider>(context, listen: false).getUserEmail() ?? "");
-    _passwordController!.text = (Provider.of<AuthProvider>(context, listen: false).getUserPassword() ?? "");
+    _emailController!.text = (Provider.of<AuthProvider>(context, listen: false).getUserEmail() ?? null)!;
+    _passwordController!.text = (Provider.of<AuthProvider>(context, listen: false).getUserPassword() ?? null)!;
   }
 
   @override
@@ -50,16 +50,8 @@ class _SignInWidgetState extends State<SignInWidget> {
   FocusNode _passNode = FocusNode();
   LoginModel loginBody = LoginModel();
 
- Future<void> loginUser()  async {
-   await Future.delayed(Duration(seconds: 1));
-   if(_formKeyLogin==null){
-     _formKeyLogin = GlobalKey<FormState>();
-print("llll"+ _formKeyLogin!.currentState!.validate().toString());
-   }
-  // print("llll"+ _formKeyLogin!.currentState!.validate().toString());
-    if (_formKeyLogin!=null&&_formKeyLogin!.currentState!=null&&
-
-        _formKeyLogin!.currentState!.validate()) {
+  void loginUser() async {
+    if (_formKeyLogin!.currentState!.validate()) {
       _formKeyLogin!.currentState!.save();
 
       String _email = _emailController!.text.trim();
@@ -67,17 +59,17 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
 
       if (_email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('EMAIL_MUST_BE_REQUIRED', context)),
+          content: Text(getTranslated('EMAIL_MUST_BE_REQUIRED', context)!),
           backgroundColor: Colors.red,
         ));
       } else if (_password.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getTranslated('PASSWORD_MUST_BE_REQUIRED', context)),
+          content: Text(getTranslated('PASSWORD_MUST_BE_REQUIRED', context)!),
           backgroundColor: Colors.red,
         ));
       } else {
 
-        if (Provider.of<AuthProvider>(context, listen: false).isRemember) {
+        if (Provider.of<AuthProvider>(context, listen: false).isRemember!) {
           Provider.of<AuthProvider>(context, listen: false).saveUserEmail(_email, _password);
         } else {
           Provider.of<AuthProvider>(context, listen: false).clearUserEmailAndPassword();
@@ -85,7 +77,7 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
 
         loginBody.email = _email;
         loginBody.password = _password;
-        login();
+        await Provider.of<AuthProvider>(context, listen: false).login(loginBody, route);
       }
     }
   }
@@ -93,7 +85,7 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
   route(bool isRoute, String token, String temporaryToken, String errorMessage) async {
     if (isRoute) {
       if(token==null || token.isEmpty){
-        if(Provider.of<SplashProvider>(context,listen: false).configModel.emailVerification){
+        if(Provider.of<SplashProvider>(context,listen: false).configModel!.emailVerification!){
           Provider.of<AuthProvider>(context, listen: false).checkEmail(_emailController!.text.toString(),
               temporaryToken).then((value) async {
             if (value.isSuccess) {
@@ -103,7 +95,7 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
 
             }
           });
-        }else if(Provider.of<SplashProvider>(context,listen: false).configModel.phoneVerification){
+        }else if(Provider.of<SplashProvider>(context,listen: false).configModel!.phoneVerification!){
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => MobileVerificationScreen(
               temporaryToken)), (route) => false);
         }
@@ -120,7 +112,7 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
   @override
   Widget build(BuildContext context) {
     Provider.of<AuthProvider>(context, listen: false).isRemember;
-    _formKeyLogin = GlobalKey<FormState>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.MARGIN_SIZE_LARGE),
       child: Form(
@@ -164,17 +156,20 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
                       checkColor: ColorResources.WHITE,
                       activeColor: Theme.of(context).primaryColor,
                       value: authProvider.isRemember,
-                      onChanged: authProvider.updateRemember(!authProvider.isRemember)),),
+                      onChanged: authProvider.updateRemember,),),
 
 
-                  Text(getTranslated('REMEMBER', context), style: titilliumRegular),
+                  Text(getTranslated('REMEMBER', context)!, style: titilliumRegular),
                 ],),
 
                   InkWell(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ForgetPasswordScreen())),
-                    child: Text(getTranslated('FORGET_PASSWORD', context),
-                        style: titilliumRegular.copyWith(
-                        color: ColorResources.getLightSkyBlue(context))),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(getTranslated('FORGET_PASSWORD', context)!,
+                          style: titilliumRegular.copyWith(
+                              color: ColorResources.getLightSkyBlue(context))),
+                    ),
                   ),
                 ],
               ),
@@ -188,9 +183,7 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
               Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor,),),) :
-              CustomButton(onTap: loginUser,
-                  buttonText: getTranslated('SIGN_IN',
-                      context)),),
+              CustomButton(onTap: loginUser, buttonText: getTranslated('SIGN_IN', context)),),
             SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
 
 
@@ -198,7 +191,7 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
             SocialLoginWidget(),
             SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
 
-            Center(child: Text(getTranslated('OR', context),
+            Center(child: Text(getTranslated('OR', context)!,
                 style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT))),
 
 
@@ -217,7 +210,7 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
                 width: double.infinity, height: 40, alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Colors.transparent, borderRadius: BorderRadius.circular(6),),
-                child: Text(getTranslated('CONTINUE_AS_GUEST', context),
+                child: Text(getTranslated('CONTINUE_AS_GUEST', context)!,
                     style: titleHeader.copyWith(color: ColorResources.getPrimary(context))),
               ),
             ),
@@ -229,9 +222,5 @@ print("llll"+ _formKeyLogin!.currentState!.validate().toString());
 
   }
 
-  Future<void> login() async {
-    await Provider.of<AuthProvider>(context, listen: false).login(loginBody, route);
-
-  }
-
 }
+
