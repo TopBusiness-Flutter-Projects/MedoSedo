@@ -87,8 +87,8 @@ class LocationRepo {
 
   Future<ApiResponse> updateAddress(AddressModel addressModel, int addressId) async {
     try {
-      Response response = await dioClient!.post(
-        '${AppConstants.UPDATE_ADDRESS_URI}$addressId',
+      Response response = await dioClient!.put(
+        '${AppConstants.UPDATE_ADDRESS_URI}',
         data: addressModel.toJson(),
       );
       return ApiResponse.withSuccess(response);

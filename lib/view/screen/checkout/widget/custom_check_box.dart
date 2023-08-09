@@ -32,7 +32,7 @@ class CustomCheckBox extends StatelessWidget {
                   shape: CircleBorder(),
                   value: order.paymentMethodIndex == index,
                   activeColor: Theme.of(context).primaryColor,
-                  onChanged: order.setPaymentMethod!(index),
+                  onChanged: order.setPaymentMethod(index),
                 ),
                 SizedBox(width: 100,child: Image.asset(icon!))
 

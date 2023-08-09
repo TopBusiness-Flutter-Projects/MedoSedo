@@ -419,5 +419,7 @@
   "paypal": "Paypal",
   "liqpay": "Liqpay",
   "cash": "Cash",
-  "card": "Card"
+  "card": "Card",
+  "you_denied": "you denied"
+
 }

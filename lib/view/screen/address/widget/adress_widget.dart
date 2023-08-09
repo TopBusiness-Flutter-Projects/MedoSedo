@@ -17,14 +17,15 @@ class AddressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+print("llxllxx");
       return Padding(
         padding: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
         child: InkWell(
           onTap: () {
-            if(addressModel != null) {
+            print(";;;;;");
+          // if(addressModel != null) {
               Navigator.push(context, MaterialPageRoute(builder: (_) => MapWidget(address: addressModel)));
-            }
+            //}
           },
           child: Container(
             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),

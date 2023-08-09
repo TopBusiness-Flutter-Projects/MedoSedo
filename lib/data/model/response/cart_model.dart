@@ -24,7 +24,7 @@ class CartModel {
   String? _cartGroupId;
   String? _shopInfo;
   List<ChoiceOptions>? _choiceOptions;
-  List<int>? _variationIndexes;
+  List<int> _variationIndexes=[];
   double?  _shippingCost;
   String? _shippingType;
   int? _minimumOrderQuantity;
@@ -41,7 +41,7 @@ class CartModel {
 
   String get variant => _variant!;
   String get color => _color!;
-  Variation get variation => _variation!;
+  Variation? get variation => _variation;
   // ignore: unnecessary_getters_setters
   int get quantity => _quantity!;
   // ignore: unnecessary_getters_setters
@@ -92,7 +92,7 @@ class CartModel {
     _maxQuantity = json['max_quantity'];
     _variant = json['variant'];
     _color = json['color'];
-    _variation = json['variation'] != null ? Variation.fromJson(json['variation']) : null;
+    _variation = json['variation'] != null ? Variation.fromJson(json['variation']) : Variation();
     _discount = json['discount'].toDouble();
     _discountType = json['discount_type'];
     _tax = json['tax'].toDouble();

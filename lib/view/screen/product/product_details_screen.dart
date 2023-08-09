@@ -104,7 +104,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Column(
                   children: [
 
-                    ProductImageView(productModel: details.productDetailsModel),
+                    details.productDetailsModel !=null?ProductImageView(productModel: details.productDetailsModel):SizedBox(),
 
                     Container(
                       transform: Matrix4.translationValues(0.0, -25.0, 0.0),

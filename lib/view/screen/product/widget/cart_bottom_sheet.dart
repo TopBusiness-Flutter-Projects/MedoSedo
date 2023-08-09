@@ -375,8 +375,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                             CartModel cart = CartModel(
                                 widget.product.id,widget.product.id, widget.product.thumbnail, widget.product.name,
                                 widget.product.addedBy == 'seller' ?
-                                '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller.fName} '
-                                    '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller.lName}' : 'admin',
+                                '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller!.fName} '
+                                    '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller!.lName}' : 'admin',
                                 price, priceWithDiscount, details.quantity, _stock,
                                 (widget.product.colors != null && widget.product.colors.length > 0) ? widget.product.colors[details.variantIndex].name : '',
                                 (widget.product.colors != null && widget.product.colors.length > 0) ? widget.product.colors[details.variantIndex].code : '',
@@ -414,8 +414,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                             CartModel cart = CartModel(
                                 widget.product.id,widget.product.id, widget.product.thumbnail, widget.product.name,
                                 widget.product.addedBy == 'seller' ?
-                                '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller.fName} '
-                                    '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller.lName}' : 'admin',
+                                '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller!.fName} '
+                                    '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller!.lName}' : 'admin',
                                 price, priceWithDiscount, details.quantity, _stock,
                                 widget.product.colors.length > 0 ? widget.product.colors[details.variantIndex].name : '',
                                 widget.product.colors.length > 0 ? widget.product.colors[details.variantIndex].code : '',

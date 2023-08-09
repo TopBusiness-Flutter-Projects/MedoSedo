@@ -45,9 +45,9 @@ class CouponProvider extends ChangeNotifier {
   }
 
   void removePrevCouponData() {
-    _coupon = null!;
+    _coupon =CouponModel() ;
     _isLoading = false;
-    _discount = null!;
-    _coupon = null!;
+    _discount = 0;
+  //  _coupon = null!;
   }
 }

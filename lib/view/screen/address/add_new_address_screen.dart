@@ -74,9 +74,12 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
     _checkPermission(() => Provider.of<LocationProvider>(context, listen: false).getCurrentLocation(context, true, mapController: _controller),context);
     if (widget.isEnableUpdate && widget.address != null) {
       _updateAddress = false;
-      Provider.of<LocationProvider>(context, listen: false).updatePosition(CameraPosition(target: LatLng(double.parse(widget.address!.latitude!), double.parse(widget.address!.longitude!))), true, widget.address!.address!, context);
+      Provider.of<LocationProvider>(context, listen: false).updatePosition(CameraPosition(target: LatLng(double.parse(widget.address!.latitude!), double.parse(widget.address!.longitude!))), true,
+          widget.address!.address??'', context);
       _contactPersonNameController.text = '${widget.address!.contactPersonName}';
       _contactPersonNumberController.text = '${widget.address!.phone}';
+      _zipCodeController.text = '${widget.address!.zip}';
+      _cityController.text = '${widget.address!.city}';
       if (widget.address!.addressType == 'Home') {
         Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(0, false);
       } else if (widget.address!.addressType == 'Workplace') {
@@ -85,7 +88,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
         Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(2, false);
       }
     }else {
-      if(Provider.of<ProfileProvider>(context, listen: false).userInfoModel!=null){
+      if(Provider.of<ProfileProvider>(context, listen: false).userInfoModel.name.isNotEmpty){
         _contactPersonNameController.text = '${Provider.of<ProfileProvider>(context, listen: false).userInfoModel.fName ?? ''}'
             ' ${Provider.of<ProfileProvider>(context, listen: false).userInfoModel.lName ?? ''}';
         _contactPersonNumberController.text = Provider.of<ProfileProvider>(context, listen: false).userInfoModel.phone ?? '';
@@ -104,7 +107,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(title: widget.isEnableUpdate ? getTranslated('update_address', context) : getTranslated('add_new_address', context)),
+              CustomAppBar(title: widget.isEnableUpdate ? getTranslated('UPDATE_ADDRESS', context) : getTranslated('add_new_address', context)),
               Consumer<LocationProvider>(
                 builder: (context, locationProvider, child) {
                   return Container(
@@ -463,7 +466,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                   height: 50.0,
                                   margin: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                                   child: !locationProvider.isLoading ? CustomButton(
-                                    buttonText: widget.isEnableUpdate ? getTranslated('update_address', context) : getTranslated('save_location', context),
+                                    buttonText: widget.isEnableUpdate ? getTranslated('UPDATE_ADDRESS', context) : getTranslated('save_location', context),
                                     onTap: locationProvider.loading ? null : () { AddressModel addressModel = AddressModel(
                                       addressType: locationProvider.getAllAddressType[locationProvider.selectAddressIndex],
                                       contactPersonName: _contactPersonNameController.text ?? '',
@@ -479,8 +482,22 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                     );
                                     if (widget.isEnableUpdate) {
                                       addressModel.id = widget.address!.id;
+
                                       // addressModel.method = 'put';
-                                      locationProvider.updateAddress(context, addressModel: addressModel, addressId: addressModel.id).then((value) {});
+                                      locationProvider.updateAddress(context, addressModel: addressModel, addressId: addressModel.id).then((value) {
+                                        if (value.isSuccess) {
+                                          Provider.of<ProfileProvider>(context, listen: false).initAddressList(context);
+                                          Navigator.pop(context);
+                                          if (widget.fromCheckout) {
+                                            Provider.of<ProfileProvider>(context, listen: false).initAddressList(context);
+                                            Provider.of<OrderProvider>(context, listen: false).setAddressIndex(-1);
+                                          } else {
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value.message), duration: Duration(milliseconds: 600), backgroundColor: Colors.green));
+                                          }
+                                        } else {
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value.message), duration: Duration(milliseconds: 600), backgroundColor: Colors.red));
+                                        }
+                                      });
                                     } else {
                                       locationProvider.addAddress(addressModel, context).then((value) {
                                         if (value.isSuccess) {
@@ -555,7 +572,10 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
             await Geolocator.requestPermission();
             _checkPermission(callback, context);
         },
-          child: AlertDialog(content: MyDialog(icon: Icons.location_on_outlined, title: '', description: getTranslated('you_denied', context))));
+          child: AlertDialog(content: MyDialog(icon: Icons.location_on_outlined, title: '',
+              description: getTranslated('you_denied',context),
+
+          )));
     }else if(permission == LocationPermission.deniedForever) {
       InkWell(
           onTap: () async{

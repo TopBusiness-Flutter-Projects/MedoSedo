@@ -331,17 +331,17 @@ class ProductDetailsModel {
         _categoryIds.add(new CategoryIds.fromJson(v));
       });
     }
-    _brandId = json['brand_id'];
+    _brandId = json['brand_id']??0;
     _unit = json['unit'];
     _minQty = json['min_qty'];
     _refundable = json['refundable'];
-    _digitalProductType = json['digital_product_type'];
-    _digitalFileReady = json['digital_file_ready'];
+    _digitalProductType = json['digital_product_type']??'';
+    _digitalFileReady = json['digital_file_ready']??'';
     _images = json['images'].cast<String>();
     _thumbnail = json['thumbnail'];
-    _featured = json['featured'];
+    _featured = json['featured']??0;
     _videoProvider = json['video_provider'];
-    _videoUrl = json['video_url'];
+    _videoUrl = json['video_url']??'';
     if (json['colors_formatted'] != null) {
       _colors = <Colors>[];
       json['colors_formatted'].forEach((v) {
@@ -383,11 +383,11 @@ class ProductDetailsModel {
     _updatedAt = json['updated_at'];
     _status = json['status'];
     _featuredStatus = json['featured_status'];
-    _metaTitle = json['meta_title'];
-    _metaDescription = json['meta_description'];
+    _metaTitle = json['meta_title']??'';
+    _metaDescription = json['meta_description']??'';
     _metaImage = json['meta_image'];
     _requestStatus = int.parse(json['request_status'].toString());
-    _deniedNote = json['denied_note'];
+    _deniedNote = json['denied_note']??'';
     _shippingCost = json['shipping_cost'].toDouble();
     _multiplyQty = json['multiply_qty'];
     _code = json['code'];
@@ -399,7 +399,7 @@ class ProductDetailsModel {
         _reviews.add(new Reviews.fromJson(v));
       });
     }
-    _seller = (json['seller'] != null ? new Seller.fromJson(json['seller']) : null)!;
+    _seller = (json['seller'] != null ? new Seller.fromJson(json['seller']) : Seller())!;
   }
 
   Map<String, dynamic> toJson() {

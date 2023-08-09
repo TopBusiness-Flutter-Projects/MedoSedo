@@ -1,12 +1,12 @@
 class SellerModel {
-  late Seller _seller;
-  late int _avgRating;
-  late int _totalReview;
-  late int _totalOrder;
-  late int _totalProduct;
+   Seller? _seller;
+   int? _avgRating;
+   int? _totalReview;
+   int? _totalOrder;
+   int? _totalProduct;
 
   SellerModel(
-      {required Seller seller, required int avgRating, required int totalReview, required int totalOrder, required int totalProduct}) {
+      { Seller? seller,  int? avgRating,  int? totalReview,  int? totalOrder,  int? totalProduct}) {
     if (seller != null) {
       this._seller = seller;
     }
@@ -24,11 +24,11 @@ class SellerModel {
     }
   }
 
-  Seller get seller => _seller;
-  int get avgRating => _avgRating;
-  int get totalReview => _totalReview;
-  int get totalOrder => _totalOrder;
-  int get totalProduct => _totalProduct;
+  Seller? get seller => _seller;
+  int? get avgRating => _avgRating;
+  int? get totalReview => _totalReview;
+  int? get totalOrder => _totalOrder;
+  int? get totalProduct => _totalProduct;
 
 
   SellerModel.fromJson(Map<String, dynamic> json) {
@@ -43,7 +43,7 @@ class SellerModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this._seller != null) {
-      data['seller'] = this._seller.toJson();
+      data['seller'] = this._seller!.toJson();
     }
     data['avg_rating'] = this._avgRating;
     data['total_review'] = this._totalReview;
@@ -54,20 +54,20 @@ class SellerModel {
 }
 
 class Seller {
-  late int _id;
-  late String _fName;
-  late  String _lName;
-  late  String _phone;
-  late  String _image;
-  late Shop _shop;
+   int? _id;
+   String? _fName;
+    String? _lName;
+    String? _phone;
+    String? _image;
+   Shop? _shop;
 
   Seller(
-      {required int id,
-        required String fName,
-        required String lName,
-        required String phone,
-        required String image,
-        required Shop shop}) {
+      { int? id,
+         String? fName,
+         String? lName,
+         String? phone,
+         String? image,
+         Shop? shop}) {
     if (id != null) {
       this._id = id;
     }
@@ -88,12 +88,12 @@ class Seller {
     }
   }
 
-  int get id => _id;
-  String get fName => _fName;
-  String get lName => _lName;
-  String get phone => _phone;
-  String get image => _image;
-  Shop get shop => _shop;
+  int? get id => _id;
+  String? get fName => _fName;
+  String? get lName => _lName;
+  String? get phone => _phone;
+  String? get image => _image;
+  Shop? get shop => _shop;
 
   Seller.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
@@ -112,41 +112,41 @@ class Seller {
     data['phone'] = this._phone;
     data['image'] = this._image;
     if (this._shop != null) {
-      data['shop'] = this._shop.toJson();
+      data['shop'] = this._shop!.toJson();
     }
     return data;
   }
 }
 
 class Shop {
-  late int _id;
-  late int _sellerId;
-  late  String _name;
-  late  String _address;
-  late  String _contact;
-  late  String _image;
-  late  String _createdAt;
-  late  String _updatedAt;
-  late  String _banner;
-  late  int _temporaryClose;
-  late String _vacationEndDate;
-  late String _vacationStartDate;
-  late  int _vacationStatus;
+   int? _id;
+   int? _sellerId;
+    String? _name;
+    String? _address;
+    String? _contact;
+    String? _image;
+    String? _createdAt;
+    String? _updatedAt;
+    String? _banner;
+    int? _temporaryClose;
+   String? _vacationEndDate;
+   String? _vacationStartDate;
+    int? _vacationStatus;
 
   Shop(
-      {required int id,
-        required int sellerId,
-        required String name,
-        required String address,
-        required String contact,
-        required String image,
-        required String createdAt,
-        required String updatedAt,
-        required String banner,
-        required int temporaryClose,
-        required String vacationEndDate,
-        required String vacationStartDate,
-        required int vacationStatus
+      { int? id,
+         int? sellerId,
+         String? name,
+         String? address,
+         String? contact,
+         String? image,
+         String? createdAt,
+         String? updatedAt,
+         String? banner,
+         int? temporaryClose,
+         String? vacationEndDate,
+         String? vacationStartDate,
+         int? vacationStatus
       }) {
     if (id != null) {
       this._id = id;
@@ -181,19 +181,19 @@ class Shop {
     this._vacationStatus = vacationStatus;
   }
 
-  int get id => _id;
-  int get sellerId => _sellerId;
-  String get name => _name;
-  String get address => _address;
-  String get contact => _contact;
-  String get image => _image;
-  String get createdAt => _createdAt;
-  String get updatedAt => _updatedAt;
-  String get banner => _banner;
-  int get temporaryClose => _temporaryClose;
-  String get vacationEndDate => _vacationEndDate;
-  String get vacationStartDate => _vacationStartDate;
-  int get vacationStatus => _vacationStatus;
+  int? get id => _id;
+  int? get sellerId => _sellerId;
+  String? get name => _name;
+  String? get address => _address;
+  String? get contact => _contact;
+  String? get image => _image;
+  String? get createdAt => _createdAt;
+  String? get updatedAt => _updatedAt;
+  String? get banner => _banner;
+  int? get temporaryClose => _temporaryClose;
+  String? get vacationEndDate => _vacationEndDate;
+  String? get vacationStartDate => _vacationStartDate;
+  int? get vacationStatus => _vacationStatus;
 
 
   Shop.fromJson(Map<String, dynamic> json) {

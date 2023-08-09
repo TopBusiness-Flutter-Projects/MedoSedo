@@ -41,7 +41,7 @@ class SellerView extends StatelessWidget {
                   child: FadeInImage.assetNetwork(fit: BoxFit.cover,
                     placeholder: Images.placeholder, height: MediaQuery.of(context).size.width,
                     width: MediaQuery.of(context).size.width,
-                    image: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.shopImageUrl}/${seller.sellerModel.seller.shop.image}',
+                    image: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.shopImageUrl}/${seller.sellerModel.seller!.shop!.image}',
                     imageErrorBuilder: (c, o, s) => Image.asset(
                       Images.placeholder, height: MediaQuery.of(context).size.width,
                       width: MediaQuery.of(context).size.width,fit: BoxFit.cover,
@@ -62,12 +62,12 @@ class SellerView extends StatelessWidget {
                         child: Column(mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(seller.sellerModel != null ? '${seller.sellerModel.seller.shop.name ?? ''}'  : '',
+                            Text(seller.sellerModel != null ? '${seller.sellerModel.seller!.shop!.name ?? ''}'  : '',
                               style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
                             ),
 
                             Text(seller.sellerModel != null ?
-                            '${seller.sellerModel.seller.fName ?? ''}'+' '+'${seller.sellerModel.seller.lName ?? ''}'  : '',
+                            '${seller.sellerModel.seller!.fName ?? ''}'+' '+'${seller.sellerModel.seller!.lName ?? ''}'  : '',
                               style: titleRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: Theme.of(context).hintColor),
                             ),
                           ],
@@ -82,8 +82,8 @@ class SellerView extends StatelessWidget {
                           showAnimatedDialog(context, GuestDialog(), isFlip: true);
                         }else if(seller.sellerModel != null) {
                           Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(
-                              id: seller.sellerModel.seller.id,
-                              name: seller.sellerModel.seller.shop.name,
+                              id: seller.sellerModel.seller!.id,
+                              name: seller.sellerModel.seller!.shop!.name!,
                           )));
                         }
                       },

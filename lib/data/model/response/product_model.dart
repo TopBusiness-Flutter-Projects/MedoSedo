@@ -468,16 +468,16 @@ class ChoiceOptions {
 }
 
 class Variation {
-  String _type='';
+  String _type='variant';
   double _price=0;
   String _sku='';
    int _qty=0;
 
   Variation({ String? type,  double? price,  String? sku,  int? qty}) {
-    this._type = type!;
-    this._price = price!;
-    this._sku = sku!;
-    this._qty = qty!;
+    this._type = type??'';
+    this._price = price??0;
+    this._sku = sku??'';
+    this._qty = qty??0;
   }
 
   String get type => _type;
@@ -486,7 +486,7 @@ class Variation {
   int get qty => _qty;
 
   Variation.fromJson(Map<String, dynamic> json) {
-    _type = json['type'];
+    _type = json['type']??'';
     _price = json['price'].toDouble();
     _sku = json['sku'];
     _qty = json['qty'];

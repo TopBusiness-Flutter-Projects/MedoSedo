@@ -330,7 +330,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     children: [
                                       Container(
                                         child: Text(
-                                          Provider.of<OrderProvider>(context,listen: false)!.addressIndex == null ?
+                                      Provider.of<ProfileProvider>(context, listen: false).addressList.isEmpty|| Provider.of<OrderProvider>(context,listen: false).addressIndex == -1 ?
                                           '${getTranslated('address_type', context)}' :
                                           Provider.of<ProfileProvider>(context, listen: false).addressList[
                                           Provider.of<OrderProvider>(context, listen: false).addressIndex].addressType!,
@@ -343,7 +343,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                                       Container(
                                         child: Text(
-                                          Provider.of<OrderProvider>(context,listen: false).addressIndex == null ?
+                  Provider.of<ProfileProvider>(context, listen: false).addressList.isEmpty||  Provider.of<OrderProvider>(context,listen: false).addressIndex ==-1?
                                           getTranslated('add_your_address', context) :
                                           Provider.of<ProfileProvider>(context, listen: false).addressList[
                                             shipping.addressIndex].address!,

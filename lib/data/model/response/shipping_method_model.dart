@@ -19,15 +19,15 @@ class ShippingMethodModel {
          int? status,
          String? createdAt,
          String? updatedAt}) {
-    this.id = id!;
-    this.creatorId = creatorId!;
-    this.creatorType = creatorType!;
-    this.title = title!;
-    this.cost = cost!;
-    this.duration = duration!;
-    this.status = status!;
-    this.createdAt = createdAt!;
-    this.updatedAt = updatedAt!;
+    this.id = id??0;
+    this.creatorId = creatorId??0;
+    this.creatorType = creatorType??'';
+    this.title = title??'';
+    this.cost = cost??0;
+    this.duration = duration??'';
+    this.status = status??0;
+    this.createdAt = createdAt??'';
+    this.updatedAt = updatedAt??'';
   }
 
 

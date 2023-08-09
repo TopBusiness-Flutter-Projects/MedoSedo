@@ -45,8 +45,9 @@ class CartRepo{
     for(int index=0; index<choiceOptions.length; index++){
       _choice.addAll({choiceOptions[index].name: choiceOptions[index].options[variationIndexes[index]]});
     }
-    Map<String, dynamic> _data = {'id': cart.id,
-      'variant': cart.variation != null ? cart.variation.type : null,
+    Map<String, dynamic> _data = {
+      'id': cart.id,
+      'variant':  cart.variation!=null?cart.variation!.type :"variant",
       'quantity': cart.quantity};
     _data.addAll(_choice);
     if(cart.variant.isNotEmpty) {

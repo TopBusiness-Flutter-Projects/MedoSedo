@@ -93,7 +93,7 @@ class AppConstants {
   static const String WALLET_PAYMENT = '/api/v1/customer/order/place-by-wallet';
 
   //address
-  static const String UPDATE_ADDRESS_URI = '/api/v1/customer/address/update/';
+  static const String UPDATE_ADDRESS_URI = '/api/v1/customer/address/update';
   static const String GEOCODE_URI = '/api/v1/mapapi/geocode-api';
   static const String SEARCH_LOCATION_URI = '/api/v1/mapapi/place-api-autocomplete';
   static const String PLACE_DETAILS_URI = '/api/v1/mapapi/place-api-details';

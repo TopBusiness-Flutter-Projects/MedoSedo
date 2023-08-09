@@ -24,7 +24,7 @@ class OrderProvider with ChangeNotifier {
   List<OrderModel> _pendingList=[];
   List<OrderModel> _deliveredList=[];
   List<OrderModel> _canceledList=[];
-  int _addressIndex=0;
+  int _addressIndex=-1;
   int _billingAddressIndex=0;
   int get billingAddressIndex => _billingAddressIndex;
   int _shippingIndex=0;

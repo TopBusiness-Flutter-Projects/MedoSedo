@@ -12,6 +12,8 @@ import 'package:medosedo_ecommerce/view/basewidget/show_custom_modal_dialog.dart
 import 'package:medosedo_ecommerce/view/screen/address/add_new_address_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../address/widget/map_widget.dart';
+
 class AddressListScreen extends StatelessWidget {
 
   @override
@@ -37,7 +39,7 @@ class AddressListScreen extends StatelessWidget {
           isGuestMode ?
           Expanded(child: NotLoggedInWidget()) : Consumer<ProfileProvider>(
             builder: (context, profileProvider, child) {
-              return profileProvider.shippingAddressList != null ? profileProvider.shippingAddressList.length > 0 ?
+              return profileProvider.shippingAddressList .isNotEmpty ? profileProvider.shippingAddressList.length > 0 ?
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () async {
@@ -48,51 +50,72 @@ class AddressListScreen extends StatelessWidget {
                   child: ListView.builder(
                     padding: EdgeInsets.all(0),
                     itemCount: profileProvider.shippingAddressList.length,
-                    itemBuilder: (context, index) => Card(
-                      child: Stack(
-                        children: [
-                          ListTile(
-                            title: Text('Address: ${profileProvider.shippingAddressList[index].address}' ?? ""),
-                            subtitle: Row(
-                              children: [
-                                Text('${getTranslated('city', context)} : ${profileProvider.shippingAddressList[index].city ?? ""}'),
-                                SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
-                                Text('${getTranslated('zip', context)} : ${profileProvider.shippingAddressList[index].zip ?? ""}'),
-                              ],
-                            ),
-                            trailing: IconButton(
-                              icon: Icon(Icons.delete_forever, color: Colors.red),
-                              onPressed: () {
-                                showCustomModalDialog(
-                                  context,
-                                  title: getTranslated('REMOVE_ADDRESS', context),
-                                  content: profileProvider.shippingAddressList[index].address!,
-                                  cancelButtonText: getTranslated('CANCEL', context),
-                                  submitButtonText: getTranslated('REMOVE', context),
-                                  submitOnPressed: () {
-                                    Provider.of<ProfileProvider>(context, listen: false).removeAddressById(profileProvider.shippingAddressList[index].id!, index, context);
-                                    Provider.of<ProfileProvider>(context, listen: false).initAddressList(context);
-                                    Navigator.of(context).pop();
-                                  },
-                                  cancelOnPressed: () => Navigator.of(context).pop(),
-                                );
-                              },
-                            ),
-                          ),
-                          Positioned(right: 0,top: 0,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5),topLeft: Radius.circular(5)),
-                                color: Theme.of(context).primaryColor,
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: () {
+                        print(";;;;;");
+                        // if(addressModel != null) {
+                    //    Navigator.push(context, MaterialPageRoute(builder: (_) => MapWidget(address: profileProvider.shippingAddressList.elementAt(index))));
+                        //}
+                      },
+
+                      child: Card(
+                        child: Stack(
+                          children: [
+                            ListTile(
+
+                              title: Text('Address: ${profileProvider.shippingAddressList[index].address}' ?? ""),
+                              subtitle: Row(
+                                children: [
+                                  Text('${getTranslated('city', context)} : ${profileProvider.shippingAddressList[index].city ?? ""}'),
+                                  SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
+                                  Text('${getTranslated('zip', context)} : ${profileProvider.shippingAddressList[index].zip ?? ""}'),
+                                 Spacer(),
+                                  IconButton(
+                                    icon: Icon(Icons.edit, color: Colors.pink),
+                                    onPressed: () {
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (BuildContext context) => AddNewAddressScreen(isBilling: false,isEnableUpdate: true,address: profileProvider.shippingAddressList.elementAt(index),)));
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.delete_forever, color: Colors.red),
+                                    onPressed: () {
+                                      showCustomModalDialog(
+                                        context,
+                                        title: getTranslated('REMOVE_ADDRESS', context),
+                                        content: profileProvider.shippingAddressList[index].address!,
+                                        cancelButtonText: getTranslated('CANCEL', context),
+                                        submitButtonText: getTranslated('REMOVE', context),
+                                        submitOnPressed: () {
+                                          Provider.of<ProfileProvider>(context, listen: false).removeAddressById(profileProvider.shippingAddressList[index].id!, index, context);
+                                          Provider.of<ProfileProvider>(context, listen: false).initAddressList(context);
+                                          Navigator.of(context).pop();
+                                        },
+                                        cancelOnPressed: () => Navigator.of(context).pop(),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(profileProvider.shippingAddressList[index].isBilling ==0?
-                            getTranslated('shipping_address', context):getTranslated('billing_address', context),
-                                  style: robotoRegular.copyWith(fontSize: 8, color: Theme.of(context).cardColor),),
-                              ),),
-                          )
-                        ],
+
+
+
+                            ),
+                            Positioned(right: 0,top: 0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5),topLeft: Radius.circular(5)),
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(profileProvider.shippingAddressList[index].isBilling ==0?
+                              getTranslated('shipping_address', context):getTranslated('billing_address', context),
+                                    style: robotoRegular.copyWith(fontSize: 8, color: Theme.of(context).cardColor),),
+                                ),),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

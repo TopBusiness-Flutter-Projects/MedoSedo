@@ -18,9 +18,9 @@ class CallAndChatWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String phone = isSeller? orderProvider.orderDetails[0].seller.phone : orderModel.deliveryMan.phone;
-    String name = isSeller? orderProvider.orderDetails[0].seller.shop.name : orderModel.deliveryMan.fName+' '+orderModel.deliveryMan.lName;
-    int id =  isSeller ? orderProvider.orderDetails[0].seller.id : orderModel.deliveryMan.id;
+    String? phone = isSeller? orderProvider.orderDetails[0].seller.phone : orderModel.deliveryMan.phone;
+    String? name = isSeller? orderProvider.orderDetails[0].seller.shop!.name : orderModel.deliveryMan.fName+' '+orderModel.deliveryMan.lName;
+    int? id =  isSeller ? orderProvider.orderDetails[0].seller.id : orderModel.deliveryMan.id;
     return Row(children: [
       InkWell(
         onTap: ()=> _launchUrl("tel:$phone"),
@@ -41,7 +41,7 @@ class CallAndChatWidget extends StatelessWidget {
         onTap: (){
           Provider.of<ChatProvider>(context, listen: false).setUserTypeIndex(context, 1);
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ChatScreen(id: id, name: name)));
+              builder: (context) => ChatScreen(id: id, name: name!)));
 
           },
         child: Padding(

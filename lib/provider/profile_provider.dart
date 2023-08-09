@@ -191,7 +191,7 @@ class ProfileProvider extends ChangeNotifier {
 
     if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       Map map = apiResponse.response!.data;
-      if(_addressList == null) {
+      if(_addressList.isEmpty) {
         _addressList = [];
       }
       _addressList.add(addressModel);

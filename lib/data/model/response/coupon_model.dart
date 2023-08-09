@@ -14,19 +14,19 @@ class CouponModel {
    String? _updatedAt;
 
   CouponModel(
-      {required int id,
-        required String couponType,
-        required String title,
-        required String code,
-        required String startDate,
-        required String expireDate,
-        required double minPurchase,
-        required double maxDiscount,
-        required double discount,
-        required String discountType,
-        required int status,
-        required String createdAt,
-        required String updatedAt}) {
+      { int? id,
+         String? couponType,
+         String? title,
+         String? code,
+         String? startDate,
+         String? expireDate,
+         double? minPurchase,
+         double? maxDiscount,
+         double? discount,
+         String? discountType,
+         int? status,
+         String? createdAt,
+         String? updatedAt}) {
     this._id = id;
     this._couponType = couponType;
     this._title = title;
