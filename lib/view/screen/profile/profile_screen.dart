@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
-  late File file;
+   File? file;
   final picker = ImagePicker();
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -108,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       String pass = _passwordController.text ?? '';
 
       await Provider.of<ProfileProvider>(context, listen: false).updateUserInfo(
-        updateUserInfoModel, pass, file, Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+        updateUserInfoModel, pass, file!, Provider.of<AuthProvider>(context, listen: false).getUserToken(),
       ).then((response) {
         if(response.isSuccess) {
           Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
@@ -183,7 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder,
                                     width: Dimensions.profileImageSize, height: Dimensions.profileImageSize, fit: BoxFit.cover),
                               ) :
-                              Image.file(file, width: Dimensions.profileImageSize,
+                              Image.file(file!, width: Dimensions.profileImageSize,
                                   height: Dimensions.profileImageSize, fit: BoxFit.fill),),
                             Positioned(bottom: 0, right: -10,
                               child: CircleAvatar(backgroundColor: ColorResources.LIGHT_SKY_BLUE,
