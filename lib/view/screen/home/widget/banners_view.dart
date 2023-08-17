@@ -32,7 +32,7 @@ class BannersView extends StatelessWidget {
       }
 
     }else if(type == 'product'){
-      if(product != null) {
+      if(product .id!=0) {
         Navigator.push(context, MaterialPageRoute(builder: (_) => ProductDetails(
           productId: product.id,slug: product.slug,
         )));
@@ -69,7 +69,7 @@ class BannersView extends StatelessWidget {
             return Container(
               width: _width,
               height: _width * 0.4,
-              child: bannerProvider.mainBannerList != null ? bannerProvider.mainBannerList.length != 0 ? Stack(
+              child: bannerProvider.mainBannerList .isNotEmpty? bannerProvider.mainBannerList.length != 0 ? Stack(
                 fit: StackFit.expand,
                 children: [
                   CarouselSlider.builder(
