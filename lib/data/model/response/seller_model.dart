@@ -37,7 +37,7 @@ class SellerModel {
     _avgRating = json['avg_rating'];
     _totalReview = json['total_review'];
     _totalOrder = json['total_order'];
-    _totalProduct = json['total_product'];
+    _totalProduct = json['total_product']??0;
   }
 
   Map<String, dynamic> toJson() {
