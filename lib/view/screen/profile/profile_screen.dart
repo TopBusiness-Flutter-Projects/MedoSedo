@@ -19,7 +19,6 @@ import 'package:medosedo_ecommerce/view/basewidget/textfield/custom_textfield.da
 import 'package:medosedo_ecommerce/view/screen/more/widget/sign_out_confirmation_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();

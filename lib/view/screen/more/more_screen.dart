@@ -293,7 +293,11 @@ class SquareButton extends StatelessWidget {
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                Image.asset(image, color: Theme.of(context).highlightColor),
+                Image.asset(
+                    width: width / 5,
+                    height: width / 5,
+                    image,fit: BoxFit.cover
+                    , color: Theme.of(context).highlightColor),
                 hasCount?
                 Positioned(top: -2, right: -2,
                   child: Consumer<CartProvider>(builder: (context, cart, child) {
