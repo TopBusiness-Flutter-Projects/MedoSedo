@@ -1,4 +1,3 @@
-import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:medosedo_ecommerce/data/model/response/top_seller_model.dart';
@@ -154,7 +153,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                       Expanded(
                         child: Consumer<SellerProvider>(
                           builder: (context, sellerProvider,_) {
-                            String ratting = !sellerProvider.sellerModel.isNull&& sellerProvider.sellerModel.avgRating != null?
+                            String ratting = sellerProvider.sellerModel.avgRating != null?
                             sellerProvider.sellerModel.avgRating.toString() : "0";
 
                             return Column(crossAxisAlignment: CrossAxisAlignment.start,

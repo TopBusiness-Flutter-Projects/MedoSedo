@@ -9,7 +9,7 @@ class SellerProvider extends ChangeNotifier {
   SellerProvider({required this.sellerRepo});
 
   List<SellerModel> _orderSellerList = [];
-  SellerModel? _sellerModel;
+  SellerModel? _sellerModel=SellerModel();
 
   List<SellerModel> get orderSellerList => _orderSellerList;
   SellerModel get sellerModel => _sellerModel!;
