@@ -576,21 +576,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 margin: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
                 padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                 color: Theme.of(context).highlightColor,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  Text(getTranslated('payment_method', context), style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),),
-                  SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                  SizedBox(height: 100,
-                      child: ListView.builder(
-                        itemCount: _paymentMethods.length,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index){
-                          return  CustomCheckBox(index: index, icon: _paymentMethods[index].image);
-                        },
-                        )
-                  ),
-                ]),
+                child: SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    Text(getTranslated('payment_method', context), style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),),
+                    SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                    SizedBox(height: 100,
+                        child: ListView.builder(
+                          itemCount: _paymentMethods.length,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index){
+                            return  CustomCheckBox(index: index, icon: _paymentMethods[index].image);
+                          },
+                          )
+                    ),
+                  ]),
+                ),
               ),
 
 

@@ -290,8 +290,8 @@ class _CartScreenState extends State<CartScreen> {
                                                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                                         Text(getTranslated('SHIPPING_PARTNER', context), style: titilliumRegular),
                                                         Flexible(
-                                                          child: Text((cart.shippingList == null || cart.shippingList[index].shippingMethodList == null || cart.chosenShippingList.length == 0 || cart.shippingList[index].shippingIndex == -1) ? ''
-                                                                : '${cart.shippingList[index].shippingMethodList[cart.shippingList[index].shippingIndex].title.toString()}',
+                                                          child: Text((cart.shippingList == null || cart.shippingList![index].shippingMethodList.isEmpty || cart.chosenShippingList.length == 0 || cart.shippingList![index].shippingIndex == -1) ? ''
+                                                                : '${cart.shippingList![index].shippingMethodList[cart.shippingList![index].shippingIndex].title.toString()}',
                                                             style: titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context)),
                                                             maxLines: 1,
                                                             overflow: TextOverflow.ellipsis,textAlign: TextAlign.end,
@@ -338,8 +338,8 @@ class _CartScreenState extends State<CartScreen> {
                               Text(getTranslated('SHIPPING_PARTNER', context), style: titilliumRegular),
                               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                                 Text(
-                                  (cart.shippingList == null ||cart.chosenShippingList.length == 0 || cart.shippingList.length==0 || cart.shippingList[0].shippingMethodList == null ||  cart.shippingList[0].shippingIndex == -1) ? ''
-                                      : '${cart.shippingList[0].shippingMethodList[cart.shippingList[0].shippingIndex].title.toString()}',
+                                  (cart.shippingList == null ||cart.chosenShippingList.length == 0 || cart.shippingList!.length==0 || cart.shippingList![0].shippingMethodList.isEmpty ||  cart.shippingList![0].shippingIndex == -1) ? ''
+                                      : '${cart.shippingList![0].shippingMethodList[cart.shippingList![0].shippingIndex].title.toString()}',
                                   style: titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context)),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,

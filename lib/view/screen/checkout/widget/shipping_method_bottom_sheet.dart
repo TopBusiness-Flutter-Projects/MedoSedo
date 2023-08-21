@@ -41,62 +41,64 @@ class _ShippingMethodBottomSheetState extends State<ShippingMethodBottomSheet> {
         color: Theme.of(context).highlightColor,
         borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
       ),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        // Close Button
-        Align(
-          alignment: Alignment.centerRight,
-          child: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              width: 25,
-              height: 25,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).highlightColor,
-                  boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 200]!, spreadRadius: 1, blurRadius: 5)]),
-              child: Icon(Icons.clear, size: Dimensions.ICON_SIZE_SMALL),
+      child: SingleChildScrollView(
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          // Close Button
+          Align(
+            alignment: Alignment.centerRight,
+            child: InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).highlightColor,
+                    boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 200]!, spreadRadius: 1, blurRadius: 5)]),
+                child: Icon(Icons.clear, size: Dimensions.ICON_SIZE_SMALL),
+              ),
             ),
           ),
-        ),
 
-        Consumer<CartProvider>(
-          builder: (context, order, child) {
-            return order.shippingList[widget.sellerIndex].shippingMethodList != null ? order.shippingList[widget.sellerIndex].shippingMethodList.length != 0 ?  SizedBox(
-              height: 300,
-              child: ListView.builder(
-                itemCount: order.shippingList[widget.sellerIndex].shippingMethodList.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
+          Consumer<CartProvider>(
+            builder: (context, order, child) {
+              return order.shippingList![widget.sellerIndex].shippingMethodList.isNotEmpty ? order.shippingList![widget.sellerIndex].shippingMethodList.length != 0 ?  SizedBox(
+                height: 300,
+                child: ListView.builder(
+                  itemCount: order.shippingList![widget.sellerIndex].shippingMethodList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
 
-                  return RadioListTile(
-                    title: Text('${order.shippingList[widget.sellerIndex].shippingMethodList[index].title} (Duration: ${order.shippingList[widget.sellerIndex].shippingMethodList[index].duration}, Cost: ${
-                        PriceConverter.convertPrice(context, order.shippingList[widget.sellerIndex].shippingMethodList[index].cost)})'),
-                    value: index,
-                    groupValue: order.shippingList[widget.sellerIndex].shippingIndex,
-                    activeColor: Theme.of(context).primaryColor,
-                    toggleable: false,
-                    onChanged: (value) async {
-                      Provider.of<CartProvider>(context, listen: false).setSelectedShippingMethod(int.parse(value.toString()), widget.sellerIndex);
-                      ShippingMethodModel shipping = ShippingMethodModel();
-                      shipping.id = order.shippingList[widget.sellerIndex].shippingMethodList[index].id;
-                     shipping.duration = widget.groupId;
-                      order.isLoading
-                          ? Center(child: CircularProgressIndicator(
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                            Theme.of(context).primaryColor,
+                    return RadioListTile(
+                      title: Text('${order.shippingList![widget.sellerIndex].shippingMethodList[index].title} (Duration: ${order.shippingList![widget.sellerIndex].shippingMethodList[index].duration}, Cost: ${
+                          PriceConverter.convertPrice(context, order.shippingList![widget.sellerIndex].shippingMethodList[index].cost)})'),
+                      value: index,
+                      groupValue: order.shippingList![widget.sellerIndex].shippingIndex,
+                      activeColor: Theme.of(context).primaryColor,
+                      toggleable: false,
+                      onChanged: (value) async {
+                        Provider.of<CartProvider>(context, listen: false).setSelectedShippingMethod(int.parse(value.toString()), widget.sellerIndex);
+                        ShippingMethodModel shipping = ShippingMethodModel();
+                        shipping.id = order.shippingList![widget.sellerIndex].shippingMethodList[index].id;
+                       shipping.duration = widget.groupId;
+                        order.isLoading
+                            ? Center(child: CircularProgressIndicator(
+                            valueColor: new AlwaysStoppedAnimation<Color>(
+                              Theme.of(context).primaryColor,
+                            ),
                           ),
-                        ),
-                      ) :
-                      order.addShippingMethod(context, shipping.id, shipping.duration, route);
-                      // Navigator.pop(context);
-                    },
-                  );
-                },
-              ),
-            )  : Center(child: Text('No method available')) : Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)));
-          },
-        ),
-      ]),
+                        ) :
+                        order.addShippingMethod(context, shipping.id, shipping.duration, route);
+                        // Navigator.pop(context);
+                      },
+                    );
+                  },
+                ),
+              )  : Center(child: Text('No method available')) : Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)));
+            },
+          ),
+        ]),
+      ),
     );
   }
 }

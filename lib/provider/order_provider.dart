@@ -215,7 +215,7 @@ class OrderProvider with ChangeNotifier {
 
    setPaymentMethod(int index) {
     _paymentMethodIndex = index;
-    notifyListeners();
+    //notifyListeners();
   }
   void pickImage(bool isRemove) async {
     if(isRemove) {

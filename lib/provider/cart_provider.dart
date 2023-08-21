@@ -24,8 +24,8 @@ class CartProvider extends ChangeNotifier {
   List<CartModel> _cartList = [];
   List<ChosenShippingMethodModel> _chosenShippingList = [];
   List<ChosenShippingMethodModel> get chosenShippingList =>_chosenShippingList;
-  List<ShippingModel> _shippingList=[];
-  List<ShippingModel> get shippingList => _shippingList;
+  List<ShippingModel>? _shippingList;
+  List<ShippingModel>? get shippingList => _shippingList;
   List<bool> _isSelectedList = [];
   double _amount = 0.0;
   bool _isSelectAll = true;
@@ -270,7 +270,7 @@ class CartProvider extends ChangeNotifier {
       sellerIdList.add(element[0].sellerId);
       sellerTypeList.add(element[0].sellerIs);
       groupList.add(element[0].cartGroupId);
-      _shippingList.add(ShippingModel(-1, element[0].cartGroupId, []));
+      _shippingList!.add(ShippingModel(-1, element[0].cartGroupId, []));
     }
 
     await getChosenShippingMethod(context);
@@ -281,8 +281,8 @@ class CartProvider extends ChangeNotifier {
         List<ShippingMethodModel> _shippingMethodList =[];
         apiResponse.response!.data.forEach((shipping) => _shippingMethodList.add(ShippingMethodModel.fromJson(shipping)));
 
-        _shippingList[i].shippingMethodList =[];
-        _shippingList[i].shippingMethodList.addAll(_shippingMethodList);
+        _shippingList![i].shippingMethodList =[];
+        _shippingList![i].shippingMethodList.addAll(_shippingMethodList);
         int _index = -1;
         int _shipId = -1;
         for(ChosenShippingMethodModel cs in _chosenShippingList) {
@@ -292,14 +292,14 @@ class CartProvider extends ChangeNotifier {
           }
         }
         if(_shipId != -1) {
-          for(int j=0; j<_shippingList[i].shippingMethodList.length; j++) {
-            if(_shippingList[i].shippingMethodList[j].id == _shipId) {
+          for(int j=0; j<_shippingList![i].shippingMethodList.length; j++) {
+            if(_shippingList![i].shippingMethodList[j].id == _shipId) {
               _index = j;
               break;
             }
           }
         }
-        _shippingList[i].shippingIndex = _index;
+        _shippingList![i].shippingIndex = _index;
       } else {
         ApiChecker.checkApi(context, apiResponse);
       }
@@ -316,25 +316,25 @@ class CartProvider extends ChangeNotifier {
     await getChosenShippingMethod(context);
     ApiResponse apiResponse = await cartRepo.getShippingMethod(1,'admin');
     if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
-      _shippingList.add(ShippingModel(-1, '', []));
+      _shippingList!.add(ShippingModel(-1, '', []));
       List<ShippingMethodModel> _shippingMethodList =[];
       apiResponse.response!.data.forEach((shipping) => _shippingMethodList.add(ShippingMethodModel.fromJson(shipping)));
 
-      _shippingList[0].shippingMethodList =[];
-      _shippingList[0].shippingMethodList.addAll(_shippingMethodList);
+      _shippingList![0].shippingMethodList =[];
+      _shippingList![0].shippingMethodList.addAll(_shippingMethodList);
       int _index = -1;
 
 
       if(_chosenShippingList.length>0){
-        for(int j=0; j<_shippingList[0].shippingMethodList.length; j++) {
-          if(_shippingList[0].shippingMethodList[j].id == _chosenShippingList[0].shippingMethodId) {
+        for(int j=0; j<_shippingList![0].shippingMethodList.length; j++) {
+          if(_shippingList![0].shippingMethodList[j].id == _chosenShippingList[0].shippingMethodId) {
             _index = j;
             break;
           }
         }
       }
 
-      _shippingList[0].shippingIndex = _index;
+      _shippingList![0].shippingIndex = _index;
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
@@ -360,7 +360,7 @@ class CartProvider extends ChangeNotifier {
 
 
   void setSelectedShippingMethod(int index , int sellerIndex) {
-    _shippingList[sellerIndex].shippingIndex = index;
+    _shippingList![sellerIndex].shippingIndex = index;
     notifyListeners();
   }
 
@@ -368,7 +368,7 @@ class CartProvider extends ChangeNotifier {
   void initShippingMethodIndexList(int length){
     _shippingList =[];
     for(int i =0; i< length; i++){
-      _shippingList.add(ShippingModel(0,'', []));
+      _shippingList!.add(ShippingModel(0,'', []));
     }
 
   }

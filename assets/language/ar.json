@@ -417,5 +417,6 @@
   "liqpay": "Liqpay",
   "cash": "نقد",
   "card": "بطاقة",
-  "you_denied": "لا يوجد لديك صلاحيه"
+  "you_denied": "لا يوجد لديك صلاحيه",
+  "offline_payment": "الدفع دون اتصال بالإنترنت"
 }

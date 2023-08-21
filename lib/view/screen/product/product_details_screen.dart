@@ -104,7 +104,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Column(
                   children: [
 
-                    details.productDetailsModel !=null?ProductImageView(productModel: details.productDetailsModel):SizedBox(),
+                    details.productDetailsModel.id!=0?ProductImageView(productModel: details.productDetailsModel):SizedBox(),
 
                     Container(
                       transform: Matrix4.translationValues(0.0, -25.0, 0.0),
@@ -125,14 +125,14 @@ class _ProductDetailsState extends State<ProductDetails> {
 
 
 
-                        (details.productDetailsModel?.details != null && details.productDetailsModel.details.isNotEmpty) ?
+                        (details.productDetailsModel.details != null && details.productDetailsModel.details!.isNotEmpty) ?
                         Container(height: 250,
                           margin: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
                           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                           child: ProductSpecification(productSpecification: details.productDetailsModel.details ?? ''),) : SizedBox(),
 
-                        details.productDetailsModel?.videoUrl != null?
-                        YoutubeVideoWidget(url: details.productDetailsModel.videoUrl):SizedBox(),
+                        details.productDetailsModel.videoUrl != null?
+                        YoutubeVideoWidget(url: details.productDetailsModel.videoUrl!):SizedBox(),
 
                         Container(padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT,
                             horizontal: Dimensions.FONT_SIZE_DEFAULT),
@@ -164,15 +164,15 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                               child: Row(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  RatingBar(rating: double.parse(details.productDetailsModel.averageReview), size: 18,),
+                                  RatingBar(rating: double.parse(details.productDetailsModel.averageReview!), size: 18,),
                                   SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
-                                  Text('${double.parse(details.productDetailsModel.averageReview).toStringAsFixed(1)}'+ ' '+ '${getTranslated('out_of_5', context)}'),
+                                  Text('${double.parse(details.productDetailsModel.averageReview!).toStringAsFixed(1)}'+ ' '+ '${getTranslated('out_of_5', context)}'),
                                 ],
                               ),
                             ),
 
                             SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
-                            Text('${getTranslated('total', context)}' + ' '+'${details.reviewList != null ? details.reviewList.length : 0}' +' '+ '${getTranslated('reviews', context)}'),
+                            Text('${getTranslated('total', context)}' + ' '+'${details.reviewList.isNotEmpty ? details.reviewList.length : 0}' +' '+ '${getTranslated('reviews', context)}'),
 
 
 

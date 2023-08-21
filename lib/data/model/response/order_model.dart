@@ -151,9 +151,9 @@ class OrderModel {
     }
     _updatedAt = json['updated_at'];
     _discountAmount = json['discount_amount'].toDouble();
-    _discountType = json['discount_type'];
-    _orderNote = json['order_note'];
-    _orderType = json['order_type'];
+    _discountType = json['discount_type']??'';
+    _orderNote = json['order_note']??'';
+    _orderType = json['order_type']??'';
     _extraDiscount = json['extra_discount'].toDouble();
     _extraDiscountType = json['extra_discount_type'];
     if(json['delivery_service_name']!=null && json['delivery_service_name']!= ""){

@@ -28,7 +28,7 @@ class ProductImageView extends StatelessWidget {
       children: [
         InkWell(
           onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) =>
-              ProductImageScreen(title: getTranslated('product_image', context),imageList: productModel.images))),
+              ProductImageScreen(title: getTranslated('product_image', context),imageList: productModel.images!))),
           child: productModel.images !=null ?
           Container(
             decoration: BoxDecoration(
@@ -49,13 +49,13 @@ class ProductImageView extends StatelessWidget {
 
                 PageView.builder(
                   controller: _controller,
-                  itemCount: productModel.images.length,
+                  itemCount: productModel.images!.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                       child: FadeInImage.assetNetwork(fit: BoxFit.cover,
                         placeholder: Images.placeholder, height: MediaQuery.of(context).size.width,
                         width: MediaQuery.of(context).size.width,
-                        image: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/${productModel.images[index]}',
+                        image: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/${productModel.images![index]}',
                         imageErrorBuilder: (c, o, s) => Image.asset(
                           Images.placeholder, height: MediaQuery.of(context).size.width,
                           width: MediaQuery.of(context).size.width,fit: BoxFit.cover,
@@ -84,7 +84,7 @@ class ProductImageView extends StatelessWidget {
                     Provider.of<ProductDetailsProvider>(context).imageSliderIndex != null?
                     Padding(
                       padding: const EdgeInsets.only(right: Dimensions.PADDING_SIZE_DEFAULT,bottom: Dimensions.PADDING_SIZE_DEFAULT),
-                      child: Text('${Provider.of<ProductDetailsProvider>(context).imageSliderIndex+1}'+'/'+'${productModel.images.length.toString()}'),
+                      child: Text('${Provider.of<ProductDetailsProvider>(context).imageSliderIndex+1}'+'/'+'${productModel.images!.length.toString()}'),
                     ):SizedBox(),
                   ],
                 ),
@@ -135,8 +135,8 @@ class ProductImageView extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.only(bottomRight: Radius.circular(Dimensions.PADDING_SIZE_SMALL))
                       ),
-                      child: Text('${PriceConverter.percentageCalculation(context, productModel.unitPrice,
-                          productModel.discount, productModel.discountType)}',
+                      child: Text('${PriceConverter.percentageCalculation(context, productModel.unitPrice!,
+                          productModel.discount!, productModel.discountType!)}',
                         style: titilliumRegular.copyWith(color: Theme.of(context).cardColor, fontSize: Dimensions.FONT_SIZE_LARGE),
                       ),
                     ),
@@ -157,7 +157,7 @@ class ProductImageView extends StatelessWidget {
 
   List<Widget> _indicators(BuildContext context) {
     List<Widget> indicators = [];
-    for (int index = 0; index < productModel.images.length; index++) {
+    for (int index = 0; index < productModel.images!.length; index++) {
       indicators.add(TabPageSelectorIndicator(
         backgroundColor: index == Provider.of<ProductDetailsProvider>(context).imageSliderIndex ?
         Theme.of(context).primaryColor : ColorResources.WHITE,

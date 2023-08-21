@@ -46,7 +46,7 @@ class ProductDetailsProvider extends ChangeNotifier {
   String get errorText => _errorText;
   bool get hasConnection => _hasConnection;
   ProductDetailsModel? _productDetailsModel;
-  ProductDetailsModel get productDetailsModel => _productDetailsModel!;
+  ProductDetailsModel get productDetailsModel => _productDetailsModel??ProductDetailsModel();
 
 
 
@@ -88,7 +88,7 @@ class ProductDetailsProvider extends ChangeNotifier {
     _variantIndex = 0;
     _quantity = minimumOrderQuantity;
     _variationIndex = [];
-    product.choiceOptions.forEach((element) => _variationIndex.add(0));
+    product.choiceOptions!.forEach((element) => _variationIndex.add(0));
   }
 
   void removePrevReview() {

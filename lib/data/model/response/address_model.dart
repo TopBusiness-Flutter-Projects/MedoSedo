@@ -37,7 +37,7 @@ class AddressModel {
     customerId = json['customer_id'];
     contactPersonName = json['contact_person_name'];
     addressType = json['address_type'];
-    address = json['address'];
+    address = json['address']??'';
     city = json['city'];
     zip = json['zip'];
     phone = json['phone'];

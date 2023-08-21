@@ -28,15 +28,15 @@ class _BottomCartViewState extends State<BottomCartView> {
 
     super.initState();
 
-    if(widget.product != null&&
-    widget.product.seller.shop!=null  && widget.product.seller.shop!.vacationEndDate != null){
-      DateTime vacationDate = DateTime.parse(widget.product.seller.shop!.vacationEndDate!);
-      DateTime vacationStartDate = DateTime.parse(widget.product.seller.shop!.vacationStartDate!);
+    if(widget.product .id!=0&&
+    widget.product.seller!.shop!=null  && widget.product.seller!.shop!.vacationEndDate != null){
+      DateTime vacationDate = DateTime.parse(widget.product.seller!.shop!.vacationEndDate!);
+      DateTime vacationStartDate = DateTime.parse(widget.product.seller!.shop!.vacationStartDate!);
       final today = DateTime.now();
       final difference = vacationDate.difference(today).inDays;
       final startDate = vacationStartDate.difference(today).inDays;
 
-      if(difference >= 0 && widget.product.seller.shop!.vacationStatus == 1 && startDate <= 0){
+      if(difference >= 0 && widget.product.seller!.shop!.vacationStatus == 1 && startDate <= 0){
         vacationIsOn = true;
       }
 
