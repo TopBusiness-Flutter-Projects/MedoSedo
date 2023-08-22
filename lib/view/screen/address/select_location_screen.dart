@@ -10,7 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class SelectLocationScreen extends StatefulWidget {
-  final GoogleMapController googleMapController;
+  final GoogleMapController? googleMapController;
   SelectLocationScreen({required this.googleMapController});
 
   @override
@@ -42,9 +42,9 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
   @override
   Widget build(BuildContext context) {
     if (Provider.of<LocationProvider>(context).address != null) {
-      _locationController.text = '${Provider.of<LocationProvider>(context).address.name ?? ''}, '
-          '${Provider.of<LocationProvider>(context).address.subAdministrativeArea ?? ''}, '
-          '${Provider.of<LocationProvider>(context).address.isoCountryCode ?? ''}';
+      _locationController.text = '${Provider.of<LocationProvider>(context).address!.name ?? ''}, '
+          '${Provider.of<LocationProvider>(context).address!.subAdministrativeArea ?? ''}, '
+          '${Provider.of<LocationProvider>(context).address!.isoCountryCode ?? ''}';
     }
 
     return Scaffold(
@@ -62,7 +62,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                         GoogleMap(
                           mapType: MapType.normal,
                           initialCameraPosition: CameraPosition(
-                            target: LatLng(locationProvider.position.latitude, locationProvider.position.longitude),
+                            target: LatLng(locationProvider.position!.latitude, locationProvider.position!.longitude),
                             zoom: 15,
                           ),
                           zoomControlsEnabled: false,
@@ -88,8 +88,8 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                             decoration:
                             BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL)),
                             child: Row(children: [
-                              Expanded(child: Text(locationProvider.pickAddress.name != null
-                                  ? '${locationProvider.pickAddress.name ?? ''} ${locationProvider.pickAddress.subAdministrativeArea ?? ''} ${locationProvider.pickAddress.isoCountryCode ?? ''}'
+                              Expanded(child: Text(locationProvider.pickAddress!.name != null
+                                  ? '${locationProvider.pickAddress!.name ?? ''} ${locationProvider.pickAddress!.subAdministrativeArea ?? ''} ${locationProvider.pickAddress!.isoCountryCode ?? ''}'
                                   : '', maxLines: 1, overflow: TextOverflow.ellipsis)),
                               Icon(Icons.search, size: 20),
                             ]),
@@ -130,8 +130,8 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                                     buttonText: getTranslated('select_location', context),
                                     onTap: () {
                                       if(widget.googleMapController != null) {
-                                        widget.googleMapController.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(
-                                          locationProvider.pickPosition.latitude, locationProvider.pickPosition.longitude,
+                                        widget.googleMapController!.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(
+                                          locationProvider.pickPosition!.latitude, locationProvider.pickPosition!.longitude,
                                         ), zoom: 15)));
                                         locationProvider.setAddAddressData();
                                       }

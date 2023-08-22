@@ -31,41 +31,43 @@ class _OrderScreenState extends State<OrderScreen> {
   }
   @override
   Widget build(BuildContext context) {
-
+    print("Flflfl");
+print(Provider.of<OrderProvider>(context).pendingList!.toString());
     return Scaffold(
       backgroundColor: ColorResources.getIconBg(context),
       body: Column(
         children: [
-          CustomAppBar(title: getTranslated('ORDER', context), isBackButtonExist: widget.isBacButtonExist),
+          CustomAppBar(title: getTranslated('ORDER', context),
+              isBackButtonExist: widget.isBacButtonExist),
           isGuestMode! ? SizedBox() :
-          Provider.of<OrderProvider>(context).pendingList != null ?
+          Provider.of<OrderProvider>(context).pendingList!.isNotEmpty ?
           Consumer<OrderProvider>(
             builder: (context, orderProvider, child) => Padding(
               padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
               child: Row(children: [
-                OrderTypeButton(text: getTranslated('RUNNING', context), index: 0, orderList: orderProvider.pendingList),
+                OrderTypeButton(text: getTranslated('RUNNING', context), index: 0, orderList: orderProvider.pendingList!),
                 SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                OrderTypeButton(text: getTranslated('DELIVERED', context), index: 1, orderList: orderProvider.deliveredList),
+                OrderTypeButton(text: getTranslated('DELIVERED', context), index: 1, orderList: orderProvider.deliveredList!),
                 SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                OrderTypeButton(text: getTranslated('CANCELED', context), index: 2, orderList: orderProvider.canceledList),
+                OrderTypeButton(text: getTranslated('CANCELED', context), index: 2, orderList: orderProvider.canceledList!),
               ],),),) : SizedBox(),
 
 
           isGuestMode! ? Expanded(child: NotLoggedInWidget()) :
-          Provider.of<OrderProvider>(context).pendingList != null ?
+          Provider.of<OrderProvider>(context).pendingList!.isNotEmpty ?
           Consumer<OrderProvider>(
             builder: (context, order, child) {
               List<OrderModel> orderList = [];
               if (Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == 0) {
-                orderList = order.pendingList;
+                orderList = order.pendingList??[];
               }
 
               else if (Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == 1) {
-                orderList = order.deliveredList;
+                orderList = order.deliveredList??[];
               }
 
               else if (Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == 2) {
-                orderList = order.canceledList;
+                orderList = order.canceledList??[];
               }
               return Expanded(
                 child: RefreshIndicator(

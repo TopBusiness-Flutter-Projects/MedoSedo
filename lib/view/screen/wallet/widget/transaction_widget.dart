@@ -11,7 +11,7 @@ class TransactionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String type = transactionModel!.transactionType;
+    String type = transactionModel!.transactionType!;
     String reformatType='';
     if (type.contains('_')){
       reformatType = type.replaceAll('_', ' ');
@@ -23,7 +23,7 @@ class TransactionWidget extends StatelessWidget {
           Row(children: [
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
             Text(PriceConverter.convertPrice(context,
-                transactionModel!.credit > 0 ? transactionModel!.credit: transactionModel!.debit),
+                transactionModel!.credit! > 0 ? transactionModel!.credit!: transactionModel!.debit!),
               style: robotoRegular.copyWith(color: ColorResources.getTextTitle(context),
                   fontSize: Dimensions.FONT_SIZE_LARGE),
             ),
@@ -35,13 +35,13 @@ class TransactionWidget extends StatelessWidget {
             ),
           ],)),
           Column(crossAxisAlignment: CrossAxisAlignment.end,children: [
-            Text(DateConverter.localDateToIsoStringAMPM(DateTime.parse(transactionModel!.createdAt)),
+            Text(DateConverter.localDateToIsoStringAMPM(DateTime.parse(transactionModel!.createdAt!)),
               style: robotoRegular.copyWith(color: ColorResources.getHint(context)),),
             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL,),
 
 
-            Text( '${transactionModel!.credit > 0 ? 'Credit': 'Debit'}',
-              style: robotoRegular.copyWith(color: transactionModel!.credit > 0 ? Colors.green: Colors.red),
+            Text( '${transactionModel!.credit! > 0 ? 'Credit': 'Debit'}',
+              style: robotoRegular.copyWith(color: transactionModel!.credit! > 0 ? Colors.green: Colors.red),
             ),
           ],),
           ],),

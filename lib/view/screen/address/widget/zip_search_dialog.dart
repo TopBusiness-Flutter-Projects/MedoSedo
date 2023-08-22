@@ -34,7 +34,7 @@ class ZipSearchDialog extends StatelessWidget {
                 return InkWell(
                   onTap: (){
                     print('you are clicked in ====>${locationProvider.restrictedZipList[index].zipcode}');
-                    locationProvider.setZip(locationProvider.restrictedZipList[index].zipcode);
+                    locationProvider.setZip(locationProvider.restrictedZipList[index].zipcode!);
                     locationProvider.getDeliveryRestrictedZipBySearch(context, 'xfbdhfdbgdfsbgsdfbgsgbsgfbsgbsfdgbsdgbsdgbsdf');
 
                   },
@@ -42,7 +42,7 @@ class ZipSearchDialog extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
                       child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(locationProvider.restrictedZipList[index].zipcode, style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT)),
+                          Text(locationProvider.restrictedZipList[index].zipcode!, style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT)),
                           SizedBox(height: Dimensions.PADDING_SIZE_SMALL,),
                           Divider(height: .5,color: Theme.of(context).hintColor),
                         ],

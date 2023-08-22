@@ -18,7 +18,7 @@ class OrderProductList extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, i) => OrderDetailsWidget(orderDetailsModel: order.orderDetails[i],
           callback: () {showCustomSnackBar('Review submitted successfully', context, isError: false);},
-          orderType: orderType, paymentStatus: order.trackingModel.paymentStatus),
+          orderType: orderType, paymentStatus: order.trackingModel.paymentStatus!),
     );
   }
 }

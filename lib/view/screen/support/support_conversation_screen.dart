@@ -20,7 +20,7 @@ class SupportConversationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-      Provider.of<SupportTicketProvider>(context, listen: false).getSupportTicketReplyList(context, supportTicketModel.id);
+      Provider.of<SupportTicketProvider>(context, listen: false).getSupportTicketReplyList(context, supportTicketModel.id!);
     }
 
     return CustomExpandedAppBar(
@@ -90,7 +90,7 @@ class SupportConversationScreen extends StatelessWidget {
                   onTap: () {
                     if(_controller.text.isNotEmpty){
                       Provider.of<SupportTicketProvider>(context, listen: false).sendReply(context,
-                          supportTicketModel.id, _controller.text);
+                          supportTicketModel.id!, _controller.text);
                       _controller.text = '';
                     }
                   },

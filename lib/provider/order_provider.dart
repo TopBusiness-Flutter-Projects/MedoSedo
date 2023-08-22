@@ -21,9 +21,9 @@ class OrderProvider with ChangeNotifier {
   final OrderRepo orderRepo;
   OrderProvider({required this.orderRepo});
 
-  List<OrderModel> _pendingList=[];
-  List<OrderModel> _deliveredList=[];
-  List<OrderModel> _canceledList=[];
+  List<OrderModel>? _pendingList=[];
+  List<OrderModel>? _deliveredList=[];
+  List<OrderModel>? _canceledList=[];
   int _addressIndex=-1;
   int _billingAddressIndex=0;
   int get billingAddressIndex => _billingAddressIndex;
@@ -36,9 +36,9 @@ class OrderProvider with ChangeNotifier {
   bool _onlyDigital = true;
   bool get onlyDigital => _onlyDigital;
 
-  List<OrderModel> get pendingList => _pendingList != null ? _pendingList.reversed.toList() : _pendingList;
-  List<OrderModel> get deliveredList => _deliveredList != null ? _deliveredList.reversed.toList() : _deliveredList;
-  List<OrderModel> get canceledList => _canceledList != null ? _canceledList.reversed.toList() : _canceledList;
+  List<OrderModel>? get pendingList =>_pendingList!=null? _pendingList!.isNotEmpty ? _pendingList!.reversed.toList() : _pendingList:[];
+  List<OrderModel>? get deliveredList => _deliveredList!=null?_deliveredList!.isNotEmpty ? _deliveredList!.reversed.toList() : _deliveredList:[];
+  List<OrderModel>? get canceledList =>_canceledList!=null? _canceledList! .isNotEmpty ? _canceledList!.reversed.toList() : _canceledList:[];
   int get addressIndex => _addressIndex;
   int get shippingIndex => _shippingIndex;
   bool get isLoading => _isLoading;
@@ -52,12 +52,15 @@ class OrderProvider with ChangeNotifier {
   RefundInfoModel? _refundInfoModel;
   RefundInfoModel get refundInfoModel => _refundInfoModel!;
   RefundResultModel? _refundResultModel;
-  RefundResultModel get refundResultModel => _refundResultModel!;
+  RefundResultModel? get refundResultModel => _refundResultModel!;
 
 
 
 
   Future<void> initOrderList(BuildContext context) async {
+    _pendingList = [];
+    _deliveredList = [];
+    _canceledList = [];
     ApiResponse apiResponse = await orderRepo.getOrderList();
     if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _pendingList = [];
@@ -67,15 +70,18 @@ class OrderProvider with ChangeNotifier {
         OrderModel orderModel = OrderModel.fromJson(order);
         if (orderModel.orderStatus == AppConstants.PENDING || orderModel.orderStatus == AppConstants.CONFIRMED || orderModel.orderStatus ==AppConstants.OUT_FOR_DELIVERY
             || orderModel.orderStatus == AppConstants.PROCESSING || orderModel.orderStatus == AppConstants.PROCESSED) {
-          _pendingList.add(orderModel);
+          _pendingList!.add(orderModel);
         } else if (orderModel.orderStatus == AppConstants.DELIVERED) {
-          _deliveredList.add(orderModel);
+          _deliveredList!.add(orderModel);
         } else if (orderModel.orderStatus == AppConstants.CANCELLED || orderModel.orderStatus == AppConstants.FAILED
             || orderModel.orderStatus == AppConstants.RETURNED) {
-          _canceledList.add(orderModel);
+          _canceledList!.add(orderModel);
         }
       });
     } else {
+      _pendingList = [];
+      _deliveredList = [];
+      _canceledList = [];
       ApiChecker.checkApi(context, apiResponse);
     }
     notifyListeners();
@@ -90,7 +96,7 @@ class OrderProvider with ChangeNotifier {
   }
 
   List<OrderDetailsModel> _orderDetails=[];
-  List<OrderDetailsModel> get orderDetails => _orderDetails;
+  List<OrderDetailsModel> get orderDetails => _orderDetails??[];
 
   Future <void> getOrderDetails(String orderID, BuildContext context, String languageCode) async {
     _orderDetails = [];
@@ -198,7 +204,7 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  OrderModel? _trackingModel;
+  OrderModel? _trackingModel=OrderModel();
   OrderModel get trackingModel => _trackingModel!;
 
   Future<void> initTrackingInfo(String orderID, BuildContext context) async {

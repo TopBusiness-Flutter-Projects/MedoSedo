@@ -132,10 +132,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       key: _scaffoldKey,
       body: Consumer<ProfileProvider>(
         builder: (context, profile, child) {
-          _firstNameController.text = profile.userInfoModel.fName;
-          _lastNameController.text = profile.userInfoModel.lName;
-          _emailController.text = profile.userInfoModel.email;
-          _phoneController.text = profile.userInfoModel.phone;
+          _firstNameController.text = profile.userInfoModel.fName!;
+          _lastNameController.text = profile.userInfoModel.lName!;
+          _emailController.text = profile.userInfoModel.email!;
+          _phoneController.text = profile.userInfoModel.phone!;
 
 
           print('wallet amount===>${profile.userInfoModel.walletBalance}');
@@ -349,7 +349,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
                             InkWell(
-                              onTap: () => showAnimatedDialog(context, SignOutConfirmationDialog(isDelete: true,customerId: profile.userInfoModel.id,), isFlip: true),
+                              onTap: () => showAnimatedDialog(context, SignOutConfirmationDialog(isDelete: true,customerId: profile.userInfoModel.id!,), isFlip: true),
                               child: Row(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.center,children: [
                                 Container(alignment: Alignment.center,height: Dimensions.ICON_SIZE_SMALL,child: Image.asset(Images.delete)),
                                 SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT,),

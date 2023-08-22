@@ -88,7 +88,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
         Provider.of<LocationProvider>(context, listen: false).updateAddressIndex(2, false);
       }
     }else {
-      if(Provider.of<ProfileProvider>(context, listen: false).userInfoModel.name.isNotEmpty){
+      if(Provider.of<ProfileProvider>(context, listen: false).userInfoModel.name!.isNotEmpty){
         _contactPersonNameController.text = '${Provider.of<ProfileProvider>(context, listen: false).userInfoModel.fName ?? ''}'
             ' ${Provider.of<ProfileProvider>(context, listen: false).userInfoModel.lName ?? ''}';
         _contactPersonNumberController.text = Provider.of<ProfileProvider>(context, listen: false).userInfoModel.phone ?? '';
@@ -133,7 +133,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         initialCameraPosition: CameraPosition(
                                           target: widget.isEnableUpdate
                                               ? LatLng(double.parse(widget.address!.latitude!) ?? 0.0, double.parse(widget.address!.longitude!) ?? 0.0)
-                                              : LatLng(locationProvider.position.latitude ?? 0.0, locationProvider.position.longitude ?? 0.0),
+                                              : LatLng(locationProvider.position!.latitude ?? 0.0, locationProvider.position!.longitude ?? 0.0),
                                           zoom: 17,
                                         ),
                                         onTap: (latLng) {
@@ -363,9 +363,9 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                   ):
                                   DropdownSearch<RestrictedZipModel>(
                                     items: locationProvider.restrictedZipList,
-                                    itemAsString: (RestrictedZipModel u) => u.zipcode,
+                                    itemAsString: (RestrictedZipModel u) => u.zipcode!,
                                     onChanged: (value){
-                                      _zipCodeController.text = value!.zipcode;
+                                      _zipCodeController.text = value!.zipcode!;
                                     },
                                     dropdownDecoratorProps: DropDownDecoratorProps(
                                       dropdownSearchDecoration: InputDecoration(labelText: "zip"),
@@ -476,9 +476,9 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                       country:  _countryCodeController.text,
                                       isBilling: _address == Address.billing ? 1:0,
                                       address: locationProvider.locationController.text ?? '',
-                                      latitude: widget.isEnableUpdate ? locationProvider.position.latitude.toString() ?? widget.address!.latitude! : locationProvider.position.latitude.toString() ?? '',
-                                      longitude: widget.isEnableUpdate ? locationProvider.position.longitude.toString() ?? widget.address!.longitude!
-                                          : locationProvider.position.longitude.toString() ?? '',
+                                      latitude: widget.isEnableUpdate ? locationProvider.position!.latitude.toString() ?? widget.address!.latitude! : locationProvider.position!.latitude.toString() ?? '',
+                                      longitude: widget.isEnableUpdate ? locationProvider.position!.longitude.toString() ?? widget.address!.longitude!
+                                          : locationProvider.position!.longitude.toString() ?? '',
                                     );
                                     if (widget.isEnableUpdate) {
                                       addressModel.id = widget.address!.id;

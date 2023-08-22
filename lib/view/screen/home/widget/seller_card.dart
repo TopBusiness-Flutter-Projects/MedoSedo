@@ -22,8 +22,8 @@ class _SellerCardState extends State<SellerCard> {
   Widget build(BuildContext context) {
 
     if(widget.sellerModel!.vacationEndDate != null){
-      DateTime vacationDate = DateTime.parse(widget.sellerModel!.vacationEndDate);
-      DateTime vacationStartDate = DateTime.parse(widget.sellerModel!.vacationStartDate);
+      DateTime vacationDate = DateTime.parse(widget.sellerModel!.vacationEndDate!);
+      DateTime vacationStartDate = DateTime.parse(widget.sellerModel!.vacationStartDate!);
       final today = DateTime.now();
       final difference = vacationDate.difference(today).inDays;
       final startDate = vacationStartDate.difference(today).inDays;
@@ -61,7 +61,7 @@ class _SellerCardState extends State<SellerCard> {
                     child: FadeInImage.assetNetwork(
                       fit: BoxFit.cover,
                       placeholder: Images.placeholder,
-                      image: Provider.of<SplashProvider>(context,listen: false).baseUrls.shopImageUrl+'/'+widget.sellerModel!.image,
+                      image: Provider.of<SplashProvider>(context,listen: false).baseUrls.shopImageUrl+'/'+widget.sellerModel!.image!,
                       imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder_1x1, fit: BoxFit.cover,),
                     ),
                   ),

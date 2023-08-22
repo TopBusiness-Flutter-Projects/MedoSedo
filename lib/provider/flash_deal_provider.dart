@@ -30,7 +30,7 @@ class FlashDealProvider extends ChangeNotifier {
         _flashDeal = FlashDealModel.fromJson(apiResponse.response!.data);
 
         if(_flashDeal!.id != null) {
-          DateTime endTime = DateFormat("yyyy-MM-dd").parse(_flashDeal!.endDate).add(Duration(days: 1));
+          DateTime endTime = DateFormat("yyyy-MM-dd").parse(_flashDeal!.endDate!).add(Duration(days: 1));
           _duration = endTime.difference(DateTime.now());
           _timer?.cancel();
           // _timer = null;

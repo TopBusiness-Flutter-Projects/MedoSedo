@@ -60,7 +60,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                               TextSpan(text: getTranslated('total_price', context), style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
                                               TextSpan(text: PriceConverter.convertPrice(context,
-                                                  refund.refundInfoModel.refund.productPrice*refund.refundInfoModel.refund.quntity ),
+                                                  refund.refundInfoModel.refund!.productPrice*refund.refundInfoModel.refund!.quntity ),
                                                   style: TextStyle(fontWeight: FontWeight.w200)),
                                             ],
                                           ),
@@ -72,7 +72,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                               TextSpan(text: getTranslated('product_discount', context),
                                                   style: TextStyle(fontWeight: FontWeight.bold)),
                                               TextSpan(text: PriceConverter.convertPrice(context,
-                                                  refund.refundInfoModel.refund.productTotalDiscount),
+                                                  refund.refundInfoModel.refund!.productTotalDiscount),
                                                   style: TextStyle(fontWeight: FontWeight.w200)),
                                             ],
                                           ),
@@ -84,7 +84,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                               TextSpan(text: getTranslated('tax', context), style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
                                               TextSpan(text: PriceConverter.convertPrice(context,
-                                                  refund.refundInfoModel.refund.productTotalTax),
+                                                  refund.refundInfoModel.refund!.productTotalTax),
                                                   style: TextStyle(fontWeight: FontWeight.w200)),
                                             ],
                                           ),
@@ -98,7 +98,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                               TextSpan(text: getTranslated('sub_total', context),
                                                   style: TextStyle(fontWeight: FontWeight.bold)),
                                               TextSpan(text: PriceConverter.convertPrice(context,
-                                                  refund.refundInfoModel.refund.subtotal),
+                                                  refund.refundInfoModel.refund!.subtotal),
                                                   style: TextStyle(fontWeight: FontWeight.w300)),
                                             ],
                                           ),
@@ -110,7 +110,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                               TextSpan(text: getTranslated('coupon_discount', context),
                                                   style: TextStyle(fontWeight: FontWeight.bold)),
                                               TextSpan(text: PriceConverter.convertPrice(context,
-                                                  refund.refundInfoModel.refund.couponDiscount),
+                                                  refund.refundInfoModel.refund!.couponDiscount),
                                                   style: TextStyle(fontWeight: FontWeight.w300)),
                                             ],
                                           ),
@@ -124,7 +124,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                               TextSpan(text: getTranslated('total_refund_amount', context),
                                                   style: TextStyle(fontWeight: FontWeight.bold)),
                                               TextSpan(text: PriceConverter.convertPrice(context,
-                                                  refund.refundInfoModel.refund.refundAmount),
+                                                  refund.refundInfoModel.refund!.refundAmount),
                                                   style: TextStyle(fontWeight: FontWeight.bold)),
                                             ],
                                           ),
@@ -222,7 +222,7 @@ class _RefundBottomSheetState extends State<RefundBottomSheet> {
                                   ));
                                 }else {
                                   refundReq.refundRequest(context, widget.orderDetailsId,
-                                      refundReq.refundInfoModel.refund.refundAmount,reason,
+                                      refundReq.refundInfoModel.refund!.refundAmount,reason,
                                       Provider.of<AuthProvider>(context, listen: false).getUserToken()).
                                   then((value) {
                                     if(value.statusCode==200){

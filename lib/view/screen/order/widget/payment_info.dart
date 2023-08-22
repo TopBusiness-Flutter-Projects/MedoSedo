@@ -29,8 +29,9 @@ class PaymentInfo extends StatelessWidget {
                     Text(getTranslated('PAYMENT_STATUS', context),
                         style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
 
-                    Text((order.trackingModel.paymentStatus != null && order.trackingModel.paymentStatus.isNotEmpty) ?
-                    order.trackingModel.paymentStatus : 'Digital Payment',
+                    Text((order.trackingModel.paymentStatus != null
+                        && order.trackingModel.paymentStatus!.isNotEmpty) ?
+                    order.trackingModel.paymentStatus! : 'Digital Payment',
                       style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
                     ),
                   ]),
@@ -41,7 +42,7 @@ class PaymentInfo extends StatelessWidget {
               Text(getTranslated('PAYMENT_PLATFORM', context),
                   style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
 
-              Text(order.trackingModel.paymentMethod != null ? getTranslated( order.trackingModel.paymentMethod, context): '',
+              Text(order.trackingModel.paymentMethod != null ? getTranslated( order.trackingModel.paymentMethod!, context): '',
                   style: titilliumBold.copyWith(color: Theme.of(context).primaryColor,
                   )),
             ]),

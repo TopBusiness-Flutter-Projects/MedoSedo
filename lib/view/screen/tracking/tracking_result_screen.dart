@@ -30,8 +30,8 @@ class TrackingResultScreen extends StatelessWidget {
           Expanded(
             child: Consumer<OrderProvider>(
               builder: (context, tracking, child) {
-                String status = tracking.trackingModel != null ? tracking.trackingModel.orderStatus : '';
-                return tracking.trackingModel != null ? _statusList.contains(status) ?
+                String status = tracking.trackingModel.id != 0 ? tracking.trackingModel.orderStatus! : '';
+                return tracking.trackingModel.id != 0 ? _statusList.contains(status) ?
                 ListView(
                   physics: BouncingScrollPhysics(),
                   children: [

@@ -1,7 +1,7 @@
 class RefundInfoModel {
-  late bool alreadyRequested;
-  late  bool expired;
-  late  Refund refund;
+  bool? alreadyRequested;
+    bool? expired;
+    Refund? refund;
 
   RefundInfoModel({required this.alreadyRequested, required this.expired, required this.refund});
 
@@ -17,7 +17,7 @@ class RefundInfoModel {
     data['already_requested'] = this.alreadyRequested;
     data['expired'] = this.expired;
     if (this.refund != null) {
-      data['refund'] = this.refund.toJson();
+      data['refund'] = this.refund!.toJson();
     }
     return data;
   }

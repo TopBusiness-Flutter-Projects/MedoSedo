@@ -1,18 +1,18 @@
     class FlashDealModel {
-      late int _id;
-      late String _title;
-      late String _startDate;
-      late String _endDate;
-      late int _status;
-      late int _featured;
-      late String _backgroundColor;
-      late String _textColor;
-      late  String _banner;
-      late String _slug;
-      late String _createdAt;
-      late String _updatedAt;
-      late int _productId;
-      late String _dealType;
+      int? _id;
+      String? _title;
+      String? _startDate;
+      String? _endDate;
+      int? _status;
+      int? _featured;
+      String? _backgroundColor;
+      String? _textColor;
+       String? _banner;
+      String? _slug;
+      String? _createdAt;
+      String? _updatedAt;
+      int? _productId;
+      String? _dealType;
 
   FlashDealModel(
       {required int id,
@@ -45,20 +45,20 @@
     this._dealType = dealType;
   }
 
-  int get id => _id;
-  String get title => _title;
-  String get startDate => _startDate;
-  String get endDate => _endDate;
-  int get status => _status;
-  int get featured => _featured;
-  String get backgroundColor => _backgroundColor;
-  String get textColor => _textColor;
-  String get banner => _banner;
-  String get slug => _slug;
-  String get createdAt => _createdAt;
-  String get updatedAt => _updatedAt;
-  int get productId => _productId;
-  String get dealType => _dealType;
+  int? get id => _id;
+  String? get title => _title;
+  String? get startDate => _startDate;
+  String? get endDate => _endDate;
+  int? get status => _status;
+  int? get featured => _featured;
+  String? get backgroundColor => _backgroundColor;
+  String? get textColor => _textColor;
+  String? get banner => _banner;
+  String? get slug => _slug;
+  String? get createdAt => _createdAt;
+  String? get updatedAt => _updatedAt;
+  int? get productId => _productId;
+  String? get dealType => _dealType;
 
   FlashDealModel.fromJson(Map<String, dynamic> json) {
     _id = json['id']??0;

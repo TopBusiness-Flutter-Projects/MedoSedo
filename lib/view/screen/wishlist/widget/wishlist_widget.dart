@@ -52,7 +52,7 @@ class WishListWidget extends StatelessWidget {
 
 
 
-                      product!.unitPrice!=null && product!.discount>0?
+                      product!.unitPrice!=false && product!.discount>0?
                       Positioned(top: 0,left: 0,
                         child: Container(height: 20,
                           padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -61,7 +61,7 @@ class WishListWidget extends StatelessWidget {
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                                   bottomRight: Radius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL)),
                               color: Theme.of(context).primaryColor),
-                          child: Text(product!.unitPrice!=null && product!.discount != null && product!.discountType != null?
+                          child: Text(product!.unitPrice!=false && product!.discount != null && product!.discountType != null?
                           PriceConverter.percentageCalculation(context, product!.unitPrice, product!.discount, product!.discountType) : '',
                             style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
                                 color: Theme.of(context).cardColor),

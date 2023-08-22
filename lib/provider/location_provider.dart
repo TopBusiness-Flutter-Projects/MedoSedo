@@ -17,10 +17,10 @@ import 'package:google_maps_webservice/places.dart';
 import 'dart:async';
 import 'dart:convert';
 class LocationProvider with ChangeNotifier {
-  final SharedPreferences sharedPreferences;
+  final SharedPreferences? sharedPreferences;
   final LocationRepo? locationRepo;
 
-  LocationProvider({required this.sharedPreferences, this.locationRepo});
+  LocationProvider({ this.sharedPreferences, this.locationRepo});
 
   Position _position = Position(longitude: 0, latitude: 0, timestamp: DateTime.now(), accuracy: 1, altitude: 1, heading: 1, speed: 1, speedAccuracy: 1);
   Position _pickPosition = Position(longitude: 0, latitude: 0, timestamp: DateTime.now(), accuracy: 1, altitude: 1, heading: 1, speed: 1, speedAccuracy: 1);
@@ -30,26 +30,26 @@ class LocationProvider with ChangeNotifier {
   bool get isBilling =>_isBilling;
   TextEditingController _locationController = TextEditingController();
 
-  Position get position => _position;
-  Position get pickPosition => _pickPosition;
-  Placemark _address = Placemark();
-  Placemark _pickAddress = Placemark();
+  Position? get position => _position;
+  Position? get pickPosition => _pickPosition;
+  Placemark? _address = Placemark();
+  Placemark? _pickAddress = Placemark();
 
-  Placemark get address => _address;
-  Placemark get pickAddress => _pickAddress;
+  Placemark? get address => _address;
+  Placemark? get pickAddress => _pickAddress;
   List<Marker> _markers = <Marker>[];
   TextEditingController get locationController => _locationController;
 
-  List<Marker> get markers => _markers;
+  List<Marker>? get markers => _markers;
 
   bool _buttonDisabled = true;
   bool _changeAddress = true;
- late  GoogleMapController _mapController;
+  GoogleMapController? _mapController;
   List<Prediction> _predictionList = [];
   bool _updateAddAddressData = true;
 
-  bool get buttonDisabled => _buttonDisabled;
-  GoogleMapController get mapController => _mapController;
+  bool? get buttonDisabled => _buttonDisabled;
+  GoogleMapController? get mapController => _mapController;
 
 
   List<String> _restrictedCountryList = [];
@@ -107,7 +107,7 @@ class LocationProvider with ChangeNotifier {
     }
     fromAddress ? _address = _myPlaceMark : _pickAddress = _myPlaceMark;
     if(fromAddress) {
-      _locationController.text = placeMarkToAddress(_address);
+      _locationController.text = placeMarkToAddress(_address!);
     }
     _loading = false;
     notifyListeners();
@@ -133,10 +133,10 @@ class LocationProvider with ChangeNotifier {
             String _addresss = await getAddressFromGeocode(LatLng(position.target.latitude, position.target.longitude), context);
             fromAddress ? _address = Placemark(name: _addresss) : _pickAddress = Placemark(name: _addresss);
 
-          if(address != null) {
+          if(address.isNotEmpty) {
             _locationController.text = address;
           }else if(fromAddress) {
-            _locationController.text = placeMarkToAddress(_address);
+            _locationController.text = placeMarkToAddress(_address!);
           }
         } else {
           _changeAddress = true;
@@ -153,7 +153,7 @@ class LocationProvider with ChangeNotifier {
   void dragableAddress() async {
     List<Placemark> placemarks = await placemarkFromCoordinates(_position.latitude, _position.longitude);
     _address = placemarks.first;
-    _locationController.text = placeMarkToAddress(_address);
+    _locationController.text = placeMarkToAddress(_address!);
     //saveUserAddress(address: currentAddresses.first);
     notifyListeners();
   }
@@ -349,14 +349,14 @@ class LocationProvider with ChangeNotifier {
   Future<void> saveUserAddress({Placemark? address}) async {
     String userAddress = jsonEncode(address);
     try {
-      await sharedPreferences.setString(AppConstants.USER_ADDRESS, userAddress);
+      await sharedPreferences!.setString(AppConstants.USER_ADDRESS, userAddress);
     } catch (e) {
       throw e;
     }
   }
 
   String getUserAddress() {
-    return sharedPreferences.getString(AppConstants.USER_ADDRESS) ?? "";
+    return sharedPreferences!.getString(AppConstants.USER_ADDRESS) ?? "";
   }
 
 
@@ -413,7 +413,7 @@ class LocationProvider with ChangeNotifier {
   void setAddAddressData() {
     _position = _pickPosition;
     _address = _pickAddress;
-    _locationController.text = placeMarkToAddress(_address);
+    _locationController.text = placeMarkToAddress(_address!);
     _updateAddAddressData = false;
     notifyListeners();
   }
@@ -421,7 +421,7 @@ class LocationProvider with ChangeNotifier {
   void setPickData() {
     _pickPosition = _position;
     _pickAddress = _address;
-    _locationController.text = placeMarkToAddress(_address);
+    _locationController.text = placeMarkToAddress(_address!);
   }
 
   void setMapController(GoogleMapController mapController) {

@@ -21,11 +21,11 @@ class CancelAndSupport extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           horizontal: Dimensions.PADDING_SIZE_SMALL,
           vertical: Dimensions.PADDING_SIZE_SMALL),
-      child: Row(children: [Expanded(child: orderModel != null &&
+      child: Row(children: [Expanded(child: orderModel.id != 0 &&
           orderModel.orderStatus =='pending' && orderModel.orderType != "POS" || fromNotification?
 
       CustomButton(buttonText: getTranslated('cancel_order', context),
-          onTap: () => Provider.of<OrderProvider>(context,listen: false).cancelOrder(context, orderModel.id).then((value) {
+          onTap: () => Provider.of<OrderProvider>(context,listen: false).cancelOrder(context, orderModel.id!).then((value) {
             if(value.response!.statusCode == 200){
               Provider.of<OrderProvider>(context, listen: false).initOrderList(context);
               Navigator.pop(context);

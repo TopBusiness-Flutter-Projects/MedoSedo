@@ -30,7 +30,9 @@ class NotificationScreen extends StatelessWidget {
         Expanded(
           child: Consumer<NotificationProvider>(
             builder: (context, notification, child) {
-              return notification.notificationList != null ? notification.notificationList.length != 0 ? RefreshIndicator(
+              return notification.notificationList.isNotEmpty ?
+              notification.notificationList.length != 0 ?
+              RefreshIndicator(
                 backgroundColor: Theme.of(context).primaryColor,
                 onRefresh: () async {
                   await Provider.of<NotificationProvider>(context, listen: false).initNotificationList(context);
@@ -61,7 +63,10 @@ class NotificationScreen extends StatelessWidget {
                     );
                   },
                 ),
-              ) : NoInternetOrDataScreen(isNoInternet: false) : NotificationShimmer();
+              ) :
+              NoInternetOrDataScreen(isNoInternet: false) :
+              NoInternetOrDataScreen(isNoInternet: false) ;
+
             },
           ),
         ),

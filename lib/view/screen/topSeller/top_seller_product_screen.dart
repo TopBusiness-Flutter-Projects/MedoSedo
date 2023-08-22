@@ -52,8 +52,8 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
   Widget build(BuildContext context) {
 
     if(widget.topSeller!.vacationEndDate != null){
-      DateTime vacationDate = DateTime.parse(widget.topSeller!.vacationEndDate);
-      DateTime vacationStartDate = DateTime.parse(widget.topSeller!.vacationStartDate);
+      DateTime vacationDate = DateTime.parse(widget.topSeller!.vacationEndDate!);
+      DateTime vacationStartDate = DateTime.parse(widget.topSeller!.vacationStartDate!);
       final today = DateTime.now();
       final difference = vacationDate.difference(today).inDays;
       final startDate = vacationStartDate.difference(today).inDays;
@@ -76,7 +76,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
       body: Column(
         children: [
 
-          CustomAppBar(title: widget.topSeller!.name, onActionPressed: (){}),
+          CustomAppBar(title: widget.topSeller!.name!, onActionPressed: (){}),
 
           Expanded(
             child: ListView(
@@ -160,7 +160,7 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                               children: [
                                 Row(children: [
                                     Expanded(child: Text(
-                                      widget.topSeller!.name,
+                                      widget.topSeller!.name!,
                                       style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,),),

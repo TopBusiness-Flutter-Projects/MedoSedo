@@ -1,17 +1,17 @@
 class UserInfoModel {
-  late int id;
-  late String name;
-  late String method;
-  late String fName;
-  late  String lName;
-  late String phone;
-  late  String image;
-  late  String email;
-  late  String emailVerifiedAt;
-  late  String createdAt;
-  late String updatedAt;
-  late double walletBalance;
-  late double loyaltyPoint;
+  int? id;
+  String? name;
+  String? method;
+  String? fName;
+   String? lName;
+  String? phone;
+   String? image;
+   String? email;
+   String? emailVerifiedAt;
+   String? createdAt;
+  String? updatedAt;
+  double? walletBalance;
+  double? loyaltyPoint;
 
   UserInfoModel(
       {required this.id, required this.name, required this.method, required this.fName,

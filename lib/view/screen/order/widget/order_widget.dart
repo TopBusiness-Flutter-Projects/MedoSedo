@@ -48,7 +48,7 @@ class OrderWidget extends StatelessWidget {
               SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
               Row(children: [
-                Text(DateConverter.localDateToIsoStringAMPM(DateTime.parse(orderModel.createdAt)),
+                Text(DateConverter.localDateToIsoStringAMPM(DateTime.parse(orderModel.createdAt!)),
                     style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,
                       color: Theme.of(context).hintColor,
                 )),
@@ -64,7 +64,7 @@ class OrderWidget extends StatelessWidget {
                 Text(getTranslated('total_price', context),
                     style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
                 SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                Text(PriceConverter.convertPrice(context, orderModel.orderAmount), style: titilliumSemiBold),
+                Text(PriceConverter.convertPrice(context, orderModel.orderAmount!), style: titilliumSemiBold),
               ]),
             ),
 

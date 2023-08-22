@@ -1,32 +1,32 @@
 class TopSellerModel {
-  late int _id;
-  late int _sellerId;
-  late String _name;
-  late String _address;
-  late String _contact;
-  late String _image;
-  late String _createdAt;
-  late String _updatedAt;
-  late String _banner;
-  late int _temporaryClose;
-  late String _vacationEndDate;
-  late String _vacationStartDate;
-  late int _vacationStatus;
+   int? _id;
+   int? _sellerId;
+   String? _name;
+   String? _address;
+   String? _contact;
+   String? _image;
+   String? _createdAt;
+   String? _updatedAt;
+   String? _banner;
+   int? _temporaryClose;
+   String? _vacationEndDate;
+   String? _vacationStartDate;
+   int? _vacationStatus;
 
   TopSellerModel(
-      {required int id,
-        required int sellerId,
-        required String name,
-        required String address,
-        required String contact,
-        required String image,
-        required String createdAt,
-        required String updatedAt,
-        required String banner,
-        required int temporaryClose,
-        required String vacationEndDate,
-        required String vacationStartDate,
-        required int vacationStatus
+      { int? id,
+         int? sellerId,
+         String? name,
+         String? address,
+         String? contact,
+         String? image,
+         String? createdAt,
+         String? updatedAt,
+         String? banner,
+         int? temporaryClose,
+         String? vacationEndDate,
+         String? vacationStartDate,
+         int? vacationStatus
       }) {
     this._id = id;
     this._sellerId = sellerId;
@@ -43,19 +43,19 @@ class TopSellerModel {
     this._vacationStatus = vacationStatus;
   }
 
-  int get id => _id;
-  int get sellerId => _sellerId;
-  String get name => _name;
-  String get address => _address;
-  String get contact => _contact;
-  String get image => _image;
-  String get createdAt => _createdAt;
-  String get updatedAt => _updatedAt;
-  String get banner => _banner;
-  int get temporaryClose => _temporaryClose;
-  String get vacationEndDate => _vacationEndDate;
-  String get vacationStartDate => _vacationStartDate;
-  int get vacationStatus => _vacationStatus;
+  int? get id => _id;
+  int? get sellerId => _sellerId;
+  String? get name => _name;
+  String? get address => _address;
+  String? get contact => _contact;
+  String? get image => _image;
+  String? get createdAt => _createdAt;
+  String? get updatedAt => _updatedAt;
+  String? get banner => _banner;
+  int? get temporaryClose => _temporaryClose;
+  String? get vacationEndDate => _vacationEndDate;
+  String? get vacationStartDate => _vacationStartDate;
+  int? get vacationStatus => _vacationStatus;
 
   TopSellerModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'];

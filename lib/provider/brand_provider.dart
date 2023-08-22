@@ -10,20 +10,21 @@ class BrandProvider extends ChangeNotifier {
 
   BrandProvider({required this.brandRepo});
 
-  List<BrandModel> _brandList = [];
+  List<BrandModel>? _brandList = [];
 
-  List<BrandModel> get brandList => _brandList;
+  List<BrandModel> get brandList => _brandList??[];
 
   List<BrandModel> _originalBrandList = [];
 
   Future<void> getBrandList(bool reload, BuildContext context) async {
-    if (_brandList.length == 0 || reload) {
+    _brandList=[];
+    if (_brandList!.length == 0 || reload) {
       ApiResponse apiResponse = await brandRepo.getBrandList();
       if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
         _originalBrandList.clear();
         apiResponse.response!.data.forEach((brand) => _originalBrandList.add(BrandModel.fromJson(brand)));
-        _brandList.clear();
-        apiResponse.response!.data.forEach((brand) => _brandList.add(BrandModel.fromJson(brand)));
+        _brandList!.clear();
+        apiResponse.response!.data.forEach((brand) => _brandList!.add(BrandModel.fromJson(brand)));
       } else {
         ApiChecker.checkApi(context, apiResponse);
       }
@@ -37,23 +38,23 @@ class BrandProvider extends ChangeNotifier {
 
   void sortBrandLis(int value) {
     if (value == 0) {
-      _brandList.clear();
-      _brandList.addAll(_originalBrandList);
+      _brandList!.clear();
+      _brandList!.addAll(_originalBrandList);
       isTopBrand = true;
       isAZ = false;
       isZA = false;
     } else if (value == 1) {
-      _brandList.clear();
-      _brandList.addAll(_originalBrandList);
-      _brandList.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      _brandList!.clear();
+      _brandList!.addAll(_originalBrandList);
+      _brandList!.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
       isTopBrand = false;
       isAZ = true;
       isZA = false;
     } else if (value == 2) {
-      _brandList.clear();
-      _brandList.addAll(_originalBrandList);
-      _brandList.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
-      Iterable iterable = _brandList.reversed;
+      _brandList!.clear();
+      _brandList!.addAll(_originalBrandList);
+      _brandList!.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      Iterable iterable = _brandList!.reversed;
       _brandList = iterable.toList() as List<BrandModel>;
       isTopBrand = false;
       isAZ = false;

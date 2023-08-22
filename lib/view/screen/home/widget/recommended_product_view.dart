@@ -68,7 +68,7 @@ class RecommendedProductView extends StatelessWidget {
 
 
 
-                          recommended.recommendedProduct !=null && recommended.recommendedProduct.thumbnail !=null?
+                          recommended.recommendedProduct .id!=0 && recommended.recommendedProduct.thumbnail !=null?
                           Positioned(
                             left: 15,
                             top: 15,
@@ -119,7 +119,7 @@ class RecommendedProductView extends StatelessWidget {
                                   ),
 
                                 SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_EXTRA_SMALL),
-                                recommended.recommendedProduct !=null && recommended.recommendedProduct.discount!= null && recommended.recommendedProduct.discount > 0  ? Text(
+                                recommended.recommendedProduct.id!=0 && recommended.recommendedProduct.discount!= null && recommended.recommendedProduct.discount > 0  ? Text(
                                   PriceConverter.convertPrice(context, recommended.recommendedProduct.unitPrice),
                                   style: robotoBold.copyWith(
                                     color: ColorResources.getRed(context),

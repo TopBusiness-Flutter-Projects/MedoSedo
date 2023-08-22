@@ -30,7 +30,7 @@ class ChatScreen extends StatelessWidget {
           builder: (context, chatProvider,child) {
           return Column(children: [
             CustomAppBar(title: name),
-            Expanded(child: chatProvider.messageList != null ? chatProvider.messageList.length != 0 ?
+            Expanded(child: chatProvider.messageList.isNotEmpty ? chatProvider.messageList.length != 0 ?
              ListView.builder(
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),

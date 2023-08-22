@@ -1,14 +1,14 @@
 class SupportTicketModel {
-  late int _id;
-  late  int _customerId;
-  late  String _subject;
-  late  String _type;
-  late  String _priority;
-  late  String _description;
-  late  String _reply;
-  late String _status;
-  late String _createdAt;
-  late String _updatedAt;
+  int? _id;
+   int? _customerId;
+   String? _subject;
+   String? _type;
+   String? _priority;
+   String? _description;
+   String? _reply;
+  String? _status;
+  String? _createdAt;
+  String? _updatedAt;
 
   SupportTicketModel(
       { int? id,
@@ -33,16 +33,16 @@ class SupportTicketModel {
     this._updatedAt = updatedAt!;
   }
 
-  int get id => _id;
-  int get customerId => _customerId;
-  String get subject => _subject;
-  String get type => _type;
-  String get priority => _priority;
-  String get description => _description;
-  String get reply => _reply;
-  String get status => _status;
-  String get createdAt => _createdAt;
-  String get updatedAt => _updatedAt;
+  int? get id => _id;
+  int? get customerId => _customerId;
+  String? get subject => _subject;
+  String? get type => _type;
+  String? get priority => _priority;
+  String? get description => _description;
+  String? get reply => _reply;
+  String? get status => _status;
+  String? get createdAt => _createdAt;
+  String? get updatedAt => _updatedAt;
 
   SupportTicketModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'];

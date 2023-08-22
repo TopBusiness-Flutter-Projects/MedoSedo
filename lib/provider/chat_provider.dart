@@ -16,10 +16,10 @@ class ChatProvider extends ChangeNotifier {
 
   bool _isSendButtonActive = false;
   bool get isSendButtonActive => _isSendButtonActive;
-  List<Chat> _chatList=[];
-  List<Chat> get chatList => _chatList;
-  List<Message> _messageList = [];
-  List<Message> get messageList => _messageList;
+  List<Chat>? _chatList=[];
+  List<Chat> get chatList => _chatList??[];
+  List<Message>? _messageList = [];
+  List<Message> get messageList => _messageList??[];
   bool _isSearching = false;
   bool get isSearching => _isSearching;
  File? _imageFile;

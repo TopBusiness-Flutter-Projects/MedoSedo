@@ -99,7 +99,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                             showModalBottomSheet(context: context, isScrollControlled: true,
                                 backgroundColor: Colors.transparent, builder: (context) =>
                                     ReviewBottomSheet(
-                                        productID: widget.orderDetailsModel.productDetails.id.toString(),
+                                        productID: widget.orderDetailsModel.productDetails!.id.toString(),
                                         callback: widget.callback));
                           }
                         },
@@ -126,11 +126,11 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         InkWell(
                           onTap: () {
                             Provider.of<ProductDetailsProvider>(context, listen: false).removeData();
-                            refund.getRefundReqInfo(context, widget.orderDetailsModel.id).then((value) {
+                            refund.getRefundReqInfo(context, widget.orderDetailsModel.id!).then((value) {
                               if(value.response!.statusCode==200){
                                 Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                                    RefundBottomSheet(product: widget.orderDetailsModel.productDetails,
-                                        orderDetailsId: widget.orderDetailsModel.id)));
+                                    RefundBottomSheet(product: widget.orderDetailsModel.productDetails!,
+                                        orderDetailsId: widget.orderDetailsModel.id!)));
                               }
                             });},
 
@@ -155,11 +155,11 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         InkWell(
                           onTap: () {
                             Provider.of<ProductDetailsProvider>(context, listen: false).removeData();
-                            refund.getRefundReqInfo(context, widget.orderDetailsModel.id).then((value) {
+                            refund.getRefundReqInfo(context, widget.orderDetailsModel.id!).then((value) {
                               if(value.response!.statusCode==200){
                                 Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                                    RefundResultBottomSheet(product: widget.orderDetailsModel.productDetails,
-                                        orderDetailsId: widget.orderDetailsModel.id,
+                                    RefundResultBottomSheet(product: widget.orderDetailsModel.productDetails!,
+                                        orderDetailsId: widget.orderDetailsModel.id!,
                                         orderDetailsModel:  widget.orderDetailsModel)));}});},
 
 
@@ -186,14 +186,14 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
 
-                        Text(PriceConverter.convertPrice(context, widget.orderDetailsModel.price),
+                        Text(PriceConverter.convertPrice(context, widget.orderDetailsModel.price!),
                           style: titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context)),
                         ),
                         Text('x${widget.orderDetailsModel.qty}',
                             style: titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context))),
 
 
-                        widget.orderDetailsModel.discount>0?
+                        widget.orderDetailsModel.discount!>0?
                         Container(height: 20,
                           alignment: Alignment.center,
                           padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -202,8 +202,8 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
 
 
                           child: Text(PriceConverter.percentageCalculation(context,
-                              (widget.orderDetailsModel.price * widget.orderDetailsModel.qty),
-                              widget.orderDetailsModel.discount, 'amount'),
+                              (widget.orderDetailsModel.price! * widget.orderDetailsModel.qty!),
+                              widget.orderDetailsModel.discount!, 'amount'),
                             style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
                                 color: ColorResources.getPrimary(context)),
                           ),
@@ -219,7 +219,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
             ],
           ),
 
-          (widget.orderDetailsModel.variant != null && widget.orderDetailsModel.variant.isNotEmpty) ?
+          (widget.orderDetailsModel.variant != null && widget.orderDetailsModel.variant!.isNotEmpty) ?
           Padding(
             padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL,
                 top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -230,7 +230,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                   style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
 
 
-              Flexible(child: Text(widget.orderDetailsModel.variant,
+              Flexible(child: Text(widget.orderDetailsModel.variant!,
                   style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,
                     color: Theme.of(context).disabledColor,))),
             ]),
@@ -241,7 +241,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
             padding: const EdgeInsets.only(left: 75, right: 75, top: 5),
             child: Row(
               children: [
-                Text('${getTranslated('tax', context)} ${widget.orderDetailsModel.productDetails.taxModel}(${widget.orderDetailsModel.tax})'),
+                Text('${getTranslated('tax', context)} ${widget.orderDetailsModel.productDetails!.taxModel}(${widget.orderDetailsModel.tax})'),
               ],
             ),
           ),
@@ -257,7 +257,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
               builder: (context, orderProvider, _) {
                 return InkWell(
                   onTap : () async {
-                    if(widget.orderDetailsModel.productDetails.digitalProductType == 'ready_after_sell' &&
+                    if(widget.orderDetailsModel.productDetails!.digitalProductType == 'ready_after_sell' &&
                         widget.orderDetailsModel.digitalFileAfterSell == null ){
 
                       Fluttertoast.showToast(
@@ -279,11 +279,11 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                             ? await getExternalStorageDirectory()
                             : await getApplicationSupportDirectory())!;
                         orderProvider.downloadFile(
-                            widget.orderDetailsModel.productDetails.digitalProductType == 'ready_after_sell'?
+                            widget.orderDetailsModel.productDetails!.digitalProductType == 'ready_after_sell'?
                             '${Provider.of<SplashProvider>(context, listen: false).
                             baseUrls.digitalProductUrl}/${widget.orderDetailsModel.digitalFileAfterSell}':
                             '${Provider.of<SplashProvider>(context, listen: false).
-                            baseUrls.digitalProductUrl}/${widget.orderDetailsModel.productDetails.digitalFileReady}',
+                            baseUrls.digitalProductUrl}/${widget.orderDetailsModel.productDetails!.digitalFileReady}',
                             directory.path);
                       }else{
                         print('=====permission denied=====');

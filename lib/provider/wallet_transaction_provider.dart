@@ -40,8 +40,8 @@ class WalletTransactionProvider extends ChangeNotifier {
     ApiResponse apiResponse = await transactionRepo.getWalletTransactionList(offset);
     if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _walletBalance = TransactionModel.fromJson(apiResponse.response!.data);
-      _transactionList.addAll(TransactionModel.fromJson(apiResponse.response!.data).walletTransactioList);
-      _transactionPageSize = TransactionModel.fromJson(apiResponse.response!.data).totalWalletTransactio;
+      _transactionList.addAll(TransactionModel.fromJson(apiResponse.response!.data).walletTransactioList!);
+      _transactionPageSize = TransactionModel.fromJson(apiResponse.response!.data).totalWalletTransactio!;
       _isLoading = false;
     } else {
       _isLoading = false;

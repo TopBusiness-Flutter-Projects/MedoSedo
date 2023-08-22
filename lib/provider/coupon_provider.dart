@@ -11,10 +11,10 @@ class CouponProvider extends ChangeNotifier {
   final CouponRepo couponRepo;
   CouponProvider({required this.couponRepo});
 
-  late CouponModel _coupon;
+  CouponModel? _coupon;
   double _discount=0;
   bool _isLoading = false;
-  CouponModel get coupon => _coupon;
+  CouponModel? get coupon => _coupon;
   double get discount => _discount;
   bool get isLoading => _isLoading;
   String _couponCode = '';

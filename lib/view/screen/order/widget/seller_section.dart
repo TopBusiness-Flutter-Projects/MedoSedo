@@ -25,8 +25,8 @@ class SellerSection extends StatelessWidget {
                 Provider.of<ChatProvider>(context, listen: false).setUserTypeIndex(context, 0);
                 if(order.orderDetails[0].seller != null){
                   Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(
-                      id: order.orderDetails[0].seller.id,
-                    name: order.orderDetails[0].seller.shop!.name!,
+                      id: order.orderDetails[0].seller!.id,
+                    name: order.orderDetails[0].seller!.shop!.name!,
                   )));
                 }else{
                   showCustomSnackBar(getTranslated('seller_not_available', context), context,isToaster: true);
@@ -38,8 +38,8 @@ class SellerSection extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
                 child: Row(children: [
                   Expanded(child: Text(getTranslated('seller', context), style: robotoBold)),
-                  Text(order.orderDetails[0].seller == null ? 'Admin' :
-                  '${order.orderDetails[0].seller?.shop?.name??'${getTranslated('seller_not_available', context)}'} ',
+                  Text(order.orderDetails.isNotEmpty&&order.orderDetails[0].seller!.id == 0 ? 'Admin' :
+                  '${order.orderDetails.isNotEmpty&&order.orderDetails[0].seller!.shop?.name!=null?order.orderDetails[0].seller!.shop?.name:'${getTranslated('seller_not_available', context)}'} ',
                     style: titilliumRegular.copyWith(color: ColorResources.HINT_TEXT_COLOR),
                   ),
                   SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),

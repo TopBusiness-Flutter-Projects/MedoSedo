@@ -64,6 +64,8 @@ class ProductProvider extends ChangeNotifier {
 
   //latest product
   Future<void> getLatestProductList(int offset, BuildContext context, {bool reload = false}) async {
+    _offsetList = [];
+    _latestProductList = [];
     if(reload) {
       _offsetList = [];
       _latestProductList = [];

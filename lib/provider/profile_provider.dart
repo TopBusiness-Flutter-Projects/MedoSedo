@@ -131,7 +131,7 @@ class ProfileProvider extends ChangeNotifier {
     if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _userInfoModel = UserInfoModel.fromJson(apiResponse.response!.data);
       userID = _userInfoModel!.id.toString();
-      _balance = _userInfoModel!.walletBalance;
+      _balance = _userInfoModel!.walletBalance!;
       print('===> nai keno==>${_userInfoModel!.walletBalance}');
     } else {
       ApiChecker.checkApi(context, apiResponse);

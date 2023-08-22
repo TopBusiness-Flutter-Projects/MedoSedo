@@ -79,16 +79,16 @@ class SupportTicketScreen extends StatelessWidget {
                         border: Border.all(color: ColorResources.getSellerTxt(context), width: 2),
                       ),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text('Place date: ${DateConverter.localDateToIsoStringAMPM(DateTime.parse(supportTicketList[index].createdAt))}',
+                        Text('Place date: ${DateConverter.localDateToIsoStringAMPM(DateTime.parse(supportTicketList[index].createdAt!))}',
                           style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
                         ),
-                        Text(supportTicketList[index].subject, style: titilliumSemiBold),
+                        Text(supportTicketList[index].subject!, style: titilliumSemiBold),
 
 
                         Row(children: [
                           Icon(Icons.notifications, color: ColorResources.getPrimary(context), size: 20),
                           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                          Expanded(child: Text(supportTicketList[index].type, style: titilliumSemiBold)),
+                          Expanded(child: Text(supportTicketList[index].type!, style: titilliumSemiBold)),
                           TextButton(onPressed: null,
                             style: TextButton.styleFrom(
                               backgroundColor: supportTicketList[index].status == 'open' ?

@@ -1,12 +1,12 @@
 class RefundResultModel {
-  late double productPrice;
-  late int quntity;
-  late double productTotalDiscount;
-  late double productTotalTax;
-  late double subtotal;
-  late double couponDiscount;
-  late double refundAmount;
-  late List<RefundRequest> refundRequest;
+  double? productPrice;
+  int? quntity;
+  double? productTotalDiscount;
+  double? productTotalTax;
+  double? subtotal;
+  double? couponDiscount;
+  double? refundAmount;
+  List<RefundRequest>? refundRequest;
 
   RefundResultModel(
       {required this.productPrice,
@@ -29,7 +29,7 @@ class RefundResultModel {
     if (json['refund_request'] != null) {
       refundRequest = <RefundRequest>[];
       json['refund_request'].forEach((v) {
-        refundRequest.add(new RefundRequest.fromJson(v));
+        refundRequest!.add(new RefundRequest.fromJson(v));
       });
     }
   }
@@ -45,28 +45,28 @@ class RefundResultModel {
     data['refund_amount'] = this.refundAmount;
     if (this.refundRequest != null) {
       data['refund_request'] =
-          this.refundRequest.map((v) => v.toJson()).toList();
+          this.refundRequest!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class RefundRequest {
-  late  int id;
-  late  int orderDetailsId;
-  late int customerId;
-  late String status;
-  late double amount;
-  late  int productId;
-  late  int orderId;
-  late  String refundReason;
-  late  List<String> images;
-  late  String createdAt;
-  late String updatedAt;
-  late  String approvedNote;
-  late  String rejectedNote;
-  late String paymentInfo;
-  late String changeBy;
+   int? id;
+   int? orderDetailsId;
+  int? customerId;
+  String? status;
+  double? amount;
+   int? productId;
+   int? orderId;
+   String? refundReason;
+   List<String>? images;
+   String? createdAt;
+   String? updatedAt;
+    String? approvedNote;
+    String? rejectedNote;
+   String? paymentInfo;
+   String? changeBy;
 
   RefundRequest(
       {required this.id,
