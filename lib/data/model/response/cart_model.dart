@@ -69,7 +69,7 @@ class CartModel {
   List<ChoiceOptions> get choiceOptions => _choiceOptions!;
   List<int> get variationIndexes => _variationIndexes!;
   double get  shippingCost => _shippingCost!;
-  String get  shippingType => _shippingType!;
+  String get  shippingType => _shippingType??'';
   int get  minimumOrderQuantity => _minimumOrderQuantity!;
   ProductInfo get productInfo => _productInfo!;
   String get productType =>_productType!;

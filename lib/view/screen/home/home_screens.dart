@@ -63,6 +63,7 @@ class _HomePageState extends State<HomePage> {
     await Provider.of<FeaturedDealProvider>(context, listen: false).getFeaturedDealList(reload, context);
     await Provider.of<ProductProvider>(context, listen: false).getLProductList('1', context, reload: reload);
     await Provider.of<ProductProvider>(context, listen: false).getRecommendedProduct(context);
+  await Provider.of<CartProvider>(context,listen: false).  getCartData();
   }
 
   void passData(int index, String title) {
@@ -74,7 +75,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     singleVendor = Provider.of<SplashProvider>(context, listen: false).configModel.businessMode == "single";
     Provider.of<FlashDealProvider>(context, listen: false).getMegaDealList(true, context, true);
 
@@ -124,7 +124,9 @@ class _HomePageState extends State<HomePage> {
                         child: IconButton(
                           onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (_) => CartScreen()));
                           },
-                          icon: Stack(clipBehavior: Clip.none, children: [
+                          icon: Stack(clipBehavior: Clip.none,
+                              alignment: Alignment.center,
+                              children: [
                             Image.asset(
                               Images.cart_arrow_down_image,
                               height: Dimensions.ICON_SIZE_DEFAULT,
@@ -147,7 +149,6 @@ class _HomePageState extends State<HomePage> {
 
                     ],
                   ),
-
                   // Search Button
                   SliverPersistentHeader(
                       pinned: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:medosedo_ecommerce/data/model/response/cart_model.dart';
 import 'package:medosedo_ecommerce/helper/price_converter.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
@@ -32,11 +33,9 @@ class _CartScreenState extends State<CartScreen> {
     if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
      await Provider.of<CartProvider>(context, listen: false).getCartDataAPI(context);
       Provider.of<CartProvider>(context, listen: false).setCartData();
-
       if( Provider.of<SplashProvider>(context,listen: false).configModel.shippingMethod != 'sellerwise_shipping'){
         Provider.of<CartProvider>(context, listen: false).getAdminShippingMethodList(context);
       }
-
     }
   }
 
@@ -45,7 +44,6 @@ class _CartScreenState extends State<CartScreen> {
     _loadData();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<CartProvider>(builder: (context, cart, child) {
@@ -140,7 +138,8 @@ class _CartScreenState extends State<CartScreen> {
                             Text('${getTranslated('total_price', context)}', style: titilliumSemiBold.copyWith(
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT),
                             ),
-                            Text(PriceConverter.convertPrice(context, amount+shippingAmount), style: titilliumSemiBold.copyWith(
+                            Text(PriceConverter.convertPrice(context, amount+shippingAmount )??'',
+                              style: titilliumSemiBold.copyWith(
                                 color: Theme.of(context).primaryColor,fontSize: Dimensions.FONT_SIZE_LARGE),
                             ),
                           ],
@@ -197,11 +196,10 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ]):SizedBox(),
         )
-            : null,
+            : SizedBox(),
         body: Column(
             children: [
               CustomAppBar(title: getTranslated('CART', context)),
-
               cart.isXyz ? Padding(
                 padding: const EdgeInsets.only(top: 200.0),
                 child: Center(child: CircularProgressIndicator(
@@ -324,7 +322,7 @@ class _CartScreenState extends State<CartScreen> {
                               builder: (context) => ShippingMethodBottomSheet(groupId: 'all_cart_group',sellerIndex: 0, sellerId: 1),
                             );
                           }else {
-                            showCustomSnackBar('not_logged_in', context);
+                             showCustomSnackBar(getTranslated('GOTO_LOGIN_SCREEN_ANDTRYAGAIN', context), context,isToaster: true);
                           }
                         },
                         child: Container(

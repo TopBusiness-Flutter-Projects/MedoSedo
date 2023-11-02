@@ -18,19 +18,16 @@ class CartRepo{
 
 
   Future<List<CartModel>> getCartList() async {
-    List<String>? carts =await sharedPreferences.getStringList(AppConstants.CART_LIST);
+    List<String>? carts = await sharedPreferences.getStringList(AppConstants.CART_LIST);
     List<CartModel> cartList = [];
     carts!.forEach((cart) => cartList.add(CartModel.fromJson(jsonDecode(cart))) );
     return cartList;
   }
-
   void addToCartList(List<CartModel> cartProductList) {
     List<String> carts = [];
     cartProductList.forEach((cartModel) => carts.add(jsonEncode(cartModel)) );
     sharedPreferences.setStringList(AppConstants.CART_LIST, carts);
   }
-
-
 
   Future<ApiResponse> getCartListData() async {
     try {

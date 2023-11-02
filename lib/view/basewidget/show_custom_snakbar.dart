@@ -13,7 +13,8 @@ void showCustomSnackBar(String message, BuildContext context, {bool isError = tr
         textColor: Colors.white,
         fontSize: 16.0
     );
-  }else{
+  }
+  else{
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: isError ? ColorResources.getRed(context) : Colors.green,
       content: Text(message),
