@@ -47,7 +47,7 @@ class SellerView extends StatelessWidget {
                           height: MediaQuery.of(context).size.width,
                           width: MediaQuery.of(context).size.width,
                           image:
-                              '${Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl}/${seller.sellerModel.seller!.shop!.image}',
+                              '${Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl}/${seller.sellerModel.seller?.shop!.image}',
                           imageErrorBuilder: (c, o, s) => Image.asset(
                             Images.placeholder,
                             height: MediaQuery.of(context).size.width,

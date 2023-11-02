@@ -67,7 +67,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           Navigator.of(context).pop();
         }
 
-
         return true;
       },
       child: Scaffold(
@@ -80,7 +79,6 @@ class _ProductDetailsState extends State<ProductDetails> {
             onTap: widget.isFromWishList? () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => WishListScreen())):
                 () => Navigator.pop(context),),
           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-
 
           Text(getTranslated('product_details', context),
               style: robotoRegular.copyWith(fontSize: 20,
@@ -103,9 +101,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 child: !details.isDetails?
                 Column(
                   children: [
-
                     details.productDetailsModel.id!=0?ProductImageView(productModel: details.productDetailsModel):SizedBox(),
-
                     Container(
                       transform: Matrix4.translationValues(0.0, -25.0, 0.0),
                       padding: EdgeInsets.only(top: Dimensions.FONT_SIZE_DEFAULT),

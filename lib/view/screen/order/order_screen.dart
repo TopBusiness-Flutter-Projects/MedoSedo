@@ -22,16 +22,16 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  bool? isGuestMode;
+  bool isGuestMode = false;
   @override
   void initState() {
-    Provider.of<OrderProvider>(context, listen: false).initOrderList(context);
     isGuestMode = !Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
+    // Provider.of<OrderProvider>(context, listen: false).initOrderList(context);
+
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    print("Flflfl");
 print(Provider.of<OrderProvider>(context).pendingList!.toString());
     return Scaffold(
       backgroundColor: ColorResources.getIconBg(context),
@@ -39,7 +39,7 @@ print(Provider.of<OrderProvider>(context).pendingList!.toString());
         children: [
           CustomAppBar(title: getTranslated('ORDER', context),
               isBackButtonExist: widget.isBacButtonExist),
-          isGuestMode! ? SizedBox() :
+          isGuestMode ? SizedBox() :
           Provider.of<OrderProvider>(context).pendingList!.isNotEmpty ?
           Consumer<OrderProvider>(
             builder: (context, orderProvider, child) => Padding(
@@ -61,11 +61,9 @@ print(Provider.of<OrderProvider>(context).pendingList!.toString());
               if (Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == 0) {
                 orderList = order.pendingList??[];
               }
-
               else if (Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == 1) {
                 orderList = order.deliveredList??[];
               }
-
               else if (Provider.of<OrderProvider>(context, listen: false).orderTypeIndex == 2) {
                 orderList = order.canceledList??[];
               }

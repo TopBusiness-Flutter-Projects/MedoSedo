@@ -21,14 +21,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   int _pageIndex = 0;
   List<Widget> _screens=[] ;
   GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
-
   bool singleVendor = false;
   @override
   void initState() {
     super.initState();
     singleVendor = Provider.of<SplashProvider>(context, listen: false).configModel.businessMode == "single";
-
-
     _screens = [
       HomePage(),
       singleVendor?OrderScreen(isBacButtonExist: false): InboxScreen(isBackButtonExist: false) ,
@@ -63,9 +60,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           items: _getBottomWidget(singleVendor),
           onTap: (int index) {
             _setPage(index);
+            _pageIndex = index;
           },
         ),
         body: PageView.builder(
+
           controller: _pageController,
           itemCount: _screens.length,
           physics: NeverScrollableScrollPhysics(),
@@ -89,7 +88,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   void _setPage(int pageIndex) {
     setState(() {
-      print("ddlldld");
       print(pageIndex);
       _pageController.jumpToPage(pageIndex);
       _pageIndex = pageIndex;

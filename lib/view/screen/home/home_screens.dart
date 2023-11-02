@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:medosedo_ecommerce/helper/product_type.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/provider/auth_provider.dart';
@@ -51,7 +50,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
-
   Future<void> _loadData(BuildContext context, bool reload) async {
     await Provider.of<BannerProvider>(context, listen: false).getBannerList(reload, context);
     await Provider.of<BannerProvider>(context, listen: false).getFooterBannerList(context);
@@ -105,7 +103,6 @@ class _HomePageState extends State<HomePage> {
           onRefresh: () async {
             await _loadData(context, true);
             await Provider.of<FlashDealProvider>(context, listen: false).getMegaDealList(true, context, false);
-
           //  return true;
           },
           child: Stack(
@@ -239,7 +236,7 @@ class _HomePageState extends State<HomePage> {
 
 
 
-                          // Brand
+                          // Brand منتجات مميزه
                           Provider.of<SplashProvider>(context, listen: false).configModel.brandSetting == "1"?
                           Padding(
                             padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_EXTRA_SMALL, right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -253,7 +250,7 @@ class _HomePageState extends State<HomePage> {
 
 
 
-                          //top seller
+                          //top seller  اعلي بائع
                           singleVendor?SizedBox():
                           TitleRow(title: getTranslated('top_seller', context),
                             onTap: () {Navigator.push(context, MaterialPageRoute(builder: (_) => AllTopSellerScreen(topSeller: null,)));},),
@@ -345,9 +342,6 @@ class _HomePageState extends State<HomePage> {
                             ):SizedBox();
 
                           }),
-
-
-
                           // Latest Products
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 7,vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -373,7 +367,6 @@ class _HomePageState extends State<HomePage> {
                             FooterBannersView(index: 1):SizedBox();
                           }),
                           SizedBox(height: Dimensions.HOME_PAGE_PADDING),
-
 
                           //Category filter
                           Consumer<ProductProvider>(
@@ -414,10 +407,8 @@ class _HomePageState extends State<HomePage> {
                                     }else if(value == ProductType.DISCOUNTED_PRODUCT){
                                       Provider.of<ProductProvider>(context, listen: false).changeTypeOfProduct(value as ProductType, types[3]);
                                     }
-
                                     ProductView(isHomePage: false, productType: value as ProductType, scrollController: _scrollController);
                                     Provider.of<ProductProvider>(context, listen: false).getLatestProductList(1, context, reload: true);
-
 
                                   }
                                 ) : SizedBox(),
