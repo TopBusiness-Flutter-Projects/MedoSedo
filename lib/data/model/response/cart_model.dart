@@ -33,7 +33,6 @@ class CartModel {
   String? _slug;
 
 
-
   CartModel(
       this._id,this._productId, this._thumbnail, this._name, this._seller, this._price, this._discountedPrice, this._quantity, this._maxQuantity, this._variant, this._color,
       this._variation, this._discount, this._discountType, this._tax, this._taxModel, this._taxType, this.shippingMethodId, this._cartGroupId,this._sellerId, this._sellerIs,
@@ -135,6 +134,7 @@ class CartModel {
     data['variant'] = this._variant;
     data['color'] = this._color;
     data['variation'] = this._variation;
+
     data['discount'] = this._discount;
     data['discount_type'] = this._discountType;
     data['tax'] = this._tax;
@@ -163,6 +163,7 @@ class CartModel {
 class ProductInfo {
   int? minimumOrderQty;
   int? totalCurrentStock;
+  String ? sellerPhone ;
 
   // ProductInfoInfo({ this.minimumOrderQty, this.totalCurrentStock});
 
@@ -175,12 +176,14 @@ class ProductInfo {
       }
     }
     totalCurrentStock = json['total_current_stock'];
+    sellerPhone = json['seller_phone'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['minimum_order_qty'] = this.minimumOrderQty;
     data['total_current_stock'] = this.totalCurrentStock;
+    data['seller_phone'] = this.sellerPhone;
     return data;
   }
 }

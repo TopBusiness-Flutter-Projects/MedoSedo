@@ -413,6 +413,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                           onTap: _stock < widget.product.minimumOrderQty!  && widget.product.productType == "physical" ? null :() {
                             if(_stock >= widget.product.minimumOrderQty! || widget.product.productType == "digital") {
                               CartModel cart = CartModel(
+
                                   widget.product.id,widget.product.id, widget.product.thumbnail, widget.product.name,
                                   widget.product.addedBy == 'seller' ?
                                   '${Provider.of<SellerProvider>(context, listen: false).sellerModel.seller!.fName} '
@@ -424,7 +425,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                                   widget.product.taxType, 1, '',widget.product.userId,'','','', widget.product.choiceOptions,
                                   Provider.of<ProductDetailsProvider>(context, listen: false).variationIndex,
                                   widget.product.multiplyQty==1? widget.product.shippingCost!*details.quantity : widget.product.shippingCost ??0,
-                                  widget.product.minimumOrderQty,  widget.product.productType,widget.product.slug
+                                  widget.product.minimumOrderQty,  widget.product.productType,widget.product.slug,
+
                               );
 
 

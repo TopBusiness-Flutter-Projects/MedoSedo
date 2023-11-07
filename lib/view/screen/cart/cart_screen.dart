@@ -121,82 +121,82 @@ class _CartScreenState extends State<CartScreen> {
 
 
       return Scaffold(
-        bottomNavigationBar: (!widget.fromCheckout && !cart.isLoading)
-            ? Container(height: 80, padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,
-            vertical: Dimensions.PADDING_SIZE_DEFAULT),
-
-          decoration: BoxDecoration(color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-          ),
-          child: cartList.isNotEmpty ?
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                    child: Center(
-                        child: Row(
-                          children: [
-                            Text('${getTranslated('total_price', context)}', style: titilliumSemiBold.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_DEFAULT),
-                            ),
-                            Text(PriceConverter.convertPrice(context, amount+shippingAmount )??'',
-                              style: titilliumSemiBold.copyWith(
-                                color: Theme.of(context).primaryColor,fontSize: Dimensions.FONT_SIZE_LARGE),
-                            ),
-                          ],
-                        ))),
-                Builder(
-                  builder: (context) => InkWell(
-                    onTap: () {
-                      if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-                        if (cart.cartList.length == 0) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('select_at_least_one_product', context)),
-                            backgroundColor: Colors.red,));
-                        } else if(cart.chosenShippingList.length < orderTypeShipping.length &&
-                            Provider.of<SplashProvider>(context,listen: false).configModel.shippingMethod =='sellerwise_shipping' &&
-                            !_onlyDigital){
-
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('select_all_shipping_method', context)),
-                              backgroundColor: Colors.red));
-                        }else if(cart.chosenShippingList.length < 1 &&
-                            Provider.of<SplashProvider>(context,listen: false).configModel.shippingMethod !='sellerwise_shipping' &&
-                            Provider.of<SplashProvider>(context,listen: false).configModel.inHouseSelectedShippingType =='order_wise' && !_onlyDigital){
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('select_all_shipping_method', context)),
-                              backgroundColor: Colors.red));
-                        }
-
-
-                        else {
-
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => CheckoutScreen(
-                            cartList: cartList,totalOrderAmount: amount,shippingFee: shippingAmount, discount: discount,
-                            tax: tax, onlyDigital: _onlyDigital,
-                          )));
-
-                        }
-                      } else {showAnimatedDialog(context, GuestDialog(), isFlip: true);}
-                    },
-
-                    child: Container(width: MediaQuery.of(context).size.width/3.5,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL,
-                              vertical: Dimensions.FONT_SIZE_SMALL),
-                          child: Text(getTranslated('checkout', context),
-                              style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                color: Theme.of(context).cardColor,
-                              )),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ]):SizedBox(),
-        )
-            : SizedBox(),
+        // bottomNavigationBar: (!widget.fromCheckout && !cart.isLoading)
+        //     ? Container(height: 80, padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,
+        //     vertical: Dimensions.PADDING_SIZE_DEFAULT),
+        //
+        //   decoration: BoxDecoration(color: Theme.of(context).cardColor,
+        //     borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+        //   ),
+        //   child: cartList.isNotEmpty ?
+        //   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //       children: [
+        //         Expanded(
+        //             child: Center(
+        //                 child: Row(
+        //                   children: [
+        //                     Text('${getTranslated('total_price', context)}', style: titilliumSemiBold.copyWith(
+        //                         fontSize: Dimensions.FONT_SIZE_DEFAULT),
+        //                     ),
+        //                     Text(PriceConverter.convertPrice(context, amount+shippingAmount )??'',
+        //                       style: titilliumSemiBold.copyWith(
+        //                         color: Theme.of(context).primaryColor,fontSize: Dimensions.FONT_SIZE_LARGE),
+        //                     ),
+        //                   ],
+        //                 ))),
+        //         Builder(
+        //           builder: (context) => InkWell(
+        //             onTap: () {
+        //               if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+        //                 if (cart.cartList.length == 0) {
+        //                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('select_at_least_one_product', context)),
+        //                     backgroundColor: Colors.red,));
+        //                 } else if(cart.chosenShippingList.length < orderTypeShipping.length &&
+        //                     Provider.of<SplashProvider>(context,listen: false).configModel.shippingMethod =='sellerwise_shipping' &&
+        //                     !_onlyDigital){
+        //
+        //                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('select_all_shipping_method', context)),
+        //                       backgroundColor: Colors.red));
+        //                 }else if(cart.chosenShippingList.length < 1 &&
+        //                     Provider.of<SplashProvider>(context,listen: false).configModel.shippingMethod !='sellerwise_shipping' &&
+        //                     Provider.of<SplashProvider>(context,listen: false).configModel.inHouseSelectedShippingType =='order_wise' && !_onlyDigital){
+        //                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('select_all_shipping_method', context)),
+        //                       backgroundColor: Colors.red));
+        //                 }
+        //
+        //
+        //                 else {
+        //
+        //                   Navigator.push(context, MaterialPageRoute(builder: (_) => CheckoutScreen(
+        //                     cartList: cartList,totalOrderAmount: amount,shippingFee: shippingAmount, discount: discount,
+        //                     tax: tax, onlyDigital: _onlyDigital,
+        //                   )));
+        //
+        //                 }
+        //               } else {showAnimatedDialog(context, GuestDialog(), isFlip: true);}
+        //             },
+        //
+        //             child: Container(width: MediaQuery.of(context).size.width/3.5,
+        //               decoration: BoxDecoration(
+        //                 color: Theme.of(context).primaryColor,
+        //                 borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
+        //               ),
+        //               child: Center(
+        //                 child: Padding(
+        //                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL,
+        //                       vertical: Dimensions.FONT_SIZE_SMALL),
+        //                   child: Text(getTranslated('checkout', context),
+        //                       style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT,
+        //                         color: Theme.of(context).cardColor,
+        //                       )),
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //         ),
+        //       ]):SizedBox(),
+        // )
+        //     : SizedBox(),
         body: Column(
             children: [
               CustomAppBar(title: getTranslated('CART', context)),
@@ -313,42 +313,42 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                       ),
-                      Provider.of<SplashProvider>(context,listen: false).configModel.shippingMethod !='sellerwise_shipping' && Provider.of<SplashProvider>(context,listen: false).configModel.inHouseSelectedShippingType =='order_wise'?
-                      InkWell(
-                        onTap: () {
-                          if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-                            showModalBottomSheet(
-                              context: context, isScrollControlled: true, backgroundColor: Colors.transparent,
-                              builder: (context) => ShippingMethodBottomSheet(groupId: 'all_cart_group',sellerIndex: 0, sellerId: 1),
-                            );
-                          }else {
-                             showCustomSnackBar(getTranslated('GOTO_LOGIN_SCREEN_ANDTRYAGAIN', context), context,isToaster: true);
-                          }
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 0.5,color: Colors.grey),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              Text(getTranslated('SHIPPING_PARTNER', context), style: titilliumRegular),
-                              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                                Text(
-                                  (cart.shippingList == null ||cart.chosenShippingList.length == 0 || cart.shippingList!.length==0 || cart.shippingList![0].shippingMethodList.isEmpty ||  cart.shippingList![0].shippingIndex == -1) ? ''
-                                      : '${cart.shippingList![0].shippingMethodList[cart.shippingList![0].shippingIndex].title.toString()}',
-                                  style: titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context)),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                Icon(Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor),
-                              ]),
-                            ]),
-                          ),
-                        ),
-                      ):SizedBox(),
+                      // Provider.of<SplashProvider>(context,listen: false).configModel.shippingMethod !='sellerwise_shipping' && Provider.of<SplashProvider>(context,listen: false).configModel.inHouseSelectedShippingType =='order_wise'?
+                      // InkWell(
+                      //   onTap: () {
+                      //     if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+                      //       showModalBottomSheet(
+                      //         context: context, isScrollControlled: true, backgroundColor: Colors.transparent,
+                      //         builder: (context) => ShippingMethodBottomSheet(groupId: 'all_cart_group',sellerIndex: 0, sellerId: 1),
+                      //       );
+                      //     }else {
+                      //        showCustomSnackBar(getTranslated('GOTO_LOGIN_SCREEN_ANDTRYAGAIN', context), context,isToaster: true);
+                      //     }
+                      //   },
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       border: Border.all(width: 0.5,color: Colors.grey),
+                      //       borderRadius: BorderRadius.all(Radius.circular(10)),
+                      //     ),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.all(8.0),
+                      //       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                      //         Text(getTranslated('SHIPPING_PARTNER', context), style: titilliumRegular),
+                      //         Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                      //           Text(
+                      //             (cart.shippingList == null ||cart.chosenShippingList.length == 0 || cart.shippingList!.length==0 || cart.shippingList![0].shippingMethodList.isEmpty ||  cart.shippingList![0].shippingIndex == -1) ? ''
+                      //                 : '${cart.shippingList![0].shippingMethodList[cart.shippingList![0].shippingIndex].title.toString()}',
+                      //             style: titilliumSemiBold.copyWith(color: ColorResources.getPrimary(context)),
+                      //             maxLines: 1,
+                      //             overflow: TextOverflow.ellipsis,
+                      //           ),
+                      //           SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      //           Icon(Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor),
+                      //         ]),
+                      //       ]),
+                      //     ),
+                      //   ),
+                      // ):SizedBox(),
 
 
                     ],

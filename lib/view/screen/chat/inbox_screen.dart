@@ -47,7 +47,6 @@ class _InboxScreenState extends State<InboxScreen> {
       backgroundColor: ColorResources.getIconBg(context),
       body: Column(children: [
         CustomAppBar(title: getTranslated('inbox', context), isBackButtonExist: false),
-
         Container(
             height: 100,decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
