@@ -106,19 +106,19 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget> {
               Provider.of<SplashProvider>(context,listen: false).configModel.socialLogin[1].status?
               InkWell(
                 onTap: () async{
-                  await Provider.of<FacebookLoginProvider>(context, listen: false).login();
-                  String id,token,email, medium;
-                  if(Provider.of<FacebookLoginProvider>(context,listen: false).userData != null){
-                    id = Provider.of<FacebookLoginProvider>(context,listen: false).result.accessToken!.userId;
-                    email = Provider.of<FacebookLoginProvider>(context,listen: false).userData['email'];
-                    token = Provider.of<FacebookLoginProvider>(context,listen: false).result.accessToken!.token;
-                    medium = 'facebook';
-                    socialLogin.email = email;
-                    socialLogin.medium = medium;
-                    socialLogin.token = token;
-                    socialLogin.uniqueId = id;
-                    await Provider.of<AuthProvider>(context, listen: false).socialLogin(socialLogin, route);
-                  }
+                  // await Provider.of<FacebookLoginProvider>(context, listen: false).login();
+                  // String id,token,email, medium;
+                  // if(Provider.of<FacebookLoginProvider>(context,listen: false).userData != null){
+                  //   id = Provider.of<FacebookLoginProvider>(context,listen: false).result.accessToken!.userId;
+                  //   email = Provider.of<FacebookLoginProvider>(context,listen: false).userData['email'];
+                  //   token = Provider.of<FacebookLoginProvider>(context,listen: false).result.accessToken!.token;
+                  //   medium = 'facebook';
+                  //   socialLogin.email = email;
+                  //   socialLogin.medium = medium;
+                  //   socialLogin.token = token;
+                  //   socialLogin.uniqueId = id;
+                  //   await Provider.of<AuthProvider>(context, listen: false).socialLogin(socialLogin, route);
+                  // }
                 },
                 child: Ink(color: Color(0xFF397AF3),
                   child: Padding(padding: EdgeInsets.all(6),
