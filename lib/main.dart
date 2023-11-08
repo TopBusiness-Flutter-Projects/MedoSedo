@@ -98,7 +98,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<GoogleSignInProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<FacebookLoginProvider>()),
+      // ChangeNotifierProvider(create: (context) => di.sl<FacebookLoginProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<LocationProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<WalletTransactionProvider>()),
     ],
