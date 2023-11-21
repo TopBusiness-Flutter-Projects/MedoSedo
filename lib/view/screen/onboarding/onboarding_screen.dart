@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/provider/onboarding_provider.dart';
 import 'package:medosedo_ecommerce/provider/splash_provider.dart';
@@ -50,10 +49,14 @@ class OnBoardingScreen extends StatelessWidget {
                         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                         child: Column(
                           children: [
-                            Image.asset(onBoardingList.onBoardingList[index].imageUrl, height: _height*0.5),
-                            Text(onBoardingList.onBoardingList[index].title, style: titilliumBold.copyWith(fontSize: _height*0.035), textAlign: TextAlign.center),
+                            Flexible(child: Image.asset(onBoardingList.onBoardingList[index].imageUrl, height:MediaQuery.of(context).size.width/1.3)),
+                            Padding(
+                              padding:  EdgeInsets.symmetric(
+                                  vertical:  MediaQuery.of(context).size.width/22),
+                              child: Text(onBoardingList.onBoardingList[index].title, style: titilliumBold.copyWith( fontSize:MediaQuery.of(context).size.width/18), textAlign: TextAlign.center),
+                            ),
                             Text(onBoardingList.onBoardingList[index].description, textAlign: TextAlign.center, style: titilliumRegular.copyWith(
-                              fontSize: _height*0.015,
+                              fontSize:MediaQuery.of(context).size.width/22,
                             )),
                           ],
                         ),

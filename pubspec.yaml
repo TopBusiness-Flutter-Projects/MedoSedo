@@ -3,7 +3,7 @@ description: A new Flutter setup application for starting a project.
 
 publish_to: 'none'
 
-version: 3.0.0+10
+version: 3.0.0+11
 
 environment:
   sdk: '>=3.0.6 <4.0.0'

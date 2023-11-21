@@ -36,7 +36,6 @@ import 'package:medosedo_ecommerce/theme/light_theme.dart';
 import 'package:medosedo_ecommerce/utill/app_constants.dart';
 import 'package:medosedo_ecommerce/view/screen/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
-
 import 'di_container.dart' as di;
 import 'firebase_options.dart';
 import 'helper/custom_delegate.dart';
@@ -100,7 +99,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<GoogleSignInProvider>()),
       // ChangeNotifierProvider(create: (context) => di.sl<FacebookLoginProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<LocationProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<WalletTransactionProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<WalletTransactionProvider>())
     ],
     child: MyApp(orderId: _orderID),
   ));

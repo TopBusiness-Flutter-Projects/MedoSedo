@@ -16,17 +16,17 @@ class OnBoardingRepo{
     try {
       List<OnboardingModel> onBoardingList = [
         OnboardingModel(
-          'assets/images/onboarding_image_one.png',
+          'assets/images/1.png',
           '${getTranslated('on_boarding_title_one', context)} ${AppConstants.APP_NAME}',
           getTranslated('on_boarding_description_one', context),
         ),
         OnboardingModel(
-          'assets/images/onboarding_image_two.png',
+          'assets/images/12.png',
           getTranslated('on_boarding_title_two', context),
           getTranslated('on_boarding_description_two', context),
         ),
         OnboardingModel(
-          'assets/images/onboarding_image_three.png',
+          'assets/images/13.png',
           getTranslated('on_boarding_title_three', context),
           getTranslated('on_boarding_description_three', context),
         ),

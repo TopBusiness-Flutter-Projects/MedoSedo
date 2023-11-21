@@ -226,48 +226,57 @@ class CartWidget extends StatelessWidget {
 
                           Provider.of<AuthProvider>(context, listen: false)
                                   .isLoggedIn()
-                              ? Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          right: Dimensions.PADDING_SIZE_SMALL),
-                                      child: QuantityButton(
-                                        isIncrement: false,
-                                        index: index,
-                                        quantity: cartModel!.quantity,
-                                        maxQty: cartModel!
-                                            .productInfo.totalCurrentStock!,
-                                        cartModel: cartModel!,
-                                        minimumOrderQuantity: cartModel!
-                                            .productInfo.minimumOrderQty!,
-                                        digitalProduct:
-                                            cartModel!.productType == "digital"
-                                                ? true
-                                                : false,
-                                      ),
-                                    ),
-                                    Text(cartModel!.quantity.toString(), style: titilliumSemiBold),
-                                    //
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: Dimensions.PADDING_SIZE_SMALL),
-                                      child: QuantityButton(
-                                        index: index,
-                                        isIncrement: true,
-                                        quantity: cartModel!.quantity,
-                                        maxQty: cartModel!
-                                            .productInfo.totalCurrentStock!,
-                                        cartModel: cartModel!,
-                                        minimumOrderQuantity: cartModel!
-                                            .productInfo.minimumOrderQty!,
-                                        digitalProduct:
-                                            cartModel?.productType == "digital"
-                                                ? true
-                                                : false,
-                                      ),
-                                    ),
-                                  ],
-                                )
+                              ? Flexible(
+                                child: Row(
+                            children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      right: Dimensions.PADDING_SIZE_SMALL),
+                                  child: QuantityButton(
+                                    isIncrement: false,
+                                    index: index,
+                                    quantity: cartModel!.quantity,
+                                    maxQty: cartModel!
+                                        .productInfo.totalCurrentStock!,
+                                    cartModel: cartModel!,
+                                    minimumOrderQuantity: cartModel!
+                                        .productInfo.minimumOrderQty!,
+                                    digitalProduct:
+                                    cartModel!.productType == "digital"
+                                        ? true
+                                        : false,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Text(cartModel!.quantity.toString(), style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20
+                                  ),
+
+                                  ),
+                                ),
+                                //
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: Dimensions.PADDING_SIZE_SMALL),
+                                  child: QuantityButton(
+                                    index: index,
+                                    isIncrement: true,
+                                    quantity: cartModel!.quantity,
+                                    maxQty: cartModel!
+                                        .productInfo.totalCurrentStock!,
+                                    cartModel: cartModel!,
+                                    minimumOrderQuantity: cartModel!
+                                        .productInfo.minimumOrderQty!,
+                                    digitalProduct:
+                                    cartModel?.productType == "digital"
+                                        ? true
+                                        : false,
+                                  ),
+                                ),
+                            ],
+                          ),
+                              )
                               : SizedBox.shrink(),
                         ],
                       ),
@@ -336,7 +345,7 @@ class QuantityButton extends StatelessWidget {
             : quantity > 1
                 ? ColorResources.getPrimary(context)
                 : ColorResources.getGrey(context),
-        size: 30,
+        size: 40,
       ),
     );
   }
