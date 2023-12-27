@@ -172,14 +172,14 @@ class _SellerScreenState extends State<SellerScreen> {
                             showAnimatedDialog(context, GuestDialog(),
                                 isFlip: true);
                           } else if (widget.seller != null) {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (_) => ChatScreen(
-                            //               id: widget.seller.seller!.id,
-                            //               name:
-                            //                   widget.seller.seller!.shop!.name!,
-                            //             )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => ChatScreen(
+                                          id: widget.seller.seller!.id,
+                                          name:
+                                              widget.seller.seller!.shop!.name!,
+                                        )));
                           }
                         },
                         icon: Image.asset(Images.chat_image,

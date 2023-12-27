@@ -30,7 +30,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         "single";
     _screens = [
       HomePage(),
-      // InboxScreen(isBackButtonExist: false),
+      InboxScreen(isBackButtonExist: false),
       // OrderScreen(isBacButtonExist: false),
       NotificationScreen(isBacButtonExist: false),
       MoreScreen(),
@@ -102,18 +102,20 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     List<BottomNavigationBarItem> _list = [];
     if (!isSingleVendor) {
       _list.add(_barItem(Images.home_image, getTranslated('home', context), 0));
-      // _list.add(
-      //     _barItem(Images.message_image, getTranslated('inbox', context), 1));
+      _list.add(
+          _barItem(Images.message_image, getTranslated('inbox', context), 1));
       // _list.add(_barItem(Images.shopping_image, getTranslated('orders', context), 2));
       _list.add(_barItem(
-          Images.notification, getTranslated('notification', context), 1));
-      _list.add(_barItem(Images.more_image, getTranslated('more', context), 2));
+          Images.notification, getTranslated('notification', context), 2));
+      _list.add(_barItem(Images.more_image, getTranslated('more', context), 3));
     } else {
       _list.add(_barItem(Images.home_image, getTranslated('home', context), 0));
-      // _list.add(_barItem(Images.shopping_image, getTranslated('orders', context), 1));
+      _list.add(
+          _barItem(Images.message_image, getTranslated('inbox', context), 1));
+      // _list.add(_barItem(Images.shopping_image, getTranslated('orders', context), 2));
       _list.add(_barItem(
-          Images.notification, getTranslated('notification', context), 1));
-      _list.add(_barItem(Images.more_image, getTranslated('more', context), 2));
+          Images.notification, getTranslated('notification', context), 2));
+      _list.add(_barItem(Images.more_image, getTranslated('more', context), 3));
     }
 
     return _list;

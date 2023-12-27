@@ -285,13 +285,13 @@ class _MoreScreenState extends State<MoreScreen> {
                       title: getTranslated('notification', context),
                       navigateTo: NotificationScreen()),
 
-                  singleVendor
-                      ? SizedBox()
-                      : TitleButton(
-                          image: Images.chats,
-                          title: getTranslated('chats', context),
-                          navigateTo: Container(),
-                        ),
+                  // singleVendor
+                  //     ? SizedBox()
+                  //     : TitleButton(
+                  //         image: Images.chats,
+                  //         title: getTranslated('chats', context),
+                  //         navigateTo: Container(),
+                  //       ),
 
                   TitleButton(
                       image: Images.settings,

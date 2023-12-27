@@ -25,13 +25,13 @@ class SellerSection extends StatelessWidget {
             Provider.of<ChatProvider>(context, listen: false)
                 .setUserTypeIndex(context, 0);
             if (order.orderDetails[0].seller != null) {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (_) => ChatScreen(
-              //               id: order.orderDetails[0].seller!.id,
-              //               name: order.orderDetails[0].seller!.shop!.name!,
-              //             )));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => ChatScreen(
+                            id: order.orderDetails[0].seller!.id,
+                            name: order.orderDetails[0].seller!.shop!.name!,
+                          )));
             } else {
               showCustomSnackBar(
                   getTranslated('seller_not_available', context), context,

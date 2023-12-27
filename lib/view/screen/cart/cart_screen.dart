@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:medosedo_ecommerce/data/model/response/cart_model.dart';
-import 'package:medosedo_ecommerce/helper/price_converter.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/provider/auth_provider.dart';
 import 'package:medosedo_ecommerce/provider/cart_provider.dart';
@@ -9,13 +7,10 @@ import 'package:medosedo_ecommerce/provider/splash_provider.dart';
 import 'package:medosedo_ecommerce/utill/color_resources.dart';
 import 'package:medosedo_ecommerce/utill/custom_themes.dart';
 import 'package:medosedo_ecommerce/utill/dimensions.dart';
-import 'package:medosedo_ecommerce/view/basewidget/animated_custom_dialog.dart';
 import 'package:medosedo_ecommerce/view/basewidget/custom_app_bar.dart';
-import 'package:medosedo_ecommerce/view/basewidget/guest_dialog.dart';
 import 'package:medosedo_ecommerce/view/basewidget/no_internet_screen.dart';
 import 'package:medosedo_ecommerce/view/basewidget/show_custom_snakbar.dart';
 import 'package:medosedo_ecommerce/view/screen/cart/widget/cart_widget.dart';
-import 'package:medosedo_ecommerce/view/screen/checkout/checkout_screen.dart';
 import 'package:medosedo_ecommerce/view/screen/checkout/widget/shipping_method_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 

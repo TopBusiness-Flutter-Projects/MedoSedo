@@ -227,12 +227,16 @@ class _TopSellerProductScreenState extends State<TopSellerProductScreen> {
                                                 context, GuestDialog(),
                                                 isFlip: true);
                                           } else if (widget.topSeller != null) {
-                                            // Navigator.push(context,
-                                            //     MaterialPageRoute(builder: (_) =>
-                                            //         ChatScreen(
-                                            //           id: widget.topSeller!.sellerId,
-                                            //           name: widget.topSeller?.name??'',
-                                            //         )));
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) => ChatScreen(
+                                                          id: widget.topSeller!
+                                                              .sellerId,
+                                                          name: widget.topSeller
+                                                                  ?.name ??
+                                                              '',
+                                                        )));
                                           }
                                         },
                                         child: Image.asset(Images.chat_image,

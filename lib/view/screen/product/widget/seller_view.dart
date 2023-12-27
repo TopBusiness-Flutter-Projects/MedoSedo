@@ -101,14 +101,14 @@ class SellerView extends StatelessWidget {
                                 showAnimatedDialog(context, GuestDialog(),
                                     isFlip: true);
                               } else if (seller.sellerModel != null) {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (_) => ChatScreen(
-                                //               id: seller.sellerModel.seller!.id,
-                                //               name: seller.sellerModel.seller!
-                                //                   .shop!.name!,
-                                //             )));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ChatScreen(
+                                              id: seller.sellerModel.seller!.id,
+                                              name: seller.sellerModel.seller!
+                                                  .shop!.name!,
+                                            )));
                               }
                             },
                             child: Image.asset(Images.chat_image,

@@ -56,8 +56,8 @@ class CallAndChatWidget extends StatelessWidget {
           onTap: () {
             Provider.of<ChatProvider>(context, listen: false)
                 .setUserTypeIndex(context, 1);
-            // Navigator.of(context).push(MaterialPageRoute(
-            //     builder: (context) => ChatScreen(id: id, name: name!)));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ChatScreen(id: id, name: name!)));
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(

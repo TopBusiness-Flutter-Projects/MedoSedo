@@ -114,19 +114,14 @@ class CartWidget extends StatelessWidget {
                                     }
                                   },
                                   child: Container(
-                                      width: 20,
-                                      height: 20,
-                                      child: Image.asset(
-                                        Images.delete,
-                                        scale: .5,
-                                      )),
+                                      width: 25,
+                                      height: 25,
+                                      child: Image.asset(Images.delete)),
                                 )
                               : SizedBox.shrink(),
                         ],
                       ),
-                      SizedBox(
-                        height: Dimensions.PADDING_SIZE_SMALL,
-                      ),
+                      SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                       Row(
                         children: [
                           cartModel!.discount > 0
@@ -141,9 +136,7 @@ class CartWidget extends StatelessWidget {
                                   ),
                                 )
                               : SizedBox(),
-                          SizedBox(
-                            width: Dimensions.FONT_SIZE_DEFAULT,
-                          ),
+                          SizedBox(width: Dimensions.FONT_SIZE_DEFAULT),
                           Text(
                             PriceConverter.convertPrice(
                                 context, cartModel!.price,
@@ -227,56 +220,60 @@ class CartWidget extends StatelessWidget {
                           Provider.of<AuthProvider>(context, listen: false)
                                   .isLoggedIn()
                               ? Flexible(
-                                child: Row(
-                            children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      right: Dimensions.PADDING_SIZE_SMALL),
-                                  child: QuantityButton(
-                                    isIncrement: false,
-                                    index: index,
-                                    quantity: cartModel!.quantity,
-                                    maxQty: cartModel!
-                                        .productInfo.totalCurrentStock!,
-                                    cartModel: cartModel!,
-                                    minimumOrderQuantity: cartModel!
-                                        .productInfo.minimumOrderQty!,
-                                    digitalProduct:
-                                    cartModel!.productType == "digital"
-                                        ? true
-                                        : false,
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            right:
+                                                Dimensions.PADDING_SIZE_SMALL),
+                                        child: QuantityButton(
+                                          isIncrement: false,
+                                          index: index,
+                                          quantity: cartModel!.quantity,
+                                          maxQty: cartModel!
+                                              .productInfo.totalCurrentStock!,
+                                          cartModel: cartModel!,
+                                          minimumOrderQuantity: cartModel!
+                                              .productInfo.minimumOrderQty!,
+                                          digitalProduct:
+                                              cartModel!.productType ==
+                                                      "digital"
+                                                  ? true
+                                                  : false,
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Text(
+                                          cartModel!.quantity.toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20),
+                                        ),
+                                      ),
+                                      //
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left:
+                                                Dimensions.PADDING_SIZE_SMALL),
+                                        child: QuantityButton(
+                                          index: index,
+                                          isIncrement: true,
+                                          quantity: cartModel!.quantity,
+                                          maxQty: cartModel!
+                                              .productInfo.totalCurrentStock!,
+                                          cartModel: cartModel!,
+                                          minimumOrderQuantity: cartModel!
+                                              .productInfo.minimumOrderQty!,
+                                          digitalProduct:
+                                              cartModel?.productType ==
+                                                      "digital"
+                                                  ? true
+                                                  : false,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Flexible(
-                                  child: Text(cartModel!.quantity.toString(), style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 20
-                                  ),
-
-                                  ),
-                                ),
-                                //
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: Dimensions.PADDING_SIZE_SMALL),
-                                  child: QuantityButton(
-                                    index: index,
-                                    isIncrement: true,
-                                    quantity: cartModel!.quantity,
-                                    maxQty: cartModel!
-                                        .productInfo.totalCurrentStock!,
-                                    cartModel: cartModel!,
-                                    minimumOrderQuantity: cartModel!
-                                        .productInfo.minimumOrderQty!,
-                                    digitalProduct:
-                                    cartModel?.productType == "digital"
-                                        ? true
-                                        : false,
-                                  ),
-                                ),
-                            ],
-                          ),
-                              )
+                                )
                               : SizedBox.shrink(),
                         ],
                       ),
