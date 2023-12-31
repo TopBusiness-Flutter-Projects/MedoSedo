@@ -63,7 +63,7 @@ Future<void> main() async {
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
     _orderID = ((notificationAppLaunchDetails!.payload != null &&
             notificationAppLaunchDetails.payload!.isNotEmpty)
-        ? int.parse(notificationAppLaunchDetails!.payload!)
+        ? int.parse(notificationAppLaunchDetails.payload!)
         : null)!;
   }
   final RemoteMessage? remoteMessage =
