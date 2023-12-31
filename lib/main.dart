@@ -45,6 +45,7 @@ import 'provider/banner_provider.dart';
 import 'provider/flash_deal_provider.dart';
 import 'provider/product_provider.dart';
 
+///new branch
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
@@ -62,7 +63,7 @@ Future<void> main() async {
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
     _orderID = ((notificationAppLaunchDetails!.payload != null &&
             notificationAppLaunchDetails.payload!.isNotEmpty)
-        ? int.parse(notificationAppLaunchDetails!.payload!)
+        ? int.parse(notificationAppLaunchDetails.payload!)
         : null)!;
   }
   final RemoteMessage? remoteMessage =

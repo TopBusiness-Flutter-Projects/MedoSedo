@@ -169,27 +169,29 @@ class CartWidget extends StatelessWidget {
                               ]),
                             )
                           : SizedBox(),
+
                       SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(
-                              onPressed: () {
-                                phoneCallMethod(
-                                    cartModel!.productInfo!.sellerPhone!);
-                              },
-                              icon: Icon(
-                                Icons.call,
-                                color: Colors.blue,
-                              )),
-                          IconButton(
-                              onPressed: () {
-                                whatsAppMethod(
-                                    cartModel!.productInfo!.sellerPhone!);
-                              },
-                              icon: Image.asset(
-                                  'assets/images/whats.png')), ////////
+                          // IconButton(
+                          //     onPressed: () {
+                          //       phoneCallMethod(
+                          //           cartModel!.productInfo!.sellerPhone!);
+                          //     },
+                          //     icon: Icon(
+                          //       Icons.call,
+                          //       color: Colors.blue,
+                          //     )),
+                          // IconButton(
+                          //     onPressed: () {
+                          //       whatsAppMethod(
+                          //           cartModel!.productInfo!.sellerPhone!);
+                          //     },
+                          //     icon: Image.asset(
+                          //         'assets/images/whats.png')), ////////
+
                           cartModel!.shippingType != 'order_wise' &&
                                   Provider.of<AuthProvider>(context,
                                           listen: false)

@@ -16,8 +16,8 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isMe = message.sentByCustomer == 1;
-    String dateTime = DateConverter.localDateToIsoStringAMPM(
-        DateTime.parse(message.createdAt));
+    String dateTime =
+        DateConverter.localDateToIsoStringAMPM(message.createdAt!);
     String baseUrl =
         Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
             ? Provider.of<SplashProvider>(context, listen: false)
@@ -29,9 +29,9 @@ class MessageBubble extends StatelessWidget {
     String? image =
         Provider.of<ChatProvider>(context, listen: false).userTypeIndex == 0
             ? message.sellerInfo != null
-                ? message.sellerInfo?.shops![0]?.image
+                ? message.sellerInfo?.shops![0].image
                 : ''
-            : message.deliveryMan.image;
+            : message.deliveryManId.image;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,6 +47,7 @@ class MessageBubble extends StatelessWidget {
                   height: 40,
                   child: ClipRRect(
                     child: CustomImage(
+                      placeholder: 'assets/images/upload_image.png',
                       fit: BoxFit.cover,
                       width: 40,
                       height: 40,
@@ -59,8 +60,8 @@ class MessageBubble extends StatelessWidget {
         Flexible(
           child: Container(
             margin: isMe
-                ? EdgeInsets.fromLTRB(70, 5, 10, 5)
-                : EdgeInsets.fromLTRB(10, 5, 70, 5),
+                ? EdgeInsets.fromLTRB(50, 4, 7, 4)
+                : EdgeInsets.fromLTRB(7, 4, 50, 4),
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -81,8 +82,8 @@ class MessageBubble extends StatelessWidget {
                         color: ColorResources.getHint(context),
                       ))
                   : SizedBox.shrink(),
-              message.message.isNotEmpty
-                  ? Text(message.message,
+              message.message != null
+                  ? Text(message.message ?? '',
                       textAlign: TextAlign.justify,
                       style: titilliumRegular.copyWith(
                           fontSize: Dimensions.FONT_SIZE_SMALL))
