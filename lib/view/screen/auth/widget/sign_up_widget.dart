@@ -1,7 +1,6 @@
 import 'package:country_code_picker/country_code.dart';
 import 'package:flutter/material.dart';
 import 'package:medosedo_ecommerce/data/model/body/register_model.dart';
-import 'package:medosedo_ecommerce/helper/email_checker.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/provider/auth_provider.dart';
 import 'package:medosedo_ecommerce/provider/profile_provider.dart';
@@ -15,8 +14,6 @@ import 'package:medosedo_ecommerce/view/basewidget/textfield/custom_textfield.da
 import 'package:medosedo_ecommerce/view/screen/auth/widget/social_login_widget.dart';
 import 'package:medosedo_ecommerce/view/screen/dashboard/dashboard_screen.dart';
 import 'package:provider/provider.dart';
-
-import 'code_picker_widget.dart';
 import 'otp_verification_screen.dart';
 
 class SignUpWidget extends StatefulWidget {
@@ -102,7 +99,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         ));
       } else {
         register.fName = '${_firstNameController.text}';
-        register.lName = _lastNameController.text ?? " ";
+        register.lName = _lastNameController.text ?? "";
         register.email = _emailController.text;
         register.phone = _phoneNumber;
         register.password = _passwordController.text;
@@ -131,13 +128,13 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 context,
                 MaterialPageRoute(
                     builder: (_) => VerificationScreen(
-                        tempToken!, '', _emailController.text.toString())),
+                        tempToken, '', _emailController.text.toString())),
                 (route) => false);
           }
         });
       } else if (Provider.of<SplashProvider>(context, listen: false)
-          .configModel!
-          .phoneVerification!) {
+          .configModel
+          .phoneVerification) {
         Provider.of<AuthProvider>(context, listen: false)
             .checkPhone(_phone, tempToken!)
             .then((value) async {
@@ -224,19 +221,19 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 ),
               ),
 
-              Container(
-                margin: EdgeInsets.only(
-                    left: Dimensions.MARGIN_SIZE_DEFAULT,
-                    right: Dimensions.MARGIN_SIZE_DEFAULT,
-                    top: Dimensions.MARGIN_SIZE_SMALL),
-                child: CustomTextField(
-                  hintText: getTranslated('ENTER_YOUR_EMAIL', context),
-                  focusNode: _emailFocus,
-                  nextNode: _phoneFocus,
-                  textInputType: TextInputType.emailAddress,
-                  controller: _emailController,
-                ),
-              ),
+              // Container(
+              //   margin: EdgeInsets.only(
+              //       left: Dimensions.MARGIN_SIZE_DEFAULT,
+              //       right: Dimensions.MARGIN_SIZE_DEFAULT,
+              //       top: Dimensions.MARGIN_SIZE_SMALL),
+              //   child: CustomTextField(
+              //     hintText: getTranslated('ENTER_YOUR_EMAIL', context),
+              //     focusNode: _emailFocus,
+              //     nextNode: _phoneFocus,
+              //     textInputType: TextInputType.emailAddress,
+              //     controller: _emailController,
+              //   ),
+              // ),
 
               Container(
                 margin: EdgeInsets.only(
