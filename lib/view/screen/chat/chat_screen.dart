@@ -30,21 +30,23 @@ class ChatScreen extends StatelessWidget {
         return Column(children: [
           CustomAppBar(title: name),
           Expanded(
-              child: chatProvider.messageList.isNotEmpty
-                  ? chatProvider.messageList.length != 0
+              child: chatProvider.msgmodel != null
+                  ? chatProvider.messageList?.length != 0
                       ? ListView.builder(
                           physics: BouncingScrollPhysics(),
                           padding:
                               EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                          itemCount: chatProvider.messageList.length,
+                          itemCount: chatProvider.messageList!.length,
                           reverse: true,
                           itemBuilder: (context, index) {
                             List<Message> messages =
-                                chatProvider.messageList.reversed.toList();
+                                chatProvider.messageList!.reversed.toList();
                             return MessageBubble(message: messages[index]);
                           },
                         )
-                      : SizedBox.shrink()
+                      : Center(
+                          child: Text('ليس لديك أي رسائل'),
+                        )
                   : ChatShimmer()),
 
           // Bottom TextField

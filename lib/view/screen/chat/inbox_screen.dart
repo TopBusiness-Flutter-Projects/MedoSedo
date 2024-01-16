@@ -81,7 +81,10 @@ class _InboxScreenState extends State<InboxScreen> {
                                         chat: chatProvider.chatList[index]);
                                   },
                                 )
-                              : NoInternetOrDataScreen(isNoInternet: false)
+                              : NoInternetOrDataScreen(
+                                  isNoInternet: false,
+                                  isChat: true,
+                                )
                           : InboxShimmer();
                     },
                   ),

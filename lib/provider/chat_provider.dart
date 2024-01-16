@@ -18,7 +18,7 @@ class ChatProvider extends ChangeNotifier {
   List<Chat>? _chatList = [];
   List<Chat> get chatList => _chatList ?? [];
   List<Message>? _messageList = [];
-  List<Message> get messageList => _messageList ?? [];
+  List<Message>? get messageList => _messageList;
   bool _isSearching = false;
   bool get isSearching => _isSearching;
   File? _imageFile;
@@ -47,16 +47,19 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  MessageModel? msgmodel;
   Future<void> getMessageList(BuildContext context, int id, int offset,
       {bool reload = true}) async {
     if (reload) {
       _messageList = [];
+      msgmodel = null;
     }
     _isLoading = true;
     ApiResponse apiResponse = await chatRepo.getMessageList(
         _userTypeIndex == 0 ? 'seller' : 'delivery-man', id, offset);
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
+      msgmodel = MessageModel.fromJson(apiResponse.response!.data);
       _messageList = MessageModel.fromJson(apiResponse.response!.data).message;
     } else {
       ApiChecker.checkApi(context, apiResponse);

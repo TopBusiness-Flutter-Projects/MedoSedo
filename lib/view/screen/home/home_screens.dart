@@ -663,9 +663,10 @@ class _HomePageState extends State<HomePage> {
                             );
                           }),
                           ProductView(
-                              isHomePage: false,
-                              productType: ProductType.NEW_ARRIVAL,
-                              scrollController: _scrollController),
+                            isHomePage: false,
+                            productType: ProductType.NEW_ARRIVAL,
+                            scrollController: _scrollController,
+                          ),
                           SizedBox(height: Dimensions.HOME_PAGE_PADDING),
                         ],
                       ),

@@ -9,7 +9,9 @@ import 'package:medosedo_ecommerce/utill/images.dart';
 class NoInternetOrDataScreen extends StatelessWidget {
   final bool isNoInternet;
   final Widget? child;
-  NoInternetOrDataScreen({required this.isNoInternet, this.child});
+  bool isChat;
+  NoInternetOrDataScreen(
+      {required this.isNoInternet, this.child, this.isChat = false});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,9 @@ class NoInternetOrDataScreen extends StatelessWidget {
             Text(
               isNoInternet
                   ? getTranslated('no_internet_connection', context)
-                  : 'لا يوجد منتجات',
+                  : isChat
+                      ? 'ليس لديك اي غرف دردشه'
+                      : 'لا يوجد منتجات',
               textAlign: TextAlign.center,
               style: titilliumRegular,
             ),
