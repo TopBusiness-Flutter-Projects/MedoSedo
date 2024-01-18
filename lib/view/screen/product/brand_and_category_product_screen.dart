@@ -9,7 +9,6 @@ import 'package:medosedo_ecommerce/view/basewidget/custom_app_bar.dart';
 import 'package:medosedo_ecommerce/view/basewidget/no_internet_screen.dart';
 import 'package:medosedo_ecommerce/view/basewidget/product_shimmer.dart';
 import 'package:medosedo_ecommerce/view/basewidget/product_widget.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 class BrandAndCategoryProductScreen extends StatelessWidget {
@@ -71,16 +70,21 @@ class BrandAndCategoryProductScreen extends StatelessWidget {
                 // Products
                 productProvider.brandOrCategoryProductList.length > 0
                     ? Expanded(
-                        child: StaggeredGridView.countBuilder(
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisSpacing: 4.0,
+                                  crossAxisSpacing: 4.0,
+                                  crossAxisCount: 2),
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.PADDING_SIZE_SMALL),
                           physics: BouncingScrollPhysics(),
-                          crossAxisCount: 2,
+                          // crossAxisCount: 2,
                           itemCount:
                               productProvider.brandOrCategoryProductList.length,
                           shrinkWrap: true,
-                          staggeredTileBuilder: (int index) =>
-                              StaggeredTile.fit(1),
+                          // staggeredTileBuilder: (int index) =>
+                          //     StaggeredTile.fit(1),
                           itemBuilder: (BuildContext context, int index) {
                             return ProductWidget(
                                 productModel: productProvider

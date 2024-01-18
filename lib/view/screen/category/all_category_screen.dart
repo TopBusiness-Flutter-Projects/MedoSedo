@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:medosedo_ecommerce/data/model/response/category.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/provider/category_provider.dart';
 import 'package:medosedo_ecommerce/provider/splash_provider.dart';
-import 'package:medosedo_ecommerce/provider/theme_provider.dart';
 import 'package:medosedo_ecommerce/utill/color_resources.dart';
 import 'package:medosedo_ecommerce/utill/custom_themes.dart';
 import 'package:medosedo_ecommerce/utill/dimensions.dart';
@@ -13,10 +11,6 @@ import 'package:medosedo_ecommerce/view/basewidget/custom_app_bar.dart';
 import 'package:medosedo_ecommerce/view/screen/product/brand_and_category_product_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../../../provider/product_provider.dart';
-import '../../basewidget/no_internet_screen.dart';
-import '../../basewidget/product_shimmer.dart';
-import '../../basewidget/product_widget.dart';
 import '../home/widget/category_widget.dart';
 
 class AllCategoryScreen extends StatelessWidget {
