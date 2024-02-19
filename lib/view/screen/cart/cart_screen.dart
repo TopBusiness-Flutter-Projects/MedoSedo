@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medosedo_ecommerce/data/model/response/cart_model.dart';
+import 'package:medosedo_ecommerce/helper/price_converter.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/provider/auth_provider.dart';
 import 'package:medosedo_ecommerce/provider/cart_provider.dart';
@@ -13,6 +14,10 @@ import 'package:medosedo_ecommerce/view/basewidget/show_custom_snakbar.dart';
 import 'package:medosedo_ecommerce/view/screen/cart/widget/cart_widget.dart';
 import 'package:medosedo_ecommerce/view/screen/checkout/widget/shipping_method_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+
+import '../../basewidget/animated_custom_dialog.dart';
+import '../../basewidget/guest_dialog.dart';
+import '../checkout/checkout_screen.dart';
 
 class CartScreen extends StatefulWidget {
   final bool fromCheckout;
@@ -104,7 +109,8 @@ class _CartScreenState extends State<CartScreen> {
       }
 
       for (int i = 0; i < cart.cartList.length; i++) {
-        amount += (cart.cartList[i].price - cart.cartList[i].discount) *
+        amount += (cart.cartList[i].productInfo.unitPrice -
+                cart.cartList[i].discount) *
             cart.cartList[i].quantity;
         discount += cart.cartList[i].discount * cart.cartList[i].quantity;
         print('====TaxModel == ${cart.cartList[i].taxModel}');
@@ -120,82 +126,139 @@ class _CartScreenState extends State<CartScreen> {
       }
 
       return Scaffold(
-        // bottomNavigationBar: (!widget.fromCheckout && !cart.isLoading)
-        //     ? Container(height: 80, padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,
-        //     vertical: Dimensions.PADDING_SIZE_DEFAULT),
-        //
-        //   decoration: BoxDecoration(color: Theme.of(context).cardColor,
-        //     borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-        //   ),
-        //   child: cartList.isNotEmpty ?
-        //   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Expanded(
-        //             child: Center(
-        //                 child: Row(
-        //                   children: [
-        //                     Text('${getTranslated('total_price', context)}', style: titilliumSemiBold.copyWith(
-        //                         fontSize: Dimensions.FONT_SIZE_DEFAULT),
-        //                     ),
-        //                     Text(PriceConverter.convertPrice(context, amount+shippingAmount )??'',
-        //                       style: titilliumSemiBold.copyWith(
-        //                         color: Theme.of(context).primaryColor,fontSize: Dimensions.FONT_SIZE_LARGE),
-        //                     ),
-        //                   ],
-        //                 ))),
-        //         Builder(
-        //           builder: (context) => InkWell(
-        //             onTap: () {
-        //               if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-        //                 if (cart.cartList.length == 0) {
-        //                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('select_at_least_one_product', context)),
-        //                     backgroundColor: Colors.red,));
-        //                 } else if(cart.chosenShippingList.length < orderTypeShipping.length &&
-        //                     Provider.of<SplashProvider>(context,listen: false).configModel.shippingMethod =='sellerwise_shipping' &&
-        //                     !_onlyDigital){
-        //
-        //                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('select_all_shipping_method', context)),
-        //                       backgroundColor: Colors.red));
-        //                 }else if(cart.chosenShippingList.length < 1 &&
-        //                     Provider.of<SplashProvider>(context,listen: false).configModel.shippingMethod !='sellerwise_shipping' &&
-        //                     Provider.of<SplashProvider>(context,listen: false).configModel.inHouseSelectedShippingType =='order_wise' && !_onlyDigital){
-        //                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('select_all_shipping_method', context)),
-        //                       backgroundColor: Colors.red));
-        //                 }
-        //
-        //
-        //                 else {
-        //
-        //                   Navigator.push(context, MaterialPageRoute(builder: (_) => CheckoutScreen(
-        //                     cartList: cartList,totalOrderAmount: amount,shippingFee: shippingAmount, discount: discount,
-        //                     tax: tax, onlyDigital: _onlyDigital,
-        //                   )));
-        //
-        //                 }
-        //               } else {showAnimatedDialog(context, GuestDialog(), isFlip: true);}
-        //             },
-        //
-        //             child: Container(width: MediaQuery.of(context).size.width/3.5,
-        //               decoration: BoxDecoration(
-        //                 color: Theme.of(context).primaryColor,
-        //                 borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
-        //               ),
-        //               child: Center(
-        //                 child: Padding(
-        //                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL,
-        //                       vertical: Dimensions.FONT_SIZE_SMALL),
-        //                   child: Text(getTranslated('checkout', context),
-        //                       style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT,
-        //                         color: Theme.of(context).cardColor,
-        //                       )),
-        //                 ),
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        //       ]):SizedBox(),
-        // )
-        //     : SizedBox(),
+        //TODO_payment method
+        bottomNavigationBar: (!widget.fromCheckout && !cart.isLoading)
+            ? Container(
+                height: 80,
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_LARGE,
+                    vertical: Dimensions.PADDING_SIZE_DEFAULT),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      topLeft: Radius.circular(10)),
+                ),
+                child: cartList.isNotEmpty
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                            Expanded(
+                                child: Center(
+                                    child: Row(
+                              children: [
+                                Text(
+                                  '${getTranslated('total_price', context)}',
+                                  style: titilliumSemiBold.copyWith(
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT),
+                                ),
+                                Text(
+                                  PriceConverter.convertPrice(
+                                          context, amount + shippingAmount) ??
+                                      '',
+                                  style: titilliumSemiBold.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: Dimensions.FONT_SIZE_LARGE),
+                                ),
+                              ],
+                            ))),
+                            Builder(
+                              builder: (context) => InkWell(
+                                onTap: () {
+                                  if (Provider.of<AuthProvider>(context,
+                                          listen: false)
+                                      .isLoggedIn()) {
+                                    if (cart.cartList.length == 0) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(getTranslated(
+                                            'select_at_least_one_product',
+                                            context)),
+                                        backgroundColor: Colors.red,
+                                      ));
+                                    } else if (cart.chosenShippingList.length <
+                                            orderTypeShipping.length &&
+                                        Provider.of<SplashProvider>(context,
+                                                    listen: false)
+                                                .configModel
+                                                .shippingMethod ==
+                                            'sellerwise_shipping' &&
+                                        !_onlyDigital) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(getTranslated(
+                                                  'select_all_shipping_method',
+                                                  context)),
+                                              backgroundColor: Colors.red));
+                                    } // } else if (cart.chosenShippingList.length <
+                                    //         1 &&
+                                    //     Provider.of<SplashProvider>(context,
+                                    //                 listen: false)
+                                    //             .configModel
+                                    //             .shippingMethod !=
+                                    //         'sellerwise_shipping' &&
+                                    //     Provider.of<SplashProvider>(context,
+                                    //                 listen: false)
+                                    //             .configModel
+                                    //             .inHouseSelectedShippingType ==
+                                    //         'order_wise' &&
+                                    //     !_onlyDigital) {
+                                    //   ScaffoldMessenger.of(context)
+                                    //       .showSnackBar(SnackBar(
+                                    //           content: Text(getTranslated(
+                                    //               'select_all_shipping_method',
+                                    //               context)),
+                                    //           backgroundColor: Colors.red));
+                                    // }
+
+                                    else {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => CheckoutScreen(
+                                                    cartList: cartList,
+                                                    totalOrderAmount: amount,
+                                                    shippingFee: shippingAmount,
+                                                    discount: discount,
+                                                    tax: tax,
+                                                    onlyDigital: _onlyDigital,
+                                                  )));
+                                    }
+                                  } else {
+                                    showAnimatedDialog(context, GuestDialog(),
+                                        isFlip: true);
+                                  }
+                                },
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width / 3.5,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.PADDING_SIZE_SMALL),
+                                  ),
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal:
+                                              Dimensions.PADDING_SIZE_SMALL,
+                                          vertical: Dimensions.FONT_SIZE_SMALL),
+                                      child: Text(
+                                          getTranslated('checkout', context),
+                                          style: titilliumSemiBold.copyWith(
+                                            fontSize:
+                                                Dimensions.FONT_SIZE_DEFAULT,
+                                            color: Theme.of(context).cardColor,
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ])
+                    : SizedBox(),
+              )
+            : SizedBox(),
 ///////////////////////////////////////////////////////////
         body: Column(children: [
           CustomAppBar(title: getTranslated('CART', context)),

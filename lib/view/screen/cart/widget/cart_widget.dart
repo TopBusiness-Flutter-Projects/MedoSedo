@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medosedo_ecommerce/data/model/response/cart_model.dart';
 import 'package:medosedo_ecommerce/helper/price_converter.dart';
@@ -12,8 +11,6 @@ import 'package:medosedo_ecommerce/utill/dimensions.dart';
 import 'package:medosedo_ecommerce/utill/images.dart';
 import 'package:medosedo_ecommerce/view/screen/product/product_details_screen.dart';
 import 'package:provider/provider.dart';
-
-import 'callmethod.dart';
 
 class CartWidget extends StatelessWidget {
   final CartModel? cartModel;
@@ -139,7 +136,9 @@ class CartWidget extends StatelessWidget {
                           SizedBox(width: Dimensions.FONT_SIZE_DEFAULT),
                           Text(
                             PriceConverter.convertPrice(
-                                context, cartModel!.price,
+                                context,
+                                double.parse(cartModel!.productInfo.unitPrice
+                                    .toString()),
                                 discount: cartModel!.discount,
                                 discountType: 'amount'),
                             maxLines: 1,
@@ -235,8 +234,10 @@ class CartWidget extends StatelessWidget {
                                           maxQty: cartModel!
                                               .productInfo.totalCurrentStock!,
                                           cartModel: cartModel!,
-                                          minimumOrderQuantity: cartModel!
-                                              .productInfo.minimumOrderQty!,
+                                          minimumOrderQuantity: int.parse(
+                                              cartModel!.productInfo
+                                                      .minimumOrderQty ??
+                                                  "1"),
                                           digitalProduct:
                                               cartModel!.productType ==
                                                       "digital"
@@ -264,8 +265,9 @@ class CartWidget extends StatelessWidget {
                                           maxQty: cartModel!
                                               .productInfo.totalCurrentStock!,
                                           cartModel: cartModel!,
-                                          minimumOrderQuantity: cartModel!
-                                              .productInfo.minimumOrderQty!,
+                                          minimumOrderQuantity: int.parse(
+                                              cartModel!.productInfo
+                                                  .minimumOrderQty!),
                                           digitalProduct:
                                               cartModel?.productType ==
                                                       "digital"
