@@ -7,7 +7,6 @@ import 'package:medosedo_ecommerce/utill/dimensions.dart';
 import 'package:medosedo_ecommerce/utill/images.dart';
 import 'package:medosedo_ecommerce/view/basewidget/product_widget.dart';
 import 'package:medosedo_ecommerce/view/screen/search/widget/search_filter_bottom_sheet.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class SearchProductWidget extends StatelessWidget {
   final bool isViewScrollable;
@@ -61,12 +60,12 @@ class SearchProductWidget extends StatelessWidget {
           ),
           SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
           Expanded(
-            child: StaggeredGridView.countBuilder(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisSpacing: 2, crossAxisSpacing: 2),
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.all(0),
-              crossAxisCount: 2,
               itemCount: products!.length,
-              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
               itemBuilder: (BuildContext context, int index) {
                 return ProductWidget(productModel: products![index]);
               },

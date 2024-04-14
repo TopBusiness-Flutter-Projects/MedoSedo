@@ -8,7 +8,6 @@ import 'package:medosedo_ecommerce/view/basewidget/no_internet_screen.dart';
 import 'package:medosedo_ecommerce/view/basewidget/product_shimmer.dart';
 import 'package:medosedo_ecommerce/view/basewidget/search_widget.dart';
 import 'package:medosedo_ecommerce/view/screen/search/widget/search_product_widget.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -100,7 +99,6 @@ class SearchScreen extends StatelessWidget {
                                 isEnabled: Provider.of<SearchProvider>(context)
                                     .searchProductList
                                     .isEmpty))
-                                    
                     : Expanded(
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -138,8 +136,12 @@ class SearchScreen extends StatelessWidget {
                               Expanded(
                                 child: Consumer<SearchProvider>(
                                   builder: (context, searchProvider, child) =>
-                                      StaggeredGridView.countBuilder(
-                                    crossAxisCount: 2,
+                                      GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            mainAxisSpacing: 2,
+                                            crossAxisSpacing: 2),
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount:
                                         searchProvider.historyList.length,
@@ -179,32 +181,27 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                           ),
                                         )),
-                                    staggeredTileBuilder: (int index) =>
-                                        new StaggeredTile.fit(1),
-                                    mainAxisSpacing: 4.0,
-                                    crossAxisSpacing: 4.0,
                                   ),
                                 ),
+                                // Positioned(top: -50, left: 0, right: 0,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(8.0),
+                                //     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //       children: [
+                                //         Text(getTranslated('SEARCH_HISTORY', context), style: robotoBold),
+                                //
+                                //
+                                //         InkWell(borderRadius: BorderRadius.circular(10),
+                                //             onTap: () => Provider.of<SearchProvider>(context, listen: false).clearSearchAddress(),
+                                //             child: Container(padding: EdgeInsets.symmetric(horizontal:Dimensions.PADDING_SIZE_DEFAULT,
+                                //                 vertical:Dimensions.PADDING_SIZE_LARGE ),
+                                //                 child: Text(getTranslated('REMOVE', context),
+                                //                   style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,
+                                //                       color: Theme.of(context).primaryColor),)))
+                                //       ],
+                                //     ),
+                                //   ),
                               ),
-                              // Positioned(top: -50, left: 0, right: 0,
-                              //   child: Padding(
-                              //     padding: const EdgeInsets.all(8.0),
-                              //     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //       children: [
-                              //         Text(getTranslated('SEARCH_HISTORY', context), style: robotoBold),
-                              //
-                              //
-                              //         InkWell(borderRadius: BorderRadius.circular(10),
-                              //             onTap: () => Provider.of<SearchProvider>(context, listen: false).clearSearchAddress(),
-                              //             child: Container(padding: EdgeInsets.symmetric(horizontal:Dimensions.PADDING_SIZE_DEFAULT,
-                              //                 vertical:Dimensions.PADDING_SIZE_LARGE ),
-                              //                 child: Text(getTranslated('REMOVE', context),
-                              //                   style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,
-                              //                       color: Theme.of(context).primaryColor),)))
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),

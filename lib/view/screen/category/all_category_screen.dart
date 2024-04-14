@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:medosedo_ecommerce/data/model/response/category.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/provider/category_provider.dart';

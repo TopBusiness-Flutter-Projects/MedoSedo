@@ -215,8 +215,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                         )
                                       : SizedBox(),
 
-                                  // SquareButton(image: Images.shopping_image, title: getTranslated('orders', context),
-                                  //   navigateTo: OrderScreen(),count: 1,hasCount: false,),
+                                  SquareButton(image: Images.shopping_image, title: getTranslated('orders', context),
+                                    navigateTo: OrderScreen(),count: 1,hasCount: false,),
 
                                   SquareButton(
                                     image: Images.cart_image,

@@ -5,7 +5,6 @@ import 'package:medosedo_ecommerce/provider/product_provider.dart';
 import 'package:medosedo_ecommerce/utill/dimensions.dart';
 import 'package:medosedo_ecommerce/view/basewidget/product_shimmer.dart';
 import 'package:medosedo_ecommerce/view/basewidget/product_widget.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 class ProductView extends StatelessWidget {
@@ -139,17 +138,20 @@ class ProductView extends StatelessWidget {
         return Column(children: [
           !prodProvider.filterFirstLoading
               ? productList.length != 0
-                  ? StaggeredGridView.countBuilder(
+                  ? GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 2,
+                          childAspectRatio: 3.5 / 5,
+                          crossAxisSpacing: 2),
                       itemCount: isHomePage
                           ? productList.length > 4
                               ? 4
                               : productList.length
                           : productList.length,
-                      crossAxisCount: 2,
                       padding: EdgeInsets.all(0),
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
                       itemBuilder: (BuildContext context, int index) {
                         return ProductWidget(productModel: productList[index]);
                       },
