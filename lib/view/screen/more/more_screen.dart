@@ -214,10 +214,13 @@ class _MoreScreenState extends State<MoreScreen> {
                                           hasCount: false,
                                         )
                                       : SizedBox(),
-
-                                  SquareButton(image: Images.shopping_image, title: getTranslated('orders', context),
-                                    navigateTo: OrderScreen(),count: 1,hasCount: false,),
-
+                                  SquareButton(
+                                    image: Images.shopping_image,
+                                    title: getTranslated('orders', context),
+                                    navigateTo: OrderScreen(),
+                                    count: 1,
+                                    hasCount: false,
+                                  ),
                                   SquareButton(
                                     image: Images.cart_image,
                                     title: getTranslated('CART', context),
@@ -228,7 +231,6 @@ class _MoreScreenState extends State<MoreScreen> {
                                         .length,
                                     hasCount: true,
                                   ),
-
                                   SquareButton(
                                     image: Images.offers,
                                     title: getTranslated('offers', context),
@@ -236,7 +238,6 @@ class _MoreScreenState extends State<MoreScreen> {
                                     count: 0,
                                     hasCount: false,
                                   ),
-
                                   SquareButton(
                                     image: Images.wishlist,
                                     title: getTranslated('wishlist', context),

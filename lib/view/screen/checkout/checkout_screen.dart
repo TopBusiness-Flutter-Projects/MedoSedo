@@ -29,6 +29,8 @@ import 'package:medosedo_ecommerce/view/screen/dashboard/dashboard_screen.dart';
 import 'package:medosedo_ecommerce/view/screen/payment/payment_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../payment/payment.dart';
+
 class CheckoutScreen extends StatefulWidget {
   final List<CartModel> cartList;
   final bool fromProductDetails;
@@ -383,26 +385,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             _callback,
                             widget.onlyDigital
                                 ? ''
-                                : Provider.of<ProfileProvider>(context,
-                                        listen: false)
-                                    .addressList[order.addressIndex]
-                                    .id
+                                : profile.addressList[order.addressIndex].id
                                     .toString(),
                             couponCode,
                             couponCodeAmount,
                             _billingAddress
-                                ? Provider.of<ProfileProvider>(context,
-                                        listen: false)
+                                ? profile
                                     .billingAddressList[
                                         order.billingAddressIndex]
                                     .id
                                     .toString()
                                 : widget.onlyDigital
                                     ? ''
-                                    : Provider.of<ProfileProvider>(context,
-                                            listen: false)
-                                        .addressList[order.addressIndex]
-                                        .id
+                                    : profile.addressList[order.addressIndex].id
                                         .toString(),
                             orderNote,
                             paymentByController.text,
@@ -428,7 +423,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => PaymentScreen(
+                        builder: (_) => PaymentWebViewScreen(
                               customerID: userID,
                               addressID: widget.onlyDigital
                                   ? ''
@@ -1037,7 +1032,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
 
-                  // Payment Method
+                  //! Payment Method
                   Container(
                     height: 150,
                     margin: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),

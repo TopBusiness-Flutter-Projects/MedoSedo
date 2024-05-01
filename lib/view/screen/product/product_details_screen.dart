@@ -165,11 +165,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 ''),
                                       )
                                     : SizedBox(),
-                                details.productDetailsModel.videoUrl != null
-                                    ? YoutubeVideoWidget(
-                                        url: details
-                                            .productDetailsModel.videoUrl!)
-                                    : SizedBox(),
+                                // details.productDetailsModel.videoUrl != null
+                                //     ? YoutubeVideoWidget(
+                                //         url: details
+                                //             .productDetailsModel.videoUrl!)
+                                //     : SizedBox(),
                                 Container(
                                     padding: EdgeInsets.symmetric(
                                         vertical:

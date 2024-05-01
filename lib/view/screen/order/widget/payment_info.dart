@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:medosedo_ecommerce/localization/language_constrants.dart';
 import 'package:medosedo_ecommerce/provider/order_provider.dart';
@@ -15,38 +14,42 @@ class PaymentInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+    return Container(
+      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       decoration: BoxDecoration(color: Theme.of(context).highlightColor),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(getTranslated('PAYMENT', context), style: robotoBold),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(getTranslated('PAYMENT_STATUS', context),
-                        style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
-
-                    Text((order.trackingModel.paymentStatus != null
-                        && order.trackingModel.paymentStatus!.isNotEmpty) ?
-                    order.trackingModel.paymentStatus! : 'Digital Payment',
-                      style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
-                    ),
-                  ]),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(getTranslated('PAYMENT', context), style: robotoBold),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              vertical: Dimensions.PADDING_SIZE_SMALL),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text(getTranslated('PAYMENT_STATUS', context),
+                style: titilliumRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL)),
+            Text(
+              (order.trackingModel.paymentStatus != null &&
+                      order.trackingModel.paymentStatus!.isNotEmpty)
+                  ? order.trackingModel.paymentStatus!
+                  : 'Digital Payment',
+              style: titilliumRegular.copyWith(
+                  fontSize: Dimensions.FONT_SIZE_SMALL),
             ),
-
-
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(getTranslated('PAYMENT_PLATFORM', context),
-                  style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
-
-              Text(order.trackingModel.paymentMethod != null ? getTranslated( order.trackingModel.paymentMethod!, context): '',
-                  style: titilliumBold.copyWith(color: Theme.of(context).primaryColor,
-                  )),
-            ]),
           ]),
+        ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(getTranslated('PAYMENT_PLATFORM', context),
+              style: titilliumRegular.copyWith(
+                  fontSize: Dimensions.FONT_SIZE_SMALL)),
+          Text(
+              order.trackingModel.paymentMethod != null
+                  ? getTranslated(order.trackingModel.paymentMethod!, context)
+                  : '',
+              style: titilliumBold.copyWith(
+                color: Theme.of(context).primaryColor,
+              )),
+        ]),
+      ]),
     );
   }
 }

@@ -16,73 +16,55 @@ class WebViewScreen extends StatefulWidget {
 }
 
 class _WebViewScreenState extends State<WebViewScreen> {
-  final Completer<WebViewController> _controller = Completer<WebViewController>();
-  WebViewController? controllerGlobal;
+  late final WebViewController _controller;
   bool _isLoading = true;
 
   @override
   void initState() {
-    super.initState();
+    print('xxxxxxxxxxxx${widget.url}');
 
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {
+            // Navigator.pop(context);
+          },
+          onWebResourceError: (WebResourceError error) {},
+          onUrlChange: (v) {
+            print("urlxxxxxxxxx: ${v.url.toString()}");
+            if (v.url
+                .toString()
+                .toLowerCase()
+                .contains('api/payment/callback')) {
+              //   Navigator.pop(context);
+              //   Navigator.pop(context);
+              // context.read<PaymentCubit>().checkPayment(v.url!);
+            }
+          },
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.url ?? ''));
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _exitApp,
-      child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
-        body: Column(
-          children: [
-
-            CustomAppBar(title: widget.title),
-
-            Expanded(
-              child: Stack(
-                children: [
-                  WebView(
-                    javascriptMode: JavascriptMode.unrestricted,
-                    initialUrl: widget.url,
-                    gestureNavigationEnabled: true,
-                    onWebViewCreated: (WebViewController webViewController) {
-                      _controller.future.then((value) => controllerGlobal = value);
-                      _controller.complete(webViewController);
-                    },
-                    onPageStarted: (String url) {
-                      print('Page started loading: $url');
-                      setState(() {
-                        _isLoading = true;
-                      });
-                    },
-                    onPageFinished: (String url) {
-                      print('Page finished loading: $url');
-                      setState(() {
-                        _isLoading = false;
-                      });
-                    },
-                  ),
-
-                  _isLoading ? CustomLoader(color: Theme.of(context).primaryColor) : SizedBox.shrink(),
-                ],
-              ),
-            ),
-          ],
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      ),
-    );
-  }
-
-  Future<bool> _exitApp() async {
-    if(controllerGlobal != null) {
-      if (await controllerGlobal!.canGoBack()) {
-        controllerGlobal!.goBack();
-        return Future.value(false);
-      } else {
-        return Future.value(true);
-      }
-    }else {
-      return Future.value(true);
-    }
+        body: WebViewWidget(controller: _controller));
   }
 }
