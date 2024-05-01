@@ -49,7 +49,7 @@ android {
         applicationId "com.topbusiness.medosedo_ecom"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 20
+        versionCode 21
         versionName flutterVersionName
         multiDexEnabled true
     }
